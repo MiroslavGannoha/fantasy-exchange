@@ -1,0 +1,15 @@
+.navbar-nav {
+  .dropdown-menu {
+    position: absolute;
+    float: inherit;
+
+    .navbar-collapse & {
+      // position: static;
+      // float: none;
+    }
+  }
+}
+
+.navbar-toggler-icon {
+  width: 1em;
+}

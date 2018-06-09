@@ -1,0 +1,31 @@
+{
+    "extends": [
+        "tslint:latest",
+        "tslint-react"
+    ],
+    "rules": {
+        // override tslint-react rules here
+        // "jsx-wrap-multiline": false
+        "quotemark": [
+            true,
+            "single",
+            "jsx-double"
+        ],
+        "no-implicit-dependencies": false,
+        "ordered-imports": false,
+        "indent": [
+            true,
+            "spaces",
+            4
+        ],
+        "no-submodule-imports": [
+            true,
+            "flag-icon-css/css",
+            "font-awesome/css",
+            "simple-line-icons/css/simple-line-icons.css"
+        ],
+        "no-console": false,
+        "jsx-boolean-value": ["never"],
+        "object-literal-sort-keys": false
+    }
+}

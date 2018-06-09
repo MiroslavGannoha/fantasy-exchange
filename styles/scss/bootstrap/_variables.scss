@@ -1,0 +1,241 @@
+// Colors
+$blue:    #3c91da !default;
+$indigo:  #892fff !default;
+$purple:  #803b6c !default;
+$pink:    #E56399 !default;
+$red:     #EE6352 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #F7B267 !default;
+$green:   #59CD90 !default;
+$teal:    #63BFB4 !default;
+$cyan:    #45BDDC !default;
+
+$white:  #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black:  #000 !default;
+
+
+$theme-colors: (
+  primary: $blue,
+  secondary: $gray-500,
+  success: $green,
+  info: $cyan,
+  warning: $yellow,
+  danger: $red,
+  light: darken($gray-100, 1%),
+  dark: $gray-800
+) !default;
+
+
+// Body
+$body-bg:    #f2f5f7 !default;
+$body-color: #686e71 !default;
+
+// Spacing
+$spacer: 1.43rem !default;
+$spacers: (
+  0: 0,
+  1: ($spacer * .25),
+  2: ($spacer * .5),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  5: ($spacer * 3)
+) !default;
+
+
+// Grid breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+// The yiq lightness value that determines when the lightness of color changes from "dark" to "light". Acceptable values are between 0 and 255.
+$yiq-contrasted-threshold: 240 !default;
+
+// Customize the light and dark text colors for use in our YIQ color contrast function.
+$yiq-text-dark: $gray-600 !default;
+$yiq-text-light: $white !default;
+
+// Fonts
+$font-family-sans-serif: 'Open Sans', Helvetica, Arial, sans-serif;
+$font-size-default: 14px !default;
+
+$font-size-sm:   .9rem !default;
+$line-height-sm: 1.3 !default;
+
+$h5-font-size:   1.2rem !default;
+
+$headings-font-weight:   600 !default;
+$headings-color:         inherit !default;
+
+$hr-margin-y: 1rem !default;
+
+
+// Blocks
+$block-border-width: 1px;
+$block-border-style: solid;
+$block-border-color: $gray-200;
+$block-border: $block-border-width $block-border-style $block-border-color;
+$block-border-radius: 3px;
+
+
+// Cards
+$card-spacer-y:                    map-get($spacers, 2) !default;
+$card-spacer-x:                    20px !default;
+$card-border-width:                $block-border-width;
+$card-border-radius:               $block-border-radius !default;
+$card-border-color:                $block-border-color !default;
+$card-with-bg-border-color:        rgba($black,.05) !default;
+
+$card-columns-gap:          $spacer !default;
+$card-columns-margin:       $spacer !default;
+
+
+//Buttons
+$input-btn-padding-y:         .375rem !default;
+$input-btn-padding-x:         .75rem !default;
+$input-btn-padding-y-sm:    .35rem !default;
+$input-btn-padding-x-sm:    .7rem !default;
+
+
+// Alerts
+$alert-padding-y:             1.143rem !default;
+$alert-padding-x:             1.143rem !default;
+
+
+// Jumbotron
+//$jumbotron-padding:              2rem !default;
+$jumbotron-bg:                   $white !default;
+
+
+// Grid
+$grid-gutter-width: 20px !default;
+
+
+// Navs
+$nav-link-color:                    darken($gray-500, 3%) !default;
+$nav-link-active-color:             $body-color !default;
+$nav-link-disabled-color:           $gray-400 !default;
+
+$nav-tabs-link-active-bg:           $white !default;
+$nav-tabs-border-color:             $block-border-color !default;
+$nav-tabs-link-hover-border-color:  $block-border-color !default;
+$nav-tabs-link-active-border-color: $block-border-color $block-border-color $nav-tabs-link-active-bg !default;
+$nav-tabs-link-active-color:        $body-color !default;
+
+$nav-pills-link-active-color:       $white !default;
+$nav-pills-link-active-bg:          $gray-600 !default;
+
+
+// Modals
+$modal-inner-padding-x:             20px !default;
+$modal-inner-padding-y:             15px !default;
+
+$modal-header-padding-x:            20px !default;
+$modal-header-padding-y:            15px !default;
+
+
+// Code
+$code-color:                  #c7254e !default;
+$code-bg:                     #f9f2f4 !default;
+$code-padding:                .2rem .4rem !default;
+$code-font-size:              90% !default;
+
+
+// Forms
+$form-check-input-gutter:   1.5rem !default;
+$form-check-input-margin-y: .34rem !default;
+
+$custom-file-width:         auto !default;
+
+$custom-control-indicator-size:         1rem !default;
+$custom-control-indicator-bg:           $gray-200 !default;
+$custom-control-indicator-bg-size:      60% 60% !default;
+$custom-control-indicator-box-shadow:   inset 0 .25rem .25rem rgba($black,.1) !default;
+
+$custom-control-indicator-disabled-bg:          $gray-200 !default;
+$custom-control-description-disabled-color:     $gray-600 !default;
+
+$custom-control-indicator-checked-color:        $white !default;
+$custom-control-indicator-checked-bg:           map-get($theme-colors, "secondary") !default;
+$custom-control-indicator-checked-box-shadow:   none !default;
+
+$custom-control-indicator-active-color:         $white !default;
+$custom-control-indicator-active-bg:            lighten(map-get($theme-colors, "secondary"), 10%) !default;
+$custom-control-indicator-active-box-shadow:    none !default;
+
+$custom-control-indicator-focus-box-shadow:     0 0 0 2px transparentize(map-get($theme-colors, "secondary"), 0.5) !default;
+
+
+// Badges
+$badge-font-weight:                 normal;
+$badge-padding-y:                   .38em !default;
+$badge-padding-x:                   .565em !default;
+$badge-border-radius:               .25em !default;
+
+
+// Dropdowns
+$dropdown-link-color:               $gray-700 !default;
+$dropdown-link-hover-color:         darken($gray-700, 5%) !default;
+$dropdown-link-hover-bg:            darken($gray-100, 2%) !default;
+$dropdown-border-color:             rgba($black,.15) !default;
+
+$dropdown-link-active-color:         darken($gray-900, 5%) !default;
+$dropdown-link-active-bg:            $gray-300 !default;
+$dropdown-link-disabled-color:       $gray-500 !default;
+
+
+// Tooltips
+$tooltip-color:                     $white !default;
+$tooltip-bg:                        $gray-600 !default;
+$tooltip-opacity:                   1 !default;
+$tooltip-margin:                    5px !default;
+
+
+// Tables
+$table-cell-padding-lg:       .5rem 1rem !default;
+$table-cell-padding:          .5rem .85rem !default;
+$table-cell-padding-sm:       .3rem !default;
+
+$table-accent-bg:             rgba($black,.05) !default;
+$table-hover-bg:              rgba($black,.075) !default;
+$table-active-bg:             $table-hover-bg !default;
+
+$table-border-width:          1px !default;
+$table-border-color:          $gray-200 !default;
+$table-border-radius:         $block-border-radius !default;
+
+$table-head-bg:               $gray-200 !default;
+$table-head-color:            $gray-700 !default;
+
+
+// Pagination
+$pagination-padding-y-sm:           .25rem !default;
+$pagination-padding-x-sm:           .55rem !default;
+
+$pagination-color:                  $gray-600 !default;
+
+$pagination-hover-color:            $gray-600 !default;
+$pagination-hover-bg:               $gray-200 !default;
+$pagination-hover-border-color:     $gray-200 !default;
+
+$pagination-focus-box-shadow:       0 0 0 2px rgba(173, 181, 189,.5) !default;
+
+$pagination-active-color:           $white !default;
+$pagination-active-bg:              $gray-500 !default;
+$pagination-active-border-color:    $gray-500 !default;
+
+$pagination-disabled-color:         $gray-400 !default;
+// $pagination-disabled-bg:            $white !default;
+$pagination-disabled-border-color:  $gray-200 !default;

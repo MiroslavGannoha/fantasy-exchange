@@ -1,0 +1,90 @@
+.e-tabs .nav-tabs {
+  outline: 0;
+}
+
+.e-tabs .nav-tabs .nav-item {
+  margin: 0;
+}
+
+.e-tabs .nav-tabs .nav-link {
+  position: relative;
+  border: 0;
+  color: #686e71;
+}
+
+.e-tabs .nav-tabs .nav-link.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.e-tabs .nav-tabs .active > .nav-link,
+.e-tabs .nav-tabs .nav-link.active,
+.e-tabs .nav-tabs .nav-link:hover {
+  background-color: transparent;
+}
+
+.e-tabs .nav-tabs .active > .nav-link:after,
+.e-tabs .nav-tabs .nav-link.active:after,
+.e-tabs .nav-tabs .nav-link:hover:after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0%;
+  width: 100%;
+  border-top: 2px solid #ced4da;
+}
+
+.e-tabs--nested .nav-item:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.e-tabs--nested .nav-link {
+  padding: 1rem 0.5rem;
+}
+
+.e-tabs--nested .nav-tabs {
+  outline: 0;
+}
+
+.e-tabs--nested .nav-tabs .nav-item:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.e-tabs--nested .nav-tabs .nav-link {
+  border: 0;
+}
+
+.e-tabs--nested .nav-tabs .active > .nav-link:before, .e-tabs--nested .nav-tabs .active > .nav-link:after,
+.e-tabs--nested .nav-tabs .nav-link.active:before,
+.e-tabs--nested .nav-tabs .nav-link.active:after,
+.e-tabs--nested .nav-tabs .nav-link:hover:before,
+.e-tabs--nested .nav-tabs .nav-link:hover:after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  margin-left: -6px;
+  border: 6px solid transparent;
+  width: 0;
+}
+
+.e-tabs--nested .nav-tabs .active > .nav-link:before,
+.e-tabs--nested .nav-tabs .nav-link.active:before,
+.e-tabs--nested .nav-tabs .nav-link:hover:before {
+  border-bottom-color: #e9ecef;
+}
+
+.e-tabs--nested .nav-tabs .active > .nav-link:after,
+.e-tabs--nested .nav-tabs .nav-link.active:after,
+.e-tabs--nested .nav-tabs .nav-link:hover:after {
+  bottom: -1px;
+}
+
+.e-tabs--nested .nav-tabs .nav-link:hover:after {
+  border-bottom-color: #e9ecef;
+}
+
+.e-tabs--nested .nav-tabs .active > .nav-link:after,
+.e-tabs--nested .nav-tabs .nav-link.active:after {
+  border-bottom-color: #fff;
+}

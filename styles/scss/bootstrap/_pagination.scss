@@ -1,0 +1,26 @@
+.pagination {
+  .page-link {
+    text-align: center;
+    min-width: 33px;
+  }
+
+  &.pagination-sm {
+    .page-link {
+      min-width: 25px;
+    }
+  }
+
+  &.pagination-separated {
+    .page-item:not(:first-child) {
+      margin-left: 2px;
+    }
+
+    .page-item:not(:last-child) {
+      margin-right: 2px;
+    }
+
+    .page-link {
+      border-radius: 0.25em;
+    }
+  }
+}

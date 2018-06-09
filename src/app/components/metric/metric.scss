@@ -1,0 +1,14 @@
+@import "../../scss/bootstrap/variables";
+
+.e-metric {
+  &__main {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__text {
+    line-height: 1;
+  }
+}

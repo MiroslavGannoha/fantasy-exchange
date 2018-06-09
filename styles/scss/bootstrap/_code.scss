@@ -1,0 +1,10 @@
+code {
+  background: $code-bg;
+  padding: $code-padding;
+  font-size: $code-font-size;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+}

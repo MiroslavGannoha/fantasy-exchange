@@ -1,0 +1,12 @@
+.e-advanced-table__search-input {
+  flex-grow: 1;
+}
+
+.e-advanced-table__bookmark {
+  cursor: pointer;
+  color: #e9ecef;
+}
+
+.e-advanced-table__bookmark:hover, .e-advanced-table__bookmark.active {
+  color: #adb5bd;
+}

@@ -1,0 +1,29 @@
+.e-navline .nav-item:not(:last-child) {
+  margin-right: .3rem;
+}
+
+.e-navline .nav-link {
+  padding: 1rem 0.5rem;
+  position: relative;
+}
+
+.e-navline--arrow .nav {
+  position: relative;
+}
+
+.e-navline--arrow .nav:before, .e-navline--arrow .nav:after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 1rem;
+  border: 10px solid transparent;
+}
+
+.e-navline--arrow .nav:before {
+  border-top-color: #e9ecef;
+}
+
+.e-navline--arrow .nav:after {
+  bottom: -19px;
+  border-top-color: #fff;
+}

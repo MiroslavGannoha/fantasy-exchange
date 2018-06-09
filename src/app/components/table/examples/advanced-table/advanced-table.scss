@@ -1,0 +1,19 @@
+@import "../../../../scss/bootstrap/variables";
+
+.e-advanced-table {
+  &__search-input {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+
+  &__bookmark {
+    cursor: pointer;
+    color: $gray-200;
+
+    &:hover,
+    &.active {
+      color: map-get($theme-colors, "secondary");
+    }
+  }
+}

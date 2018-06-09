@@ -1,0 +1,11 @@
+.show {
+  // Remove the outline when :focus is triggered
+  > a {
+    outline: 0;
+  }
+}
+
+.dropdown-header {
+  font-weight: normal;
+  font-size: 80%;
+}

@@ -1,0 +1,14 @@
+.e-panel .card-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.e-panel .card-title h1, .e-panel .card-title h2, .e-panel .card-title h3, .e-panel .card-title h4, .e-panel .card-title h5, .e-panel .card-title h6,
+.e-panel .card-title .h1, .e-panel .card-title .h2, .e-panel .card-title .h3, .e-panel .card-title .h4, .e-panel .card-title .h5, .e-panel .card-title .h6 {
+  font-weight: bold;
+  margin: 0;
+}
+
+.e-panel .card-title small:empty {
+  display: none;
+}

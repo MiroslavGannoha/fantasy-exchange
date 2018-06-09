@@ -1,0 +1,32 @@
+// .btn-group > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle) {
+//   border-left-color: rgba(0, 0, 0, 0.05);
+//   border-right-color: rgba(0, 0, 0, 0.05);
+// }
+//
+// .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+//   border-right-color: rgba(0, 0, 0, 0.05);
+// }
+//
+// .btn-group > .btn:last-child:not(:first-child),
+// .btn-group > .dropdown-toggle:not(:first-child) {
+//   border-left-color: rgba(0, 0, 0, 0.05);
+// }
+
+.btn-group {
+  .btn:not(:first-child),
+  .btn-group:not(:first-child) > .btn {
+    &:not([class *= 'btn-outline']) {
+      border-left-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  .btn:not(:last-child),
+  .btn-group:not(:last-child) > .btn {
+    &:not([class *= 'btn-outline']) {
+      border-right-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+}
+
+.btn-group-vertical {
+}

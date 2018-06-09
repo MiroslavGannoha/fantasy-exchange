@@ -1,0 +1,50 @@
+@import "./scss/variables";
+@import "~react-select/scss/control";
+@import "~react-select/scss/menu";
+@import "~react-select/scss/mixins";
+@import "~react-select/scss/multi";
+@import "~react-select/scss/spinner";
+
+.Select {
+  &.is-open > .Select-control {
+    border-color: $select-input-border-color;
+
+    .Select-arrow {
+			top: -$select-arrow-width;
+		}
+  }
+}
+
+.Select-input {
+  height: calc(#{$select-input-internal-height} - 1px);
+
+  & > input {
+    line-height: $select-input-internal-height;
+    padding: 0;
+  }
+}
+
+.Select-option {
+  &.is-selected {
+		background-color: $select-option-selected-bg;
+		color: $select-option-selected-color;
+	}
+}
+
+.Select--multi {
+  .Select-value {
+    line-height: 1;
+    display: inline-flex;
+    flex-direction: row-reverse;
+  }
+
+  .Select-value-icon {
+		padding: $select-item-padding-vertical $select-item-padding-horizontal;
+    border-left: 1px solid $select-item-border-color;
+    border-top-right-radius: $select-item-border-radius;
+    border-bottom-right-radius: $select-item-border-radius;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-right: 0;
+  }
+}

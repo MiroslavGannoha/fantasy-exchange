@@ -1,0 +1,17 @@
+.custom-file-input {
+  width: 100%;
+}
+
+.custom-control-nameless {
+  padding-left: 1rem;
+  margin-right: 0;
+}
+
+.custom-control .custom-control-label {
+  cursor: pointer;
+  user-select: none;
+
+  &:after, &:before {
+    top: 0.25rem;
+  }
+}

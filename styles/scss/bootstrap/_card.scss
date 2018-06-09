@@ -1,0 +1,11 @@
+.card[class *= "bg-"] {
+  border: $card-border-width solid $card-with-bg-border-color;
+
+  .card-header {
+    border-bottom: $card-border-width solid $card-with-bg-border-color;
+  }
+
+  .card-bottom {
+    border-top: $card-border-width solid $card-with-bg-border-color;
+  }
+}

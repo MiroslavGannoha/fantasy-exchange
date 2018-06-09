@@ -1,0 +1,97 @@
+@import "../../scss/bootstrap/variables";
+
+.e-tabs {
+
+  .nav-tabs {
+    outline: 0;
+
+    .nav-item {
+      margin: 0;
+    }
+
+    .nav-link {
+      position: relative;
+      border: 0;
+      color: $nav-link-active-color;
+
+      &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+    }
+
+    .active > .nav-link,
+    .nav-link.active,
+    .nav-link:hover {
+      background-color: transparent;
+
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0%;
+        width: 100%;
+        border-top: 2px solid $gray-400;
+      }
+    }
+  }
+
+  &--nested {
+
+    .nav-item:not(:last-child) {
+      margin-right: 1rem;
+    }
+
+    .nav-link {
+      padding: 1rem 0.5rem;
+    }
+
+    .nav-tabs {
+      outline: 0;
+
+      .nav-item:not(:last-child) {
+        margin-right: 1rem;
+      }
+
+      .nav-link {
+        border: 0;
+      }
+
+      .active > .nav-link,
+      .nav-link.active,
+      .nav-link:hover {
+
+        &:before, &:after {
+          content: '';
+          position: absolute;
+          bottom: 0px;
+          left: 50%;
+          margin-left: -6px;
+          border: 6px solid transparent;
+          width: 0;
+        }
+
+        &:before {
+          border-bottom-color: $nav-tabs-border-color;
+        }
+
+        &:after {
+          bottom: -1px;
+        }
+      }
+
+      .nav-link:hover {
+        &:after {
+          border-bottom-color: $nav-tabs-border-color;
+        }
+      }
+
+      .active > .nav-link,
+      .nav-link.active {
+        &:after {
+          border-bottom-color: $white;
+        }
+      }
+    }
+  }
+}

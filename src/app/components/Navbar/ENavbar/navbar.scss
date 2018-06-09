@@ -1,0 +1,129 @@
+@import "../../../../../styles/scss/bootstrap/variables";
+
+$nav-color: $nav-link-color;
+$nav-active-color: $nav-link-active-color;
+$text-color: #888;
+
+.e-logo {
+  font-weight: 700;
+  display: block;
+
+  small {
+    display: block;
+    position: relative;
+    line-height: 12px;
+    font-size: 12px;
+    top: -4px;
+    text-align: center;
+  }
+}
+
+.e-navbar {
+
+  &__cont {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+  }
+
+  &__title {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    order: 2;
+    top:0;
+  }
+
+  &__nav {
+    position: relative;
+
+    & > div {
+      width: 100%;
+    }
+  }
+
+  &__actions {
+    position: relative;
+    order: 3;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .navbar-toggler {
+    position: relative;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: $input-btn-padding-y $input-btn-padding-x;
+    border-radius: 3px;
+    color: $nav-color;
+    z-index: 20;
+    order: 1;
+  }
+
+  .navbar-brand {
+    order: 1;
+    padding: 0;
+
+    &:empty {
+      display: none !important;
+    }
+
+    &, a, a:hover, a:focus {
+      text-decoration: none;
+      color: $text-color;
+    }
+  }
+
+  .navbar-nav {
+    .nav-item:not(:last-child) {
+      margin-right: 0.5rem;
+    }
+  }
+
+  .navbar-text {
+    color: $text-color;
+
+    a {
+      color: $nav-color;
+      text-decoration: none;
+
+      &:hover,
+      &:focus {
+        color: $nav-active-color;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .btn-group {
+    font-size: 0;
+  }
+
+  &--nav-in-center {
+
+    .e-navbar__nav {
+
+      .navbar-nav {
+        justify-content: center;
+        width: 100%;
+      }
+    }
+  }
+
+  &--brand-in-center {
+
+    .navbar-brand {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      left: 0;
+      top: 0;
+    }
+  }
+}

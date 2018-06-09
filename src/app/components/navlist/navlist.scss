@@ -1,0 +1,57 @@
+@import "../../scss/bootstrap/variables";
+
+$nav-color: $gray-600;
+$nav-active-bg-color: $nav-pills-link-active-color;
+$nav-active-bg-background: $nav-pills-link-active-bg;
+
+.e-navlist {
+
+  .nav {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+
+  .nav-item:not(:last-child) {
+    margin-bottom: 3px;
+  }
+
+  .nav-link {
+
+    &.disabled {
+      opacity: 0.5;
+    }
+  }
+}
+
+.e-navlist.e-navlist--active-bg {
+
+  .nav-link {
+    color: $nav-color;
+    background-color: transparent;
+    padding: 0.5rem;
+    border-radius: .25em;
+    white-space: nowrap;
+
+    transition: background-color 0.15s linear;
+  }
+
+  .active > .nav-link,
+  .nav-link.active,
+  .nav-link:hover {
+    color: $nav-active-bg-color;
+    background-color: $nav-active-bg-background;
+  }
+}
+
+.e-navlist.e-navlist--active-bold {
+
+  .nav-link {
+    color: $body-color;
+    // padding: 0.5rem;
+  }
+
+  .active > .nav-link,
+  .nav-link.active {
+    font-weight: bold;
+  }
+}

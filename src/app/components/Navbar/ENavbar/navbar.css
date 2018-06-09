@@ -1,0 +1,108 @@
+.e-logo {
+  font-weight: 700;
+  display: block;
+}
+
+.e-logo small {
+  display: block;
+  position: relative;
+  line-height: 12px;
+  font-size: 12px;
+  top: -4px;
+  text-align: center;
+}
+
+.e-navbar__cont {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.e-navbar__title {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  order: 2;
+  top: 0;
+}
+
+.e-navbar__nav {
+  position: relative;
+}
+
+.e-navbar__nav > div {
+  width: 100%;
+}
+
+.e-navbar__actions {
+  position: relative;
+  order: 3;
+}
+
+.e-navbar__actions:empty {
+  display: none;
+}
+
+.e-navbar .navbar-toggler {
+  position: relative;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 0.375rem 0.75rem;
+  border-radius: 3px;
+  color: #a5adb6;
+  z-index: 20;
+  order: 1;
+}
+
+.e-navbar .navbar-brand {
+  order: 1;
+  padding: 0;
+}
+
+.e-navbar .navbar-brand:empty {
+  display: none !important;
+}
+
+.e-navbar .navbar-brand, .e-navbar .navbar-brand a, .e-navbar .navbar-brand a:hover, .e-navbar .navbar-brand a:focus {
+  text-decoration: none;
+  color: #888;
+}
+
+.e-navbar .navbar-nav .nav-item:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.e-navbar .navbar-text {
+  color: #888;
+}
+
+.e-navbar .navbar-text a {
+  color: #a5adb6;
+  text-decoration: none;
+}
+
+.e-navbar .navbar-text a:hover, .e-navbar .navbar-text a:focus {
+  color: #686e71;
+  text-decoration: none;
+}
+
+.e-navbar .btn-group {
+  font-size: 0;
+}
+
+.e-navbar--nav-in-center .e-navbar__nav .navbar-nav {
+  justify-content: center;
+  width: 100%;
+}
+
+.e-navbar--brand-in-center .navbar-brand {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  left: 0;
+  top: 0;
+}

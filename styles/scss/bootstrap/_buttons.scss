@@ -1,0 +1,22 @@
+// .btn {
+//   &:not([disabled]):not(.disabled),
+//   &:not([disabled]):not(.disabled) {
+//     cursor: pointer;
+//   }
+// }
+
+.btn {
+  &, &:not(.disabled):not([disabled]) {
+    &.active {
+      box-shadow: none;
+    }
+  }
+}
+
+.btn-outline-secondary {
+  color: $gray-600;
+}
+
+.btn > i + span:not(:empty) {
+    padding-left: map-get($spacers,1);
+}
