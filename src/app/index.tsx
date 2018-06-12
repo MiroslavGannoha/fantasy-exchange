@@ -11,6 +11,7 @@ import MainLayout from './containers/MainLayout';
 import Overview from './views/Overview';
 import Users from './views/Users';
 import Settings from './views/Settings';
+import Players from './views/Players';
 
 // export const App = hot(module)(() => <Root><MobxRouter /></Root>);
 export const App = () => <Root><MobxRouter /></Root>;
@@ -19,6 +20,20 @@ export const pages = {
     home: new Route({
         path: '/',
         component: <MainLayout component={Overview} />,
+    }),
+    players: new Route({
+        path: '/players',
+        component: <MainLayout component={Players} />,
+        onEnter: (route, params, store) => {
+            store.app.setTitle('AAAA');
+            console.log('entering settings!');
+        },
+        beforeExit: () => {
+            console.log('exiting settings!');
+        },
+        onParamsChange: (route, params, store) => {
+            console.log('params changed to', params);
+        },
     }),
     overview: new Route({
         path: '/overview',
@@ -33,7 +48,6 @@ export const pages = {
         onParamsChange: (route, params, store) => {
             console.log('params changed to', params);
         },
-
     }),
     users: new Route({
         path: '/users',

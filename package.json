@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "description": "A frontend boilerplate with React, MobX and Typescript",
-    "main": "index.js",
+    "main": "server/server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "webpack-dev-server --mode development --hot --progress --colors --port 3000 --open",
@@ -80,6 +80,14 @@
         "react-transition-group": "2.2.1",
         "reactstrap": "5.0.0",
         "simple-line-icons": "^2.4.1",
-        "spinkit": "1.2.5"
+        "spinkit": "1.2.5",
+        "compression": "^1.0.3",
+        "cors": "^2.5.2",
+        "helmet": "^3.10.0",
+        "loopback-boot": "^2.6.5",
+        "serve-favicon": "^2.0.1",
+        "strong-error-handler": "^2.0.0",
+        "loopback-component-explorer": "^6.0.0",
+        "loopback": "^3.19.0"
     }
 }
