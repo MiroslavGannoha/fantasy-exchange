@@ -43,7 +43,6 @@ class EChart extends React.Component<IEChartProps, {}> {
     }
 
     public refCallback(element) {
-        console.log(element);
         this.canvasElem = element;
     }
 

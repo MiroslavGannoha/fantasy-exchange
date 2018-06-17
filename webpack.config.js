@@ -51,6 +51,7 @@ module.exports = {
             // .ts, .tsx
             {
                 test: /\.tsx?$/,
+                exclude: '/functions',
                 use: isProduction
                     ? 'ts-loader'
                     : [

@@ -7,12 +7,16 @@ import ENavlist from '../navlist';
 import { pages } from '../../../app';
 import { Stores } from '../../stores';
 
+interface ISidebarProps {
+    className?: string;
+}
+
 @inject(Stores.APP)
 @observer
-class Sidebar extends React.Component {
+class Sidebar extends React.Component<ISidebarProps> {
     public render() {
         return (
-                <div className="card p-3">
+                <div className={'card p-3 ' + this.props.className || ''}>
                     <ENavlist activeBg={true}>
                         <ul className="nav">
                             <li className="nav-item">

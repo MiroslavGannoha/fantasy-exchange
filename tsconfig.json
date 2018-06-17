@@ -13,7 +13,7 @@
     "noUnusedLocals": true,
     "removeComments": true,
     "strictNullChecks": false,
-    "outDir": "build",
+    "outDir": "dist",
     "lib": ["es6", "es7", "dom"],
     "baseUrl": "src",
     "paths": {

@@ -18,12 +18,7 @@
             "spaces",
             4
         ],
-        "no-submodule-imports": [
-            true,
-            "flag-icon-css/css",
-            "font-awesome/css",
-            "simple-line-icons/css/simple-line-icons.css"
-        ],
+        "no-submodule-imports": [ false ],
         "no-console": false,
         "jsx-boolean-value": ["never"],
         "object-literal-sort-keys": false

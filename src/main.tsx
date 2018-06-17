@@ -1,13 +1,15 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-// import { createBrowserHistory } from 'history';
 // import { useStrict } from 'mobx';
+// @ts-ignore
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import { initFirestorter, Collection } from 'firestorter';
 import { Provider } from 'mobx-react';
 import { pages, App } from './app';
 import { TodoModel } from './app/models';
 import { createStores, Stores } from './app/stores';
 import { startRouter } from 'mobx-router';
-
 // Styles
 // Import Flag Icons Set
 import 'flag-icon-css/css/flag-icon.min.css';
@@ -19,6 +21,23 @@ import 'simple-line-icons/css/simple-line-icons.css';
 import '../styles/scss/elements.scss';
 // // Temp fix for reactstrap
 // import '../scss/core/_dropdown-menu-right.scss';
+
+// Initialize firebase app
+firebase.initializeApp({
+    apiKey: 'AIzaSyD94yAtoXu1JWEm635t-d53BGO1AMo1-WU',
+    authDomain: 'fantasy-exchange.firebaseapp.com',
+    databaseURL: 'https://fantasy-exchange.firebaseio.com',
+    projectId: 'fantasy-exchange',
+    storageBucket: 'gs://fantasy-exchange.appspot.com',
+    messagingSenderId: '117336781687',
+});
+
+// Initialize `firestorter`
+initFirestorter({ firebase });
+
+// Define collection
+const todos = new Collection('todos');
+console.log(todos);
 
 // enable MobX strict mode
 // useStrict(true);
@@ -42,3 +61,18 @@ ReactDOM.render(
     </Provider>,
     document.getElementById('root'),
 );
+
+// document.addEventListener('DOMCont entLoaded', () => {
+    // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    // // The Firebase SDK is initialized and available here!
+    //
+    // firebase.auth().onAuthStateChanged(user => { });
+    // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+    // firebase.messaging().requestPermission().then(() => { });
+    // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+    //
+    // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+    // const app = firebase.app();
+    // const features = ['auth', 'database', 'messaging', 'storage']
+        // .filter((feature) => typeof app[feature] === 'function');
