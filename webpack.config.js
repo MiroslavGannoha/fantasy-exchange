@@ -38,20 +38,10 @@ module.exports = {
     },
     module: {
         rules: [
-            // tslint
-            {
-                test: /\.tsx?$/,
-                enforce: 'pre',
-                loader: 'tslint-loader',
-                options: {
-                    failOnHint: true,
-                    emitErrors: true
-                }
-            },
             // .ts, .tsx
             {
                 test: /\.tsx?$/,
-                exclude: '/functions',
+                exclude: path.resolve(__dirname, 'functions/'),
                 use: isProduction
                     ? 'ts-loader'
                     : [
