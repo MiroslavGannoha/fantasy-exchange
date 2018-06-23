@@ -4,7 +4,7 @@ import * as ReactDOM from 'react-dom';
 // @ts-ignore
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import { initFirestorter, Collection } from 'firestorter';
+import { initFirestorter/* , Collection */ } from 'firestorter';
 import { Provider } from 'mobx-react';
 import { pages, App } from './app';
 import { TodoModel } from './app/models';
@@ -36,8 +36,14 @@ firebase.initializeApp({
 initFirestorter({ firebase });
 
 // Define collection
-const todos = new Collection('todos');
-console.log(todos);
+// const todos = new Collection('todos');
+// todos.add({
+//     finished: false,
+//     text: 'new task',
+// }).then((doc) => {
+//     console.log(doc);
+//     console.log(todos);
+// });
 
 // enable MobX strict mode
 // useStrict(true);

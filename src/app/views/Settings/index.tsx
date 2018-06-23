@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Profile from '../Profile';
 import { inject, observer } from 'mobx-react';
-import { Stores } from '../../../app/stores';
+import { Stores, AuthStore } from '../../../app/stores';
 
 interface IProfileProps {
     store?: any;
@@ -11,21 +11,13 @@ interface IProfileState {
     user: any;
 }
 
-@inject(Stores.APP)
+@inject(Stores.APP, Stores.AUTH)
 @observer
 class Settings extends React.Component<IProfileProps, IProfileState> {
+    private authStore: AuthStore = this.props[Stores.AUTH];
     constructor(props) {
         super(props);
-        console.log(props);
-        this.state = {
-            user: {
-                date: 1512792908,
-                name: 'John Smith7',
-                photo: '',
-                status: true,
-                username: 'johnny.s',
-            },
-        };
+        this.logout = this.logout.bind(this);
     }
 
     public componentDidMount() {
@@ -41,7 +33,7 @@ class Settings extends React.Component<IProfileProps, IProfileState> {
                 <div className="col mb-3">
                     <div className="card">
                         <div className="card-body">
-                            <Profile user={this.state.user}/>
+                            <Profile />
                         </div>
                     </div>
                 </div>
@@ -49,7 +41,7 @@ class Settings extends React.Component<IProfileProps, IProfileState> {
                     <div className="card mb-3">
                         <div className="card-body">
                             <div className="px-xl-3">
-                                <button className="btn btn-block btn-secondary">
+                                <button className="btn btn-block btn-secondary" onClick={this.logout}>
                                     <i className="fa fa-sign-out"/>
                                     <span>Logout</span>
                                 </button>
@@ -66,6 +58,10 @@ class Settings extends React.Component<IProfileProps, IProfileState> {
                 </div>
             </div>
         );
+    }
+
+    private logout() {
+        this.authStore.logout();
     }
 }
 

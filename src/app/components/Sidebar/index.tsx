@@ -14,29 +14,33 @@ interface ISidebarProps {
 @inject(Stores.APP)
 @observer
 class Sidebar extends React.Component<ISidebarProps> {
+    private appStore = this.props[Stores.APP];
     public render() {
+        console.log(this.appStore);
+        const { currentView } = this.appStore.router;
+        console.log(currentView);
         return (
                 <div className={'card p-3 ' + this.props.className || ''}>
                     <ENavlist activeBg={true}>
                         <ul className="nav">
-                            <li className="nav-item">
+                            <li className={(currentView === pages.overview ? 'active ' : '') + 'nav-item'}>
                                 <Link
                                     view={pages.overview}
-                                    store={this.props[Stores.APP]}
+                                    store={this.appStore}
                                     className="nav-link px-2"
                                 >
                                     <i className="fa fa-fw fa-bar-chart mr-1" />
                                     <span>Overview</span>
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <Link view={pages.users} store={this.props[Stores.APP]} className="nav-link px-2">
+                            <li className={(currentView === pages.users ? 'active ' : '') + 'nav-item'}>
+                                <Link view={pages.users} store={this.appStore} className="nav-link px-2">
                                     <i className="fa fa-fw fa-clone mr-1" />
                                     <span>CRUD</span>
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <Link view={pages.settings} store={this.props[Stores.APP]} className="nav-link px-2">
+                            <li className={(currentView === pages.settings ? 'active ' : '') + 'nav-item'}>
+                                <Link view={pages.settings} store={this.appStore} className="nav-link px-2">
                                     <i className="fa fa-fw fa-cog mr-1" />
                                     <span>Settings</span>
                                 </Link>

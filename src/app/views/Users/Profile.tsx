@@ -3,7 +3,7 @@ import * as classNames from 'classnames';
 import * as Moment from 'moment';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import ProfileSettingsForm from './ProfileSettingsForm';
-
+import dotaLogo from '../../../../img/dota2-logo.png';
 interface IProfileProps {
     user: any;
 }
@@ -27,12 +27,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
                 <div className="row">
                     <div className="col-12 col-sm-auto mb-3">
                         <div className="mx-auto" style={{ width: '140px' }}>
-                            <div
-                                className="d-flex justify-content-center align-items-center rounded"
-                                style={{ height: '140px', backgroundColor: '#e9ecef' }}
-                            >
-                                <span style={{ color: '#a6a8aa', font: 'bold 8pt Arial' }}>{'140x140'}</span>
-                            </div>
+                            <img src={dotaLogo} alt="logo" width="140px" />
                         </div>
                     </div>
                     <div className="col d-flex flex-column flex-sm-row justify-content-between mb-3">

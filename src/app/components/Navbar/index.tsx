@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Stores, AppStore } from '../../../app/stores';
+import { Stores, AppStore, AuthStore } from '../../../app/stores';
 import { pages } from '../../../app';
 import { Link } from 'mobx-router';
 import ENavbar from './ENavbar';
 
-@inject(Stores.APP)
+@inject(Stores.APP, Stores.AUTH)
 @observer
 class Navbar extends React.Component {
     private appStore: AppStore = this.props[Stores.APP];
+    private authStore: AuthStore = this.props[Stores.AUTH];
     public render() {
         const Brand = () => (
             <Link className="e-logo mx-4" view={pages.settings} store={this.appStore} >
@@ -28,21 +29,28 @@ class Navbar extends React.Component {
                 </li>
             </ul>
         );
-        const Actions = () => (
+
+        const UserBar = (
+            <div className="btn-group d-none d-md-block">
+                <button className="btn btn-success">
+                    <i className="fa fa-bell" />
+                </button>
+                <Link view={pages.settings} store={this.appStore} className="btn btn-success">
+                    <span className="mx-1">
+                        {this.authStore.userName}
+                    </span>
+                </Link>
+            </div>
+        );
+
+        const Actions = observer(() => (
             <div>
                 <Link view={pages.settings} store={this.appStore} className="btn btn-success d-md-none">
                     <i className="fa fa-user-circle" />
                 </Link>
-                <div className="btn-group d-none d-md-block">
-                    <button className="btn btn-success">
-                        <i className="fa fa-bell" />
-                    </button>
-                    <Link view={pages.settings} store={this.appStore} className="btn btn-success">
-                        <span className="mx-1">John Smith</span>
-                    </Link>
-                </div>
+                {this.authStore.isLoggedIn && UserBar}
             </div>
-        );
+        ));
 
         return (
             <ENavbar

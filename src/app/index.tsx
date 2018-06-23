@@ -12,6 +12,7 @@ import Overview from './views/Overview';
 import Users from './views/Users';
 import Settings from './views/Settings';
 import Players from './views/Players';
+import { UserComponent } from './components/RolesComponents';
 
 // export const App = hot(module)(() => <Root><MobxRouter /></Root>);
 export const App = () => <Root><MobxRouter /></Root>;
@@ -24,9 +25,10 @@ export const pages = {
     players: new Route({
         path: '/players',
         component: <MainLayout component={Players} />,
-        onEnter: (route, params, store) => {
+        beforeEnter: (route, params, store) => {
             store.app.setTitle('AAAA');
             console.log('entering settings!');
+            return false;
         },
         beforeExit: () => {
             console.log('exiting settings!');
@@ -66,10 +68,12 @@ export const pages = {
     }),
     settings: new Route({
         path: '/settings',
-        component: <MainLayout component={Settings} />,
-        onEnter: (route, params, store) => {
+        component: <MainLayout component={Settings} role={UserComponent}/>,
+        beforeEnter: (route, params, store) => {
             store.app.setTitle('AAAA');
-            console.log('entering settings!');
+            console.log('entering settings!', store);
+            // store.router.goTo(pages.overview, null, store);
+            // return false;
         },
         beforeExit: () => {
             console.log('exiting settings!');
