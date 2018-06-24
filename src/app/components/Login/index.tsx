@@ -4,7 +4,7 @@ import { Stores, AuthStore, AppStore } from '../../../app/stores';
 import EPanel from '../panel';
 import { Link } from 'mobx-router';
 import { pages } from '../../../app';
-
+import { Form, InputGroup, FormGroup, Input } from 'reactstrap';
 interface ILoginFormProps {
     className ?: string;
 }
@@ -20,20 +20,34 @@ class LoginForm extends React.Component<ILoginFormProps> {
         const form = this.authStore.loginForm;
         return (
             <EPanel titleNode={<Title />} className={this.props.className}>
-                <form onSubmit={form.onSubmit}>
-                    <div className="form-group">
-                        <input className="form-control" {...form.$('email').bind()} />
+                <Form onSubmit={form.onSubmit}>
+                    <FormGroup>
+                        <InputGroup>
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    @
+                                </span>
+                            </div>
+                            <Input {...form.$('email').bind()}/>
+                        </InputGroup>
                         <small className="text-danger">{form.$('email').error}</small>
-                    </div>
-                    <div className="form-group">
-                        <input className="form-control" {...form.$('password').bind()} />
+                    </FormGroup>
+                    <FormGroup>
+                        <InputGroup>
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    <i className="icon-lock" />
+                                </span>
+                            </div>
+                            <Input {...form.$('password').bind()} />
+                        </InputGroup>
                         <small className="text-danger">{form.$('password').error}</small>
-                    </div>
+                    </FormGroup>
                     <div className="row form-group justify-content-between mr-0 ml-0">
                         <Link view={pages.signUp} store={this.appStore} className="nav-link pl-0">
                             No account? Register
                         </Link>
-                        <button type="submit" className="btn btn-primary" onClick={form.onSubmit}>Sign In</button>
+                        <button type="submit" className="btn btn-primary">Sign In</button>
                     </div>
                     <div className="form-group text-center m-0">
                         <div className="btn-group">
@@ -49,7 +63,7 @@ class LoginForm extends React.Component<ILoginFormProps> {
                         </div>
                     </div>
                     <p>{form.error}</p>
-                </form>
+                </Form>
             </EPanel>
         );
     }

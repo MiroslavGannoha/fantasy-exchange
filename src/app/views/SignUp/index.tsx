@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { inject, observer } from 'mobx-react';
+import { Link } from 'mobx-router';
+import { Stores, AuthStore } from '../../../app/stores';
+import { pages } from '../../../app';
 import {
     Row,
     Col,
@@ -9,66 +13,114 @@ import {
     Input,
     InputGroup,
     CardTitle,
+    Form,
+    FormGroup,
 } from 'reactstrap';
+import Loader from '../../components/Loader';
 
+@inject(Stores.AUTH, Stores.APP)
+@observer
 class Register extends React.Component {
+    private authStore: AuthStore = this.props[Stores.AUTH];
+    private appStore = this.props[Stores.APP];
     public render() {
+        const form = this.authStore.signUpForm;
+
         return (
-            <div className="app flex-row align-items-center">
-                <Row className="justify-content-center">
-                    <Col>
-                        <Card>
-                            <CardBody className="p-4">
-                                <CardTitle>Register</CardTitle>
-                                <p className="text-muted">Create your account</p>
-                                <InputGroup className="mb-3">
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text">
-                                            <i className="icon-user" />
-                                        </span>
-                                    </div>
-                                    <Input type="text" placeholder="Username" />
-                                </InputGroup>
-                                <InputGroup className="mb-3">
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text">@</span>
-                                    </div>
-                                    <Input type="text" placeholder="Email" />
-                                </InputGroup>
-                                <InputGroup className="mb-3">
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text">
-                                            <i className="icon-lock" />
-                                        </span>
-                                    </div>
-                                    <Input type="password" placeholder="Password" />
-                                </InputGroup>
-                                <InputGroup className="mb-4">
-                                    <div className="input-group-prepend">
-                                        <span className="input-group-text">
-                                            <i className="icon-lock" />
-                                        </span>
-                                    </div>
-                                    <Input type="password" placeholder="Repeat password" />
-                                </InputGroup>
-                                <Row className="justify-content-end mr-0 ml-0">
-                                    <Button color="success" >Create Account</Button>
-                                </Row>
-                            </CardBody>
-                            <CardFooter className="p-4">
-                                <Row>
-                                    <Col xs="12" sm="6">
-                                        <Button className="btn-facebook" block={true}><span>facebook</span></Button>
-                                    </Col>
-                                    <Col xs="12" sm="6">
-                                        <Button className="btn-twitter" block={true}><span>twitter</span></Button>
-                                    </Col>
-                                </Row>
-                            </CardFooter>
-                        </Card>
-                    </Col>
-                </Row>
-            </div>
+            this.authStore.isLoggedIn ? (
+                <Card>
+                    <CardBody className="p-4">
+                        <CardTitle>
+                            You're logged in!
+                        </CardTitle>
+                        <Row>
+                            <Col>
+                                <Link view={pages.overview} store={this.appStore} className="nav-link pl-0">
+                                    Go To Overview
+                                </Link>
+                            </Col>
+                        </Row>
+                    </CardBody>
+                </Card>
+            ) : (
+                this.authStore.userLoading ? (
+                    <Loader loading={this.authStore.userLoading} />
+                ) : (
+                    <div className="app flex-row align-items-center">
+                        <Row className="justify-content-center">
+                            <Col>
+                                <Card>
+                                    <CardBody className="p-4">
+                                        <CardTitle>Register</CardTitle>
+                                        <p className="text-muted">Create your account</p>
+                                        <Form onSubmit={form.onSubmit}>
+                                            <FormGroup>
+                                                <InputGroup>
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="icon-user" />
+                                                        </span>
+                                                    </div>
+                                                    <Input {...form.$('username').bind()} />
+                                                </InputGroup>
+                                                <small className="text-danger">{form.$('username').error}</small>
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <InputGroup>
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">@</span>
+                                                    </div>
+                                                    <Input {...form.$('email').bind()} />
+                                                </InputGroup>
+                                                <small className="text-danger">{form.$('email').error}</small>
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <InputGroup>
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="icon-lock" />
+                                                        </span>
+                                                    </div>
+                                                    <Input {...form.$('password').bind()} />
+                                                </InputGroup>
+                                                <small className="text-danger">{form.$('password').error}</small>
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <InputGroup>
+                                                    <div className="input-group-prepend">
+                                                        <span className="input-group-text">
+                                                            <i className="icon-lock" />
+                                                        </span>
+                                                    </div>
+                                                    <Input {...form.$('passwordConfirm').bind()} />
+                                                </InputGroup>
+                                                <small className="text-danger">{form.$('passwordConfirm').error}</small>
+                                            </FormGroup>
+                                            <Row className="justify-content-end mr-0 ml-0 mt-4">
+                                                <Button color="success" type="submit">Create Account</Button>
+                                            </Row>
+                                        </Form>
+                                    </CardBody>
+                                    <CardFooter className="p-4">
+                                        <Row>
+                                            <Col xs="12" sm="6">
+                                                <Button className="btn-facebook" block={true}>
+                                                    <span>facebook</span>
+                                                </Button>
+                                            </Col>
+                                            <Col xs="12" sm="6">
+                                                <Button className="btn-twitter" block={true}>
+                                                    <span>twitter</span>
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                    </CardFooter>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </div>
+                )
+            )
         );
     }
 }

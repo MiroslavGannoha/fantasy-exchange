@@ -8,20 +8,22 @@ export enum Stores {
     APP = 'store',
     TODO = 'todo',
     AUTH = 'auth',
+    ROUTER = 'router',
 }
 
 export function createStores(defaultTodos?: TodoModel[]) {
     const todoStore = new TodoStore(defaultTodos);
     const authStore = new AuthStore();
+    const routerStore = new RouterStore();
     const appStore = {
         app: new AppStore(),
-        router: new RouterStore(),
-        auth: new AuthStore(),
+        router: routerStore,
     };
 
     return {
         [Stores.APP]: appStore,
         [Stores.TODO]: todoStore,
         [Stores.AUTH]: authStore,
+        [Stores.ROUTER]: routerStore,
     };
 }

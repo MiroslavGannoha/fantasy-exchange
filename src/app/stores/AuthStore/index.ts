@@ -5,10 +5,15 @@ import * as moment from 'moment';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { User, /* FirebaseAuth */ UserInfo } from '@firebase/auth-types';
-import { fields, plugins } from './loginForm';
+import { loginFormRules } from './loginForm';
+import { signUpFormRules } from './signUpForm';
+import validatorjs from 'validatorjs';
+
+const plugins = { dvr: validatorjs };
 
 export class AuthStore {
     public loginForm: MobxReactForm = null;
+    public signUpForm: MobxReactForm = null;
 
     @observable public userInfo: UserInfo = {
         displayName: '',
@@ -29,26 +34,13 @@ export class AuthStore {
 
     constructor() {
         this.auth = firebase.auth();
-
-        this.loginForm = new MobxReactForm({ fields }, { plugins, hooks: {
-            onSuccess: (form) => {
-                const {email, password} = form.values();
-                this.login(email, password);
-            },
-        }});
-
         this.auth.onAuthStateChanged((user) => this.onAuthStateChanged(user));
+        this.initForms();
     }
 
     public login(email: string, password: string) {
         this.userLoading = true;
-        this.auth.signInWithEmailAndPassword(email, password).catch((error) => {
-            error ? console.log(error) : console.log('success');
-            // Handle Errors here.
-            // var errorCode = error.code;
-            // var errorMessage = error.message;
-            // ...
-        });
+        this.auth.signInWithEmailAndPassword(email, password).catch(({code, message}) => console.log(code, message));
     }
 
     @action
@@ -88,7 +80,7 @@ export class AuthStore {
         if (user) {
             console.log('onauthstatechange SIGN IN');
             this.currentUser = user;
-            this.userInfo = user.providerData[0];
+            this.updateUserInfo(user.providerData[0]);
             user.getIdTokenResult()
                 .then((idTokenResult) => {
                     console.log(idTokenResult);
@@ -113,6 +105,40 @@ export class AuthStore {
                 uid: '',
             };
         }
+    }
+
+    @action
+    private updateUserInfo(newUserInfo: Partial<UserInfo>) {
+        Object.assign(this.userInfo, newUserInfo);
+    }
+
+    private initForms() {
+        this.loginForm = new MobxReactForm({ fields: loginFormRules }, {
+            plugins, hooks: {
+                onSuccess: (form) => {
+                    const { email, password } = form.values();
+                    this.login(email, password);
+                },
+            },
+        });
+
+        this.signUpForm = new MobxReactForm({ fields: signUpFormRules }, {
+            plugins, hooks: {
+                onSuccess: (form: MobxReactForm) => {
+                    const { username, email, password } = form.values();
+                    this.userLoading = true;
+                    this.auth.createUserWithEmailAndPassword(email, password).then(({ user }: { user: User }) => {
+                        this.userLoading = false;
+                        user.updateProfile({displayName: username, photoURL: ''}).then(() => {
+                            // this.userInfo.displayName = username;
+                            this.updateUserInfo({displayName: username});
+                        });
+                    }).catch(({ code, message }) => {
+                        console.log(code, message);
+                    });
+                },
+            },
+        });
     }
 
             // FirebaseUI config.

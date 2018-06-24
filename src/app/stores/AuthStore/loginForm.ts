@@ -1,7 +1,4 @@
-import validatorjs from 'validatorjs';
-
-export const plugins = { dvr: validatorjs };
-export const fields = [{
+export const loginFormRules = [{
     name: 'email',
     type: 'email',
     label: 'Email',
@@ -14,9 +11,4 @@ export const fields = [{
     placeholder: 'Password',
     rules: 'required|string|between:5,35',
 },
-/* , {
-    name: 'passwordConfirm',
-    label: 'Password Confirmation',
-    placeholder: 'Confirm Password',
-    rules: 'required|string|same:password',
-} */];
+];
