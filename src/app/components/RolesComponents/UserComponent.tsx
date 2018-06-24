@@ -32,7 +32,7 @@ export class UserComponent extends React.Component<IUserComponentProps> {
 
         if (!this.authStore.isLoggedIn) {
             ChildComponent = this.authStore.userLoading ?
-                <Loader loading={this.authStore.userLoading} />
+                <Loader loading={this.authStore.userLoading} size={8} />
             :
             (
                 <Row>

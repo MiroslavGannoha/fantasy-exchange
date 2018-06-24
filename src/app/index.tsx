@@ -1,18 +1,14 @@
 import * as React from 'react';
 // import { hot } from 'react-hot-loader';
 import { Route, MobxRouter } from 'mobx-router';
-// import { Router, /* Route, */ Switch, Redirect } from 'react-router-dom';
 import { Root } from './containers/Root';
-// import { TodoApp } from './views/TodoApp';
-// import Login from './views/Login';
-// import SignUp from './views/SignUp';
+import { UserComponent } from './components/RolesComponents';
 import MainLayout from './containers/MainLayout';
-// import AuthLayout from './containers/AuthLayout';
 import Overview from './views/Overview';
 import Users from './views/Users';
 import Settings from './views/Settings';
 import Players from './views/Players';
-import { UserComponent } from './components/RolesComponents';
+import SignUp from './views/SignUp';
 
 // export const App = hot(module)(() => <Root><MobxRouter /></Root>);
 export const App = () => <Root><MobxRouter /></Root>;
@@ -21,6 +17,23 @@ export const pages = {
     home: new Route({
         path: '/',
         component: <MainLayout component={Overview} />,
+    }),
+    overview: new Route({
+        path: '/overview',
+        component: <MainLayout component={Overview} />,
+    }),
+    users: new Route({
+        path: '/users',
+        component: <MainLayout component={Users} />,
+
+    }),
+    settings: new Route({
+        path: '/settings',
+        component: <MainLayout component={Settings} role={UserComponent}/>,
+    }),
+    signUp: new Route({
+        path: '/signup',
+        component: <MainLayout component={SignUp}  />,
     }),
     players: new Route({
         path: '/players',
@@ -36,52 +49,6 @@ export const pages = {
         onParamsChange: (route, params, store) => {
             console.log('params changed to', params);
         },
-    }),
-    overview: new Route({
-        path: '/overview',
-        component: <MainLayout component={Overview} />,
-        onEnter: (route, params, store) => {
-            store.app.setTitle('AAAA');
-            console.log('entering settings!');
-        },
-        beforeExit: () => {
-            console.log('exiting settings!');
-        },
-        onParamsChange: (route, params, store) => {
-            console.log('params changed to', params);
-        },
-    }),
-    users: new Route({
-        path: '/users',
-        component: <MainLayout component={Users} />,
-        onEnter: (route, params, store) => {
-            store.app.setTitle('AAAA');
-            console.log('entering settings!');
-        },
-        beforeExit: () => {
-            console.log('exiting settings!');
-        },
-        onParamsChange: (route, params, store) => {
-            console.log('params changed to', params);
-        },
-
-    }),
-    settings: new Route({
-        path: '/settings',
-        component: <MainLayout component={Settings} role={UserComponent}/>,
-        beforeEnter: (route, params, store) => {
-            store.app.setTitle('AAAA');
-            console.log('entering settings!', store);
-            // store.router.goTo(pages.overview, null, store);
-            // return false;
-        },
-        beforeExit: () => {
-            console.log('exiting settings!');
-        },
-        onParamsChange: (route, params, store) => {
-            console.log('params changed to', params);
-        },
-
     }),
 };
 

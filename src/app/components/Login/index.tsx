@@ -1,19 +1,22 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Stores, AuthStore } from '../../../app/stores';
+import { Stores, AuthStore, AppStore } from '../../../app/stores';
 import EPanel from '../panel';
+import { Link } from 'mobx-router';
+import { pages } from '../../../app';
 
 interface ILoginFormProps {
     className ?: string;
 }
 
-@inject(Stores.AUTH)
+@inject(Stores.AUTH, Stores.APP)
 @observer
 class LoginForm extends React.Component<ILoginFormProps> {
     private authStore: AuthStore = this.props[Stores.AUTH];
+    private appStore: AppStore = this.props[Stores.APP];
 
     public render() {
-        const Title = () => <div className="h6 text-center w-100 mb-2">Sign In</div>;
+        const Title = () => <div className="h5 text-center w-100 mb-2">Sign In</div>;
         const form = this.authStore.loginForm;
         return (
             <EPanel titleNode={<Title />} className={this.props.className}>
@@ -26,11 +29,11 @@ class LoginForm extends React.Component<ILoginFormProps> {
                         <input className="form-control" {...form.$('password').bind()} />
                         <small className="text-danger">{form.$('password').error}</small>
                     </div>
-                    <div className="form-group d-flex justify-content-between align-items-center">
-                        <a href="" className="text-muted btn btn-link">
-                            Need Help?
-                        </a>
-                        <button type="submit" className="btn btn-primary" onClick={form.onSubmit}>Submit</button>
+                    <div className="row form-group justify-content-between mr-0 ml-0">
+                        <Link view={pages.signUp} store={this.appStore} className="nav-link pl-0">
+                            No account? Register
+                        </Link>
+                        <button type="submit" className="btn btn-primary" onClick={form.onSubmit}>Sign In</button>
                     </div>
                     <div className="form-group text-center m-0">
                         <div className="btn-group">
