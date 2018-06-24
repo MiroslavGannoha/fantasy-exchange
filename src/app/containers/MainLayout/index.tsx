@@ -40,10 +40,10 @@ class MainLayout extends React.Component<IMainLayoutProps> {
                         <Navbar />
                         <Breadcrumb className="bg-white">
                             <BreadcrumbItem>
-                                asdasd
+                                Main
                             </BreadcrumbItem>
                             <BreadcrumbItem active={true}>
-                                asdasd
+                                Profile
                             </BreadcrumbItem>
                         </Breadcrumb>
                     </Col>
