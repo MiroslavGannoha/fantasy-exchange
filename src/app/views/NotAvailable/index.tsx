@@ -10,12 +10,14 @@ import {
 } from 'reactstrap';
 import { Link } from 'mobx-router';
 import { pages } from '../../../app';
-import { Stores, AppStore } from '../../../app/stores';
+import { IStores, IAppStore } from '../../../app/stores';
 
+interface IProps {
+    store: IAppStore;
+}
+@inject(({ store }: IStores) => ({ store }))
 @observer
-@inject(Stores.APP)
-class NotAvailable extends React.Component {
-    private appStore: AppStore = this.props[Stores.APP];
+class NotAvailable extends React.Component<IProps> {
     public render() {
         return (
             <Row>
@@ -28,7 +30,7 @@ class NotAvailable extends React.Component {
                             <CardTitle>
                                 Only for logged in users
                             </CardTitle>
-                            <Link className="nav-link" view={pages.overview} store={this.appStore}>
+                            <Link className="nav-link" view={pages.overview} store={this.props.store}>
                                 Redirect to overview
                             </Link>
                         </CardBody>

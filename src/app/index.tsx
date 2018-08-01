@@ -1,17 +1,24 @@
 import * as React from 'react';
 // import { hot } from 'react-hot-loader';
 import { Route, MobxRouter } from 'mobx-router';
+import { ToastContainer } from 'react-toastify';
 import { Root } from './containers/Root';
 import { UserComponent } from './components/RolesComponents';
 import MainLayout from './containers/MainLayout';
 import Overview from './views/Overview';
 import Users from './views/Users';
+import CRUD from './views/CRUD';
 import Settings from './views/Settings';
 import Players from './views/Players';
 import SignUp from './views/SignUp';
 
 // export const App = hot(module)(() => <Root><MobxRouter /></Root>);
-export const App = () => <Root><MobxRouter /></Root>;
+export const App = () => (
+    <Root>
+        <MobxRouter />
+        <ToastContainer />
+    </Root>
+);
 
 export const pages = {
     home: new Route({
@@ -21,6 +28,11 @@ export const pages = {
     overview: new Route({
         path: '/overview',
         component: <MainLayout component={Overview} />,
+    }),
+    crud: new Route({
+        path: '/crud',
+        component: <MainLayout component={CRUD} />,
+
     }),
     users: new Route({
         path: '/users',

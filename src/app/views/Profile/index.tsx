@@ -1,25 +1,25 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { inject, observer } from 'mobx-react';
-import { Stores, AuthStore } from '../../../app/stores';
+import { IStores, AuthStore, IAppStore } from '../../../app/stores';
 import { TabContent, TabPane, Nav, NavItem } from 'reactstrap';
 import { Link } from 'mobx-router';
 import ProfileSettingsForm from './ProfileSettingsForm';
 import { pages } from '../../../app';
 import dotaLogo from '../../../../img/dota2-logo.png';
 
-interface IProfileProps {
-    store?: any;
+interface IProps {
+    authStore?: AuthStore;
+    store?: IAppStore;
 }
 
 interface IProfileState {
     tab: any;
 }
 
-@inject(Stores.APP, Stores.AUTH)
+@inject(({ store, authStore }: IStores) => ({ store, authStore }))
 @observer
-class Profile extends React.Component<IProfileProps, IProfileState> {
-    private authStore: AuthStore = this.props[Stores.AUTH];
+class Profile extends React.Component<IProps, IProfileState> {
 
     constructor(props) {
         super(props);
@@ -36,6 +36,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
     }
 
     public render() {
+        const {authStore, store} = this.props;
         const onLinkClick = (e) => { e.preventDefault(); this.openTab('settings'); };
         return (
             <div className="e-profile">
@@ -47,10 +48,10 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
                     </div>
                     <div className="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                         <div className="text-center text-sm-left mb-2 mb-sm-0">
-                            <h4 className="pt-sm-2 pb-1 mb-0 text-nowrap">{this.authStore.userName}</h4>
-                            <p className="mb-0">{this.authStore.userInfo.email}</p>
+                            <h4 className="pt-sm-2 pb-1 mb-0 text-nowrap">{authStore.userName}</h4>
+                            <p className="mb-0">{authStore.userInfo.email}</p>
                             <div className="text-muted">
-                                <small>Last seen {this.authStore.lastVisit}</small>
+                                <small>Last seen {authStore.lastVisit}</small>
                             </div>
                             <div className="mt-2">
                                 <button className="btn btn-primary" type="button">
@@ -63,7 +64,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
                             <span className="badge badge-secondary">administrator</span>
                             <div className="text-muted">
                                 <small>
-                                    Joined {this.authStore.userCreated}
+                                    Joined {authStore.userCreated}
                                 </small>
                             </div>
                         </div>
@@ -74,7 +75,7 @@ class Profile extends React.Component<IProfileProps, IProfileState> {
                         <Link
                             className={classNames({ 'active': this.state.tab === 'settings', 'nav-link': true })}
                             onClick={onLinkClick}
-                            store={this.props[Stores.APP]}
+                            store={store}
                             view={pages.settings}
                             href=""
                         >

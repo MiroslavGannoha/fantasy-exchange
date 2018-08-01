@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'mobx-router';
-import { Stores, AuthStore, AppStore } from '../../stores';
+import { IStores, AuthStore, IAppStore } from '../../stores';
 import { pages } from '../../../app';
 
 import {
@@ -14,15 +14,15 @@ import {
 } from 'reactstrap';
 import Loader from '../../components/Loader';
 
-interface IUserComponentProps {
+interface IProps {
+    store: IAppStore;
+    authStore: AuthStore;
     children: any;
 }
 
-@inject(Stores.AUTH, Stores.APP)
+@inject(({authStore, store}: IStores) => ({authStore, store}))
 @observer
-export class UserComponent extends React.Component<IUserComponentProps> {
-    private authStore: AuthStore = this.props[Stores.AUTH];
-    private appStore: AppStore = this.props[Stores.APP];
+export class UserComponent extends React.Component<IProps> {
     constructor(props) {
         super(props);
     }
@@ -30,9 +30,9 @@ export class UserComponent extends React.Component<IUserComponentProps> {
     public render() {
         let { children: ChildComponent } = this.props;
 
-        if (!this.authStore.isLoggedIn) {
-            ChildComponent = this.authStore.userLoading ?
-                <Loader loading={this.authStore.userLoading} size={8} />
+        if (!this.props.authStore.isLoggedIn) {
+            ChildComponent = this.props.authStore.userLoading ?
+                <Loader loading={this.props.authStore.userLoading} size={8} />
             :
             (
                 <Row>
@@ -45,7 +45,7 @@ export class UserComponent extends React.Component<IUserComponentProps> {
                                 <CardTitle>
                                     Only for logged in users
                                 </CardTitle>
-                                <Link className="nav-link" view={pages.overview} store={this.appStore}>
+                                <Link className="nav-link" view={pages.overview} store={this.props.store}>
                                     Redirect to overview
                                 </Link>
                             </CardBody>

@@ -1,19 +1,19 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Stores, AuthStore } from '../../../app/stores';
+import { IStores, AuthStore } from '../../../app/stores';
 
-interface IProfileSettingsProps {
+interface IProps {
     isNew?: boolean;
+    authStore?: AuthStore;
 }
 
-interface IProfileSettingsState {
+interface IState {
     isNew: boolean;
 }
 
-@inject(Stores.AUTH)
+@inject(({ authStore }: IStores) => ({ authStore }))
 @observer
-class ProfileSettingsForm extends React.Component<IProfileSettingsProps, IProfileSettingsState> {
-    private authStore: AuthStore = this.props[Stores.AUTH];
+class ProfileSettingsForm extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,6 +27,7 @@ class ProfileSettingsForm extends React.Component<IProfileSettingsProps, IProfil
     }
 
     public render() {
+        const { authStore } = this.props;
         const password = (
             <div className="row">
                 <div className="col">
@@ -54,8 +55,8 @@ class ProfileSettingsForm extends React.Component<IProfileSettingsProps, IProfil
                                         className="form-control"
                                         type="text"
                                         name="name"
-                                        defaultValue={this.authStore.userName}
-                                        placeholder={this.authStore.userName || 'Name'}
+                                        defaultValue={authStore.userName}
+                                        placeholder={authStore.userName || 'Name'}
                                     />
                                 </div>
                             </div>
@@ -66,8 +67,8 @@ class ProfileSettingsForm extends React.Component<IProfileSettingsProps, IProfil
                                         className="form-control"
                                         type="text"
                                         name="username"
-                                        defaultValue={this.authStore.userName}
-                                        placeholder={this.authStore.userName || 'Username'}
+                                        defaultValue={authStore.userName}
+                                        placeholder={authStore.userName || 'Username'}
                                     />
                                 </div>
                             </div>
@@ -79,8 +80,8 @@ class ProfileSettingsForm extends React.Component<IProfileSettingsProps, IProfil
                                     <input
                                         className="form-control"
                                         type="text"
-                                        placeholder={this.authStore.userInfo.email || 'user@example.com'}
-                                        defaultValue={this.authStore.userInfo.email}
+                                        placeholder={authStore.userInfo.email || 'user@example.com'}
+                                        defaultValue={authStore.userInfo.email}
                                     />
                                 </div>
                             </div>

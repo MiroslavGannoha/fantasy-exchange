@@ -1,29 +1,29 @@
-import { TodoModel } from '../models';
-import { TodoStore } from './TodoStore';
 import { AppStore } from './AppStore';
 import { AuthStore } from './AuthStore';
+import { UsersStore } from './UsersStore';
 import { RouterStore } from 'mobx-router';
 
-export enum Stores {
-    APP = 'store',
-    TODO = 'todo',
-    AUTH = 'auth',
-    ROUTER = 'router',
+export interface IAppStore {
+    app: AppStore;
+    router: RouterStore;
 }
 
-export function createStores(defaultTodos?: TodoModel[]) {
-    const todoStore = new TodoStore(defaultTodos);
-    const authStore = new AuthStore();
-    const routerStore = new RouterStore();
-    const appStore = {
-        app: new AppStore(),
-        router: routerStore,
+export interface IStores {
+    authStore: AuthStore;
+    store: IAppStore;
+    usersStore: UsersStore;
+}
+
+export function createStores() {
+
+    const stores: IStores = {
+        store: {
+            app: new AppStore(),
+            router: new RouterStore(),
+        },
+        authStore: AuthStore.getInstance(),
+        usersStore: new UsersStore(),
     };
 
-    return {
-        [Stores.APP]: appStore,
-        [Stores.TODO]: todoStore,
-        [Stores.AUTH]: authStore,
-        [Stores.ROUTER]: routerStore,
-    };
+    return stores;
 }

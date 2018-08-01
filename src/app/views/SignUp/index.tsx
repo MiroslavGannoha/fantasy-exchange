@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'mobx-router';
-import { Stores, AuthStore } from '../../../app/stores';
+import { IStores, AuthStore, IAppStore } from '../../../app/stores';
 import { pages } from '../../../app';
 import {
     Row,
@@ -18,16 +18,20 @@ import {
 } from 'reactstrap';
 import Loader from '../../components/Loader';
 
-@inject(Stores.AUTH, Stores.APP)
+interface IProps {
+    store: IAppStore;
+    authStore: AuthStore;
+}
+
+@inject(({ store, authStore }: IStores) => ({ store, authStore }))
 @observer
-class Register extends React.Component {
-    private authStore: AuthStore = this.props[Stores.AUTH];
-    private appStore = this.props[Stores.APP];
+class Register extends React.Component<IProps> {
     public render() {
-        const form = this.authStore.signUpForm;
+        const {store, authStore} = this.props;
+        const {signUpForm: form} = authStore;
 
         return (
-            this.authStore.isLoggedIn ? (
+            authStore.isLoggedIn ? (
                 <Card>
                     <CardBody className="p-4">
                         <CardTitle>
@@ -35,7 +39,7 @@ class Register extends React.Component {
                         </CardTitle>
                         <Row>
                             <Col>
-                                <Link view={pages.overview} store={this.appStore} className="nav-link pl-0">
+                                <Link view={pages.overview} store={store} className="nav-link pl-0">
                                     Go To Overview
                                 </Link>
                             </Col>
@@ -43,8 +47,8 @@ class Register extends React.Component {
                     </CardBody>
                 </Card>
             ) : (
-                this.authStore.userLoading ? (
-                    <Loader loading={this.authStore.userLoading} />
+                authStore.userLoading ? (
+                    <Loader loading={authStore.userLoading} />
                 ) : (
                     <div className="app flex-row align-items-center">
                         <Row className="justify-content-center">

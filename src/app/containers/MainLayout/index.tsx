@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Stores, AuthStore } from '../../stores';
+import { IStores, AuthStore } from '../../stores';
 import { Container, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/navbar';
@@ -10,19 +10,19 @@ import Loader from '../../components/Loader';
 interface IMainLayoutProps {
     component: React.ComponentClass;
     role?: React.ComponentClass;
+    authStore?: AuthStore;
 }
 
-@inject(Stores.AUTH)
+@inject(({ authStore }: IStores) => ({ authStore }))
 @observer
 class MainLayout extends React.Component<IMainLayoutProps> {
-    private authStore: AuthStore = this.props[Stores.AUTH];
 
     constructor(props) {
         super(props);
     }
 
     public render() {
-        const { component: ChildComponent, role: RoleComponent } = this.props;
+        const { component: ChildComponent, role: RoleComponent, authStore } = this.props;
         let Component;
         if (RoleComponent) {
             Component = (
@@ -51,8 +51,8 @@ class MainLayout extends React.Component<IMainLayoutProps> {
                 </Row>
                 <Row className="flex-lg-nowrap">
                     <Col md="3" className="mb-3">
-                        <Loader loading={this.authStore.userLoading} message="Logging in ..." />
-                        {!this.authStore.isLoggedIn && !this.authStore.userLoading ? <Login className="mb-3" /> : null}
+                        <Loader loading={authStore.userLoading} message="Logging in ..." />
+                        {!authStore.isLoggedIn && !authStore.userLoading ? <Login className="mb-3" /> : null}
                         <Sidebar />
                     </Col>
                     <Col md="9" >

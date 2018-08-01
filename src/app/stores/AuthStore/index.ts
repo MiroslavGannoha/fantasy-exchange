@@ -12,8 +12,20 @@ import validatorjs from 'validatorjs';
 const plugins = { dvr: validatorjs };
 
 export class AuthStore {
+    public static getInstance() {
+        if (!AuthStore.instance) {
+            AuthStore.instance = new AuthStore();
+        }
+        return AuthStore.instance;
+    }
+
+    private static instance: AuthStore;
+
     public loginForm: MobxReactForm = null;
     public signUpForm: MobxReactForm = null;
+
+    @observable
+    public token: string = null;
 
     @observable public userInfo: UserInfo = {
         displayName: '',
@@ -84,6 +96,8 @@ export class AuthStore {
             user.getIdTokenResult()
                 .then((idTokenResult) => {
                     console.log(idTokenResult);
+                    const { token } = idTokenResult;
+                    this.token = token;
                     // Confirm the user is an Admin.
                     // if (!!idTokenResult.claims.admin) {
                     // Show admin UI.
