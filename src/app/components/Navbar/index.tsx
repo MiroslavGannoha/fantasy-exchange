@@ -1,31 +1,35 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Stores, AppStore, AuthStore } from '../../../app/stores';
+import { IStores, IAppStore, AuthStore } from '../../../app/stores';
 import { pages } from '../../../app';
 import { Link } from 'mobx-router';
 import ENavbar from './ENavbar';
 
-@inject(Stores.APP, Stores.AUTH)
+interface IProps {
+    store?: IAppStore;
+    authStore?: AuthStore;
+}
+
+@inject(({ store, authStore}: IStores) => ({store, authStore}))
 @observer
-class Navbar extends React.Component {
-    private appStore: AppStore = this.props[Stores.APP];
-    private authStore: AuthStore = this.props[Stores.AUTH];
+class Navbar extends React.Component<IProps> {
     public render() {
+        const {store, authStore} = this.props;
         const Brand = () => (
-            <Link className="e-logo mx-4" view={pages.settings} store={this.appStore} >
+            <Link className="e-logo mx-4" view={pages.settings} store={store} >
                 <span>Elements <small>stay simple</small></span>
             </Link>
         );
         const CollapseNav = () => (
             <ul className="navbar-nav pt-3 pt-md-0">
                 <li className="nav-item">
-                    <Link className="nav-link" view={pages.overview} store={this.appStore} >Overview</Link>
+                    <Link className="nav-link" view={pages.overview} store={store} >Overview</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" view={pages.users} store={this.appStore}>CRUD</Link>
+                    <Link className="nav-link" view={pages.users} store={store}>Users</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" view={pages.settings} store={this.appStore}>Settings</Link>
+                    <Link className="nav-link" view={pages.settings} store={store}>Settings</Link>
                 </li>
             </ul>
         );
@@ -35,9 +39,9 @@ class Navbar extends React.Component {
                 <button className="btn btn-success">
                     <i className="fa fa-bell" />
                 </button>
-                <Link view={pages.settings} store={this.appStore} className="btn btn-success">
+                <Link view={pages.settings} store={store} className="btn btn-success">
                     <span className="mx-1">
-                        {this.authStore.userName}
+                        {authStore.userName}
                     </span>
                 </Link>
             </div>
@@ -45,10 +49,10 @@ class Navbar extends React.Component {
 
         const Actions = observer(() => (
             <div>
-                <Link view={pages.settings} store={this.appStore} className="btn btn-success d-md-none">
+                <Link view={pages.settings} store={store} className="btn btn-success d-md-none">
                     <i className="fa fa-user-circle" />
                 </Link>
-                {this.authStore.isLoggedIn && UserBar}
+                {authStore.isLoggedIn && UserBar}
             </div>
         ));
 

@@ -5,20 +5,18 @@ import { inject, observer } from 'mobx-react';
 import { Link } from 'mobx-router';
 import ENavlist from '../navlist';
 import { pages } from '../../../app';
-import { Stores } from '../../stores';
+import { IStores, IAppStore } from '../../stores';
 
-interface ISidebarProps {
+interface IProps {
+    store?: IAppStore;
     className?: string;
 }
 
-@inject(Stores.APP)
+@inject(({ store }: IStores) => ({ store }))
 @observer
-class Sidebar extends React.Component<ISidebarProps> {
-    private appStore = this.props[Stores.APP];
+class Sidebar extends React.Component<IProps> {
     public render() {
-        console.log(this.appStore);
-        const { currentView } = this.appStore.router;
-        console.log(currentView);
+        const { currentView } = this.props.store.router;
         return (
                 <div className={'card p-3 ' + this.props.className || ''}>
                     <ENavlist activeBg={true}>
@@ -26,21 +24,27 @@ class Sidebar extends React.Component<ISidebarProps> {
                             <li className={(currentView === pages.overview ? 'active ' : '') + 'nav-item'}>
                                 <Link
                                     view={pages.overview}
-                                    store={this.appStore}
+                                    store={this.props.store}
                                     className="nav-link px-2"
                                 >
                                     <i className="fa fa-fw fa-bar-chart mr-1" />
                                     <span>Overview</span>
                                 </Link>
                             </li>
-                            <li className={(currentView === pages.users ? 'active ' : '') + 'nav-item'}>
-                                <Link view={pages.users} store={this.appStore} className="nav-link px-2">
+                            <li className={(currentView === pages.crud ? 'active ' : '') + 'nav-item'}>
+                                <Link view={pages.crud} store={this.props.store} className="nav-link px-2">
                                     <i className="fa fa-fw fa-clone mr-1" />
                                     <span>CRUD</span>
                                 </Link>
                             </li>
+                        <li className={(currentView === pages.users ? 'active ' : '') + 'nav-item'}>
+                            <Link view={pages.users} store={this.props.store} className="nav-link px-2">
+                                <i className="fa fa-fw fa-clone mr-1" />
+                                <span>Users</span>
+                            </Link>
+                        </li>
                             <li className={(currentView === pages.settings ? 'active ' : '') + 'nav-item'}>
-                                <Link view={pages.settings} store={this.appStore} className="nav-link px-2">
+                                <Link view={pages.settings} store={this.props.store} className="nav-link px-2">
                                     <i className="fa fa-fw fa-cog mr-1" />
                                     <span>Settings</span>
                                 </Link>

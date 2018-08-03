@@ -2,14 +2,15 @@ import * as React from 'react';
 import * as Moment from 'moment';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'mobx-router';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import ETabs from '../../components/tabs';
 import EPanel from '../../components/panel';
-import UsersTable from '../Users/UsersTable';
-import UsersFilter from '../Users/UsersFilter';
-// import Profile from './Profile';
-// import CreateUserForm from './ProfileSettingsForm';
+import UsersTable from './UsersTable';
+import UsersFilter from './UsersFilter';
+import Profile from './Profile';
+import CreateUserForm from './ProfileSettingsForm';
 import { pages } from '../../../app';
-import { IStores, IAppStore } from '../../stores';
+import { IStores, UsersStore, IAppStore } from '../../stores';
 
 interface IUsersState {
     page: number;
@@ -27,11 +28,13 @@ interface IUsersState {
     };
     userToEdit: any;
 }
+
 interface IProps {
+    usersStore: UsersStore;
     store: IAppStore;
 }
 
-@inject(({ store }: IStores) => ({ store }))
+@inject(({ usersStore, store }: IStores) => ({ usersStore, store }))
 @observer
 class Users extends React.Component<IProps, IUsersState> {
     constructor(props) {
@@ -93,8 +96,8 @@ class Users extends React.Component<IProps, IUsersState> {
             };
         }.bind(this)();
 
-        // const toggleModalEdit = () => this.toggleModal('edit');
-        // const toggleModalCreate = () => this.toggleModal('create');
+        const toggleModalEdit = () => this.toggleModal('edit');
+        const toggleModalCreate = () => this.toggleModal('create');
 
         return (
             <>
@@ -126,6 +129,22 @@ class Users extends React.Component<IProps, IUsersState> {
                                 onClickEdit={this.editUser}
                             />
                         </EPanel>
+                        <Modal isOpen={this.state.modals.edit} toggle={toggleModalEdit} size="lg">
+                            <ModalHeader toggle={toggleModalEdit}>Edit User</ModalHeader>
+                            <ModalBody>
+                                <div className="py-1">
+                                    <Profile user={this.state.userToEdit} />
+                                </div>
+                            </ModalBody>
+                        </Modal>
+                        <Modal isOpen={this.state.modals.create} toggle={toggleModalCreate} size="lg">
+                            <ModalHeader toggle={toggleModalCreate}>Create User</ModalHeader>
+                            <ModalBody>
+                                <div className="py-1">
+                                    <CreateUserForm isNew={true} />
+                                </div>
+                            </ModalBody>
+                        </Modal>
                     </div>
                     <div className="col-12 col-lg-3 mb-3">
                         <UsersFilter
@@ -156,7 +175,7 @@ class Users extends React.Component<IProps, IUsersState> {
         const filterName = String(filter);
         if (this.state.filters.hasOwnProperty(filterName) && value !== this.state.filters[filterName]) {
             this.setState({
-                filters: { ...this.state.filters, ...{ [filterName]: value } },
+                filters: {...this.state.filters, ...{[filterName]: value}},
             });
         }
     }
@@ -170,7 +189,7 @@ class Users extends React.Component<IProps, IUsersState> {
             this.setState({
                 items: [
                     ...itemsData.slice(0, index),
-                    { ...{}, ...item, ...updatedFields },
+                    {...{}, ...item, ...updatedFields},
                     ...itemsData.slice(index + 1),
                 ],
             });
@@ -184,7 +203,7 @@ class Users extends React.Component<IProps, IUsersState> {
     private handleSelectAll(checked: boolean) {
         const itemsData = this.state.items.slice();
         this.setState({
-            items: itemsData.map((item) => ({ ...{}, ...item, ...{ selected: checked } })),
+            items: itemsData.map((item) => ({...{}, ...item, ...{ selected: checked }})),
         });
     }
 
@@ -215,7 +234,7 @@ class Users extends React.Component<IProps, IUsersState> {
 
     private editUser(user) {
         this.setState({
-            userToEdit: { ...{}, ...user, ...{ username: user.name.split(' ').reverse().join('.').toLowerCase() } },
+            userToEdit: {...{}, ...user, ...{ username: user.name.split(' ').reverse().join('.').toLowerCase() }},
         });
         this.toggleModal('edit', true);
     }

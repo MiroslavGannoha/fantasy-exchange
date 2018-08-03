@@ -1,23 +1,24 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Stores, AuthStore, AppStore } from '../../../app/stores';
+import { IStores, AuthStore, IAppStore } from '../../../app/stores';
 import EPanel from '../panel';
 import { Link } from 'mobx-router';
 import { pages } from '../../../app';
 import { Form, InputGroup, FormGroup, Input } from 'reactstrap';
-interface ILoginFormProps {
-    className ?: string;
+
+interface IProps {
+    store?: IAppStore;
+    authStore?: AuthStore;
+    className?: string;
 }
 
-@inject(Stores.AUTH, Stores.APP)
+@inject(({ store, authStore }: IStores) => ({ store, authStore }))
 @observer
-class LoginForm extends React.Component<ILoginFormProps> {
-    private authStore: AuthStore = this.props[Stores.AUTH];
-    private appStore: AppStore = this.props[Stores.APP];
+class LoginForm extends React.Component<IProps> {
 
     public render() {
         const Title = () => <div className="h5 text-center w-100 mb-2">Sign In</div>;
-        const form = this.authStore.loginForm;
+        const form = this.props.authStore.loginForm;
         return (
             <EPanel titleNode={<Title />} className={this.props.className}>
                 <Form onSubmit={form.onSubmit}>
@@ -44,7 +45,7 @@ class LoginForm extends React.Component<ILoginFormProps> {
                         <small className="text-danger">{form.$('password').error}</small>
                     </FormGroup>
                     <div className="row form-group justify-content-between mr-0 ml-0">
-                        <Link view={pages.signUp} store={this.appStore} className="nav-link pl-0">
+                        <Link view={pages.signUp} store={this.props.store} className="nav-link pl-0">
                             No account? Register
                         </Link>
                         <button type="submit" className="btn btn-primary">Sign In</button>

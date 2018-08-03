@@ -11,9 +11,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 
-const extractCSSModules = new ExtractTextPlugin('[name].module-styles.css');
-const extractCSS = new ExtractTextPlugin('[name].styles.css');
-const extractSCSS = new ExtractTextPlugin('[name].scss-styles.css');
+const extractCSS = new ExtractTextPlugin('[name].styles.[chunkhash].css');
+const extractSCSS = new ExtractTextPlugin('[name].scss-styles.[chunkhash].css');
 
 module.exports = {
     context: sourcePath,
@@ -52,7 +51,7 @@ module.exports = {
             // scss
             {
                 test: /\.(scss)$/,
-                use: /* ['css-hot-loader'].concat(new  */ extractSCSS.extract(
+                use: extractSCSS.extract(
                     {
                         fallback: 'style-loader',
                         use: [
@@ -67,44 +66,8 @@ module.exports = {
                     }
                 )
             },
-            // css modules
-            {
-                test: /\.m\.css$/,
-                use: extractCSSModules.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            query: {
-                                modules: true,
-                                sourceMap: !isProduction,
-                                importLoaders: 1,
-                                localIdentName: '[local]__[hash:base64:5]'
-                            }
-                        },
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                ident: 'postcss',
-                                plugins: [
-                                    require('postcss-import')({
-                                        addDependencyTo: webpack
-                                    }),
-                                    require('postcss-url')(),
-                                    require('postcss-cssnext')(),
-                                    require('postcss-reporter')(),
-                                    require('postcss-browser-reporter')({
-                                        disabled: isProduction
-                                    })
-                                ]
-                            }
-                        }
-                    ]
-                })
-            },
             {
                 test: /\.css$/,
-                exclude: /\.m\.css$/,
                 use: extractCSS.extract(
                     {
                         fallback: 'style-loader',
@@ -161,7 +124,6 @@ module.exports = {
         new WebpackCleanupPlugin(),
         extractSCSS,
         extractCSS,
-        extractCSSModules,
         // new ExtractTextPlugin({
         //     filename: 'styles.css',
         //     disable: !isProduction

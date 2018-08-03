@@ -7,10 +7,10 @@ import EDatepickerRange from '../../components/datepicker/types/range';
 interface IUsersFilterProps {
     items: any[];
     filters: any;
-    tabs?: object;
-    tab?: string;
+    tabs: object;
+    tab: string;
     onFilterChange: (type: string, value) => void;
-    onTabClick?: (tab, e) => void;
+    onTabClick: (tab, e) => void;
     onClickCreate: () => void;
 }
 // const defaultProps = {

@@ -1,20 +1,20 @@
 import * as React from 'react';
 import Profile from '../Profile';
 import { inject, observer } from 'mobx-react';
-import { Stores, AuthStore } from '../../../app/stores';
+import { IStores, AuthStore } from '../../../app/stores';
 
-interface IProfileProps {
+interface IProps {
     store?: any;
+    authStore?: AuthStore;
 }
 
-interface IProfileState {
+interface IState {
     user: any;
 }
 
-@inject(Stores.APP, Stores.AUTH)
+@inject(({ authStore }: IStores) => ({ authStore }))
 @observer
-class Settings extends React.Component<IProfileProps, IProfileState> {
-    private authStore: AuthStore = this.props[Stores.AUTH];
+class Settings extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
         this.logout = this.logout.bind(this);
@@ -61,7 +61,7 @@ class Settings extends React.Component<IProfileProps, IProfileState> {
     }
 
     private logout() {
-        this.authStore.logout();
+        this.props.authStore.logout();
     }
 }
 

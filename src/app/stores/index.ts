@@ -1,5 +1,5 @@
 export * from './createStore';
-export * from './TodoStore';
 export * from './AppStore';
 export * from './AuthStore';
+export * from './UsersStore';
 export { RouterStore } from 'mobx-router';
