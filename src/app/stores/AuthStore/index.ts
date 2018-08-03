@@ -3,14 +3,15 @@ import MobxReactForm from 'mobx-react-form';
 import * as moment from 'moment';
 // @ts-ignore
 import firebase from 'firebase/app';
+// @ts-ignore
+import { User, UserInfo } from '@firebase/auth-types';
 import 'firebase/auth';
-import { User, /* FirebaseAuth */ UserInfo } from '@firebase/auth-types';
+import 'firebase/firestore';
 import { loginFormRules } from './loginForm';
 import { signUpFormRules } from './signUpForm';
 import validatorjs from 'validatorjs';
 
 const plugins = { dvr: validatorjs };
-
 export class AuthStore {
     public static getInstance() {
         if (!AuthStore.instance) {
@@ -139,14 +140,22 @@ export class AuthStore {
         this.signUpForm = new MobxReactForm({ fields: signUpFormRules }, {
             plugins, hooks: {
                 onSuccess: (form: MobxReactForm) => {
+                    const db = firebase.firestore();
+
                     const { username, email, password } = form.values();
                     this.userLoading = true;
                     this.auth.createUserWithEmailAndPassword(email, password).then(({ user }: { user: User }) => {
-                        this.userLoading = false;
-                        user.updateProfile({displayName: username, photoURL: ''}).then(() => {
-                            // this.userInfo.displayName = username;
-                            this.updateUserInfo({displayName: username});
+                        console.log(db.collection('users').doc(user.uid));
+                        const unsubscribe = db.collection('users').doc(user.uid).onSnapshot(() => {
+                            db.collection('users').doc(user.uid).update({displayName: username});
+                            unsubscribe();
                         });
+                        console.log(username);
+                        this.userLoading = false;
+                        // user.updateProfile({displayName: username, photoURL: ''}).then(() => {
+                            // this.userInfo.displayName = username;
+                            // this.updateUserInfo({displayName: username});
+                        // });
                     }).catch(({ code, message }) => {
                         console.log(code, message);
                     });

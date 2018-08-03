@@ -36,7 +36,9 @@ import '../styles/scss/elements.scss';
 // Initialize `firestorter`
 // initFirestorter({ firebase });
 // console.log(firebase);
-// const db = firebase.firestore();
+const db = firebase.firestore();
+db.collection('users').doc('nTiYywRcibg9DSjTizY5jcBjINV2').update({displayName: 'test2231'});
+
 // console.log(db);
 // db.collection('todos').get().then((querySnapshot) => console.log(querySnapshot));
 
