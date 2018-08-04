@@ -7,6 +7,7 @@ import UsersTable from './UsersTable';
 import EditUser from './Edit';
 import CreateUserForm, {formFields} from './Form';
 import { IAppStore, IStores, UsersStore, AuthStore} from '../../stores';
+import usersApi from '../../api/users';
 
 interface IUsersState {
     page: number;
@@ -39,6 +40,7 @@ class Users extends React.Component<IProps, IUsersState> {
         this.handlePageChange = this.handlePageChange.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.editUser = this.editUser.bind(this);
+        this.removeUser = this.removeUser.bind(this);
         this.createUser = this.createUser.bind(this);
         this.closeModals = this.closeModals.bind(this);
         this.state = {
@@ -83,6 +85,7 @@ class Users extends React.Component<IProps, IUsersState> {
                             perPage={this.state.perPage}
                             onPageChange={this.handlePageChange}
                             onClickEdit={this.editUser}
+                            onClickDelete={this.removeUser}
                         />
                     </EPanel>
                     <Modal isOpen={this.state.modals.edit} toggle={toggleModalEdit} size="lg">
@@ -128,6 +131,10 @@ class Users extends React.Component<IProps, IUsersState> {
         }});
     }
 
+    public removeUser(targetId) {
+        usersApi.remove(targetId);
+    }
+
     private handlePageChange(page, perPage) {
         if (page !== this.state.page || perPage !== this.state.perPage) {
             this.setState({
@@ -167,6 +174,7 @@ class Users extends React.Component<IProps, IUsersState> {
         this.props.usersStore.initUpdateForm(formFields);
         this.toggleModal('edit', true);
     }
+
 }
 
 // function searchArray(array, query, fields = []) {

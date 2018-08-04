@@ -9,6 +9,7 @@ interface IUsersTableProps {
     perPage?: number;
     onPageChange?: (page: number, perPage: number) => void;
     onClickEdit?: (row) => void;
+    onClickDelete?: (id: string) => void;
     onSelect?: (id: number, selected: boolean) => void;
     onSelectAll?: (e) => void;
     onStatusChange?: (id: number, isCell: boolean) => void;
@@ -70,6 +71,7 @@ class UsersTable extends React.Component<IUsersTableProps, {}> {
                 dataField: '',
                 formatter: (cell, row, index) => {
                     const onClickEdit = () => this.props.onClickEdit(row);
+                    const onClickDelete = () => this.props.onClickDelete(row.uid);
                     return (
                         <div className="btn-group align-top">
                             <button
@@ -82,6 +84,7 @@ class UsersTable extends React.Component<IUsersTableProps, {}> {
                             <button
                                 className="btn btn-sm btn-outline-secondary badge"
                                 type="button"
+                                onClick={onClickDelete}
                             >
                                 <i className="fa fa-trash"/>
                             </button>

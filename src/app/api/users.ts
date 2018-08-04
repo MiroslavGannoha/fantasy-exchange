@@ -1,9 +1,7 @@
-// import { AuthStore } from '../stores/AuthStore';
 // @ts-ignore
 import firebase from 'firebase/app';
 import 'firebase/functions';
 import { AccessLevel } from '../constants';
-import { AuthStore } from '../stores';
 import { toast } from 'react-toastify';
 
 firebase.initializeApp({
@@ -22,8 +20,6 @@ export interface IPersona {
     published: boolean;
 }
 
-const authStore = AuthStore.getInstance();
-
 const call = (methodName: string, reqData?: any) =>
     firebase.functions().httpsCallable(methodName)(reqData)
         .then(({ data }) => { toast.success('Successful: ' + methodName); return data; })
@@ -32,19 +28,22 @@ const call = (methodName: string, reqData?: any) =>
 export const getAll = (): Promise<any> =>
     call('getAllUsers');
 
-export const get = (personaId: string): Promise<any> =>
+export const get = (userId: string): Promise<any> =>
     call('getAllUsers');
 
 export const create = (persona: IPersona): Promise<any> =>
     call('getAllUsers');
 
-export const update = (personaId: string, persona: Partial<IPersona>): Promise<any> =>
+export const update = (userId: string, persona: Partial<IPersona>): Promise<any> =>
     call('getAllUsers');
 
-export const remove = (personaId: string): Promise<any> =>
-    call('getAllUsers');
+export const remove = (targetId: string): Promise<any> =>
+    call('deleteUser', { targetId });
+
+export const registerNewUser = (email: string, password: string, displayName: string): any =>
+    call('registerNewUser', { email, password, displayName });
 
 export const setAccessLevel = (targetUserId: string, accessLevel: AccessLevel): any =>
-    call('setCustomClaims', { accessLevel, targetUserId, idToken: authStore.token });
+    call('setCustomClaims', { accessLevel, targetUserId });
 
 export default { getAll, get, create, update, remove, setAccessLevel };

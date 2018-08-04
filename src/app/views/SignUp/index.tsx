@@ -65,9 +65,9 @@ class Register extends React.Component<IProps> {
                                                             <i className="icon-user" />
                                                         </span>
                                                     </div>
-                                                    <Input {...form.$('username').bind()} />
+                                                    <Input {...form.$('displayName').bind()} />
                                                 </InputGroup>
-                                                <small className="text-danger">{form.$('username').error}</small>
+                                                <small className="text-danger">{form.$('displayName').error}</small>
                                             </FormGroup>
                                             <FormGroup>
                                                 <InputGroup>
