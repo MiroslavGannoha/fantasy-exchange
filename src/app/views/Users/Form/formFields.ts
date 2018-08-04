@@ -6,15 +6,6 @@ export const formFields = [{
     name: 'email',
     placeholder: 'Email',
     rules: 'required|string|email',
-// }, {
-//     name: 'customClaims',
-//     fields: [
-//         {
-//             name: 'accessLevel',
-//             placeholder: 'Access Level',
-//             rules: 'required|string|min:3',
-//         },
-//     ],
 }, {
     name: 'id',
     type: 'hidden',

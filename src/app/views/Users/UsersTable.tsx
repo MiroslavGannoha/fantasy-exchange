@@ -52,15 +52,15 @@ class UsersTable extends React.Component<IUsersTableProps, {}> {
             },
             {
                 classes: 'text-nowrap align-middle',
-                dataField: 'customClaims',
+                dataField: 'accessLevel',
                 headerClasses: 'max-width',
-                formatter: ({ accessLevel }) => accessLevel,
+                formatter: (accessLevel) => accessLevel,
                 text: 'Access level',
             },
             {
                 classes: 'text-nowrap align-middle',
-                dataField: 'metadata',
-                formatter: ({creationTime}, row, index) => (
+                dataField: 'creationTime',
+                formatter: (creationTime) => (
                     <span>{Moment(creationTime).format('DD MMM YYYY')}</span>
                 ),
                 sort: true,
@@ -71,7 +71,7 @@ class UsersTable extends React.Component<IUsersTableProps, {}> {
                 dataField: '',
                 formatter: (cell, row, index) => {
                     const onClickEdit = () => this.props.onClickEdit(row);
-                    const onClickDelete = () => this.props.onClickDelete(row.uid);
+                    const onClickDelete = () => this.props.onClickDelete(row.id);
                     return (
                         <div className="btn-group align-top">
                             <button
@@ -102,7 +102,7 @@ class UsersTable extends React.Component<IUsersTableProps, {}> {
         return (
             <ETable
                 className="table-lg mt-3"
-                keyField="uid"
+                keyField="id"
                 data={this.props.items}
                 columns={columns}
                 pagination={pagination}

@@ -22,7 +22,7 @@ class EditUser extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
         this.state = {
-            selectedLevel: this.props.usersStore.selectedItemData.customClaims.accessLevel,
+            selectedLevel: this.props.usersStore.selectedItemData.accessLevel,
         };
 
         this.setAccessLevel = this.setAccessLevel.bind(this);
@@ -66,7 +66,7 @@ class EditUser extends React.Component<IProps, IState> {
 
     private setAccessLevel() {
         this.props.closeModal();
-        setAccessLevel(this.props.usersStore.selectedItemData.uid, this.state.selectedLevel);
+        setAccessLevel(this.props.usersStore.selectedItemData.id, this.state.selectedLevel);
     }
 
     private onLevelChange(value) {

@@ -35,19 +35,6 @@ import '../styles/scss/elements.scss';
 
 // Initialize `firestorter`
 // initFirestorter({ firebase });
-// console.log(firebase);
-const db = firebase.firestore();
-db.collection('users').doc('nTiYywRcibg9DSjTizY5jcBjINV2').update({displayName: 'test2231'});
-
-// console.log(db);
-// db.collection('todos').get().then((querySnapshot) => console.log(querySnapshot));
-
-// Define collection
-// const todos = new Collection('todos');
-// const todos2 = new Collection(db.collection('todos'));
-
-// console.log('docs', todos.docs);
-// console.log('docs2', todos2.docs);
 
 // enable MobX strict mode
 // useStrict(true);

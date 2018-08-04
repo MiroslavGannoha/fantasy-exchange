@@ -5,12 +5,16 @@ import * as moment from 'moment';
 import firebase from 'firebase/app';
 // @ts-ignore
 import { User, UserInfo } from '@firebase/auth-types';
+import { FirebaseFirestore } from '@firebase/firestore-types';
 import 'firebase/auth';
 import 'firebase/firestore';
 import { registerNewUser } from '../../api/users';
 import { loginFormRules } from './loginForm';
 import { signUpFormRules } from './signUpForm';
 import validatorjs from 'validatorjs';
+import { toast } from '../../../../node_modules/react-toastify';
+
+const db: FirebaseFirestore = firebase.firestore();
 
 const plugins = { dvr: validatorjs };
 export class AuthStore {
@@ -25,9 +29,6 @@ export class AuthStore {
 
     public loginForm: MobxReactForm = null;
     public signUpForm: MobxReactForm = null;
-
-    @observable
-    public token: string = null;
 
     @observable public userInfo: UserInfo = {
         displayName: '',
@@ -45,6 +46,7 @@ export class AuthStore {
     public userLoading: boolean = true;
 
     @observable private currentUser: User = null;
+    @observable private currentPersona: any = null;
 
     constructor() {
         this.auth = firebase.auth();
@@ -54,7 +56,10 @@ export class AuthStore {
 
     public login(email: string, password: string) {
         this.userLoading = true;
-        this.auth.signInWithEmailAndPassword(email, password).catch(({code, message}) => console.log(code, message));
+        this.auth.signInWithEmailAndPassword(email, password).catch(({code, message}) => {
+            toast.error(code + ' ' + message);
+            this.userLoading = false;
+        });
     }
 
     @action
@@ -64,7 +69,7 @@ export class AuthStore {
 
     @computed
     public get userName(): string {
-        return this.userInfo ? this.userInfo.displayName : '';
+        return this.currentPersona ? this.currentPersona.displayName : '';
     }
 
     @computed
@@ -92,23 +97,10 @@ export class AuthStore {
     public onAuthStateChanged(user: User) {
         this.userLoading = false;
         if (user) {
-            console.log('onauthstatechange SIGN IN');
+            console.log('onauthstatechange SIGN IN', user);
             this.currentUser = user;
+            db.collection('personas').doc(user.uid).get().then((doc) => this.currentPersona = doc.data());
             this.updateUserInfo(user.providerData[0]);
-            user.getIdTokenResult()
-                .then((idTokenResult) => {
-                    console.log(idTokenResult);
-                    const { token } = idTokenResult;
-                    this.token = token;
-                    // Confirm the user is an Admin.
-                    // if (!!idTokenResult.claims.admin) {
-                    // Show admin UI.
-                    // showAdminUI();
-                    // } else {
-                    // Show regular user UI.
-                    // showRegularUI();
-                    // }
-                });
         } else {
             console.log('onauthstatechange SIGN OUT');
             this.currentUser = null;
@@ -144,6 +136,8 @@ export class AuthStore {
                     const { displayName, email, password } = form.values();
                     this.userLoading = true;
                     registerNewUser(email, password, displayName).then(() => {
+                        this.userLoading = false;
+                    }).catch(() => {
                         this.userLoading = false;
                     });
                 },

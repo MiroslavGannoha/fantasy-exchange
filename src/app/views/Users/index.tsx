@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import { Modal, ModalHeader, ModalBody, Button, Row, Col, Card, CardBody } from 'reactstrap';
+
+// import { Collection } from 'firestorter';
 import EPanel from '../../components/panel';
 import Loader from '../../components/Loader';
 import UsersTable from './UsersTable';
@@ -169,8 +171,8 @@ class Users extends React.Component<IProps, IUsersState> {
         this.setState({
             userToEdit: user,
         });
-        const { email, displayName, customClaims, uid } = user;
-        this.props.usersStore.setSelectedItemData({ email, displayName, customClaims, uid});
+        const { email, displayName, accessLevel, id } = user;
+        this.props.usersStore.setSelectedItemData({ email, displayName, accessLevel, id});
         this.props.usersStore.initUpdateForm(formFields);
         this.toggleModal('edit', true);
     }

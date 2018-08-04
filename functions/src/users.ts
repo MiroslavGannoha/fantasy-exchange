@@ -9,13 +9,12 @@ export const registerNewUser = functions.https.onCall(({displayName, email, pass
         throw new functions.https.HttpsError('invalid-argument', 'Data is missing');
     }
 
-    auth.createUser({
+    return auth.createUser({
         email,
         password,
-    })
-        .then(({ uid, metadata: {creationTime} }) => {
+    }).then(({ uid, metadata: {creationTime} }) => {
             auth.setCustomUserClaims(uid, {accessLevel: 1});
-            db.collection('users').doc(uid).set({
+            db.collection('personas').doc(uid).set({
                 email,
                 displayName,
                 creationTime,
@@ -66,24 +65,11 @@ export const deleteUser = functions.https.onCall(({targetId}, {auth: {token}}) =
         });
 });
 
-export const setCustomClaims = functions.https.onCall((data, { instanceIdToken }) => {
-    // Get the ID token passed.
-    const {accessLevel, targetUserId} = data;
-    // Verify the ID token and decode its payload.
-    return auth.verifyIdToken(instanceIdToken).then((claims) => {
-        // Verify user is eligible for additional privileges.
-        if (typeof claims.email !== 'undefined'/*  &&
-            typeof claims.email_verified !== 'undefined' &&
-            claims.email_verified &&
-            claims.email.indexOf('@admin.example.com') !== -1 */) {
-            // Add custom claims for additional privileges.
-            return auth.setCustomUserClaims(targetUserId, {accessLevel}).then(() => {
-                // Tell client to refresh token on user.
-                return { status: 'success' };
-            });
-        } else {
-            // Return nothing.
-            return { status: 'ineligible' };
-        }
-    });
+export const setCustomClaims = functions.https.onCall(({accessLevel, targetUserId}, {auth: {token}}) => {
+    // if (token.accessLevel < 10) {
+    //     throw new functions.https.HttpsError('permission-denied', 'You have no permission');
+    // }
+    return auth.setCustomUserClaims(targetUserId, {accessLevel}).then(() => {
+        return db.collection('personas').doc(targetUserId).update({accessLevel});
+    })
 });

@@ -1,8 +1,11 @@
 // @ts-ignore
 import firebase from 'firebase/app';
 import 'firebase/functions';
+import 'firebase/database';
 import { AccessLevel } from '../constants';
 import { toast } from 'react-toastify';
+import { initFirestorter } from 'firestorter';
+import { FirebaseFirestore } from '@firebase/firestore-types';
 
 firebase.initializeApp({
     apiKey: 'AIzaSyD94yAtoXu1JWEm635t-d53BGO1AMo1-WU',
@@ -12,6 +15,10 @@ firebase.initializeApp({
     storageBucket: 'gs://fantasy-exchange.appspot.com',
     messagingSenderId: '117336781687',
 });
+
+initFirestorter({ firebase });
+
+const db: FirebaseFirestore = firebase.firestore();
 
 export interface IPersona {
     title: string;
@@ -26,7 +33,7 @@ const call = (methodName: string, reqData?: any) =>
         .catch((error) => { toast.error(error.message); throw error; });
 
 export const getAll = (): Promise<any> =>
-    call('getAllUsers');
+    db.collection('personas').get().then((qs) => qs.docs.map((doc) => ({ ...{ id: doc.id }, ...doc.data() })));
 
 export const get = (userId: string): Promise<any> =>
     call('getAllUsers');
