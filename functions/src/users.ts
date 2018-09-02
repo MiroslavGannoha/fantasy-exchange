@@ -9,24 +9,27 @@ export const registerNewUser = functions.https.onCall(({displayName, email, pass
         throw new functions.https.HttpsError('invalid-argument', 'Data is missing');
     }
 
-    return auth.createUser({
-        email,
-        password,
-    }).then(({ uid, metadata: {creationTime} }) => {
-            auth.setCustomUserClaims(uid, {accessLevel: 1});
-            db.collection('personas').doc(uid).set({
-                email,
-                displayName,
-                creationTime,
-                accessLevel: 1,
-                coins: 100,
-                points: 0,
-            });
+    return new Promise((resolve, reject) => {
+        auth.createUser({
+            email,
+            password,
+        }).then(({ uid, metadata: {creationTime} }) => {
+                db.collection('personas').doc(uid).set({
+                    email,
+                    displayName,
+                    creationTime,
+                    accessLevel: 1,
+                    coins: 100,
+                    points: 0,
+                }).then(() => {
+                    resolve();
+                })
+                .catch(reject);
+                auth.setCustomUserClaims(uid, { accessLevel: 1 });
+            })
+        .catch(reject);
+    })
 
-        })
-        .catch((error) => {
-            throw new functions.https.HttpsError('internal', error);
-        });
 });
 
 export const getAllUsers = functions.https.onCall((data, context) => {

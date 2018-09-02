@@ -4,7 +4,7 @@ import * as moment from 'moment';
 // @ts-ignore
 import firebase from 'firebase/app';
 // @ts-ignore
-import { User, UserInfo } from '@firebase/auth-types';
+import { User, UserInfo, FirebaseAuth } from '@firebase/auth-types';
 import { FirebaseFirestore } from '@firebase/firestore-types';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -15,6 +15,9 @@ import validatorjs from 'validatorjs';
 import { toast } from '../../../../node_modules/react-toastify';
 
 const db: FirebaseFirestore = firebase.firestore();
+const auth: FirebaseAuth = firebase.auth();
+
+console.log(auth);
 
 const plugins = { dvr: validatorjs };
 export class AuthStore {
@@ -99,7 +102,9 @@ export class AuthStore {
         if (user) {
             console.log('onauthstatechange SIGN IN', user);
             this.currentUser = user;
-            db.collection('personas').doc(user.uid).get().then((doc) => this.currentPersona = doc.data());
+            db.collection('personas').doc(user.uid).onSnapshot(
+                (doc) => this.currentPersona = doc.data()
+            );
             this.updateUserInfo(user.providerData[0]);
         } else {
             console.log('onauthstatechange SIGN OUT');
@@ -136,7 +141,10 @@ export class AuthStore {
                     const { displayName, email, password } = form.values();
                     this.userLoading = true;
                     registerNewUser(email, password, displayName).then(() => {
-                        this.userLoading = false;
+                        auth.signInWithEmailAndPassword(email, password).catch(({ code, message }) => {
+                            toast.error(code + ' ' + message);
+                            this.userLoading = false;
+                        });
                     }).catch(() => {
                         this.userLoading = false;
                     });
