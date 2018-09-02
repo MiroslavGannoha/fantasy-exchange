@@ -1,0 +1,194 @@
+import * as React from 'react';
+import { observer } from 'mobx-react';
+import { Modal, ModalHeader, ModalBody, Button, Row, Col, Card, CardBody } from 'reactstrap';
+
+// import { Collection } from 'firestorter';
+import EPanel from '../../components/panel';
+import Loader from '../../components/Loader';
+import { ICRUDClassStore } from '../../stores';
+import ETable from '../table';
+
+interface IItemsState {
+    page: number;
+    perPage: number;
+    modals: {
+        edit: boolean;
+        create: boolean;
+    };
+    userToEdit: any;
+}
+
+interface IProps {
+    CRUDStore: ICRUDClassStore;
+    columns: any[];
+    Form: any;
+    formFields: any;
+}
+
+@observer
+class CRUDTable extends React.Component<IProps, IItemsState> {
+    constructor(props) {
+        super(props);
+        this.handlePageChange = this.handlePageChange.bind(this);
+        this.createItem = this.createItem.bind(this);
+        this.closeModals = this.closeModals.bind(this);
+        this.state = {
+            modals: {
+                create: false,
+                edit: false,
+            },
+            page: 1,
+            perPage: 12,
+            userToEdit: {},
+        };
+
+        // this.props.CRUDStore.initCreateForm(formFields);
+
+    }
+
+    public createItem() {
+        this.toggleModal('create', true);
+    }
+
+    public render() {
+        const { columns, CRUDStore, Form, formFields } = this.props;
+        const items = CRUDStore.itemsObservable.current();
+        console.log('itemsData', items);
+
+        const toggleModalEdit = () => this.toggleModal('edit');
+        const toggleModalCreate = () => this.toggleModal('create');
+
+        const pagination = {
+            onPageChange: this.handlePageChange,
+            page: this.state.page,
+            sizePerPage: this.state.perPage,
+        };
+
+        const enhancedColumns = {
+            ...columns,
+            ...{
+                classes: 'text-center align-middle',
+                dataField: '',
+                formatter: (cell, row, index) => {
+                    return (
+                        <div className="btn-group align-top">
+                            <Button
+                                size="sm"
+                                color="secondary"
+                                outline={true}
+                                className="badge"
+                                onClick={this.editItem}
+                            >
+                                Edit
+                            </Button>
+                            <Button
+                                size="sm"
+                                color="secondary"
+                                outline={true}
+                                className="badge"
+                                onClick={this.deleteItem}
+                            >
+                                <i className="fa fa-trash" />
+                            </Button>
+                        </div>
+                    );
+                },
+                text: 'Actions',
+            },
+        };
+
+        const table = (
+            <Row className="flex-lg-nowrap">
+                <Col className="mb-3">
+                    <EPanel title="Items" subtitle="Be a wise leader">
+                        <ETable
+                            className="table-lg mt-3"
+                            keyField="id"
+                            data={items}
+                            columns={enhancedColumns}
+                            pagination={pagination}
+                        />
+                    </EPanel>
+                    <Modal isOpen={this.state.modals.edit} toggle={toggleModalEdit} size="lg">
+                        <ModalHeader toggle={toggleModalEdit}>Edit Item</ModalHeader>
+                        <ModalBody>
+                            <div className="py-1">
+                                <Form formFields={formFields} closeModal={this.closeModals} />
+                            </div>
+                        </ModalBody>
+                    </Modal>
+                    <Modal isOpen={this.state.modals.create} toggle={toggleModalCreate} size="lg">
+                        <ModalHeader toggle={toggleModalCreate}>Create Item</ModalHeader>
+                        <ModalBody>
+                            <div className="py-1">
+                                <Form formFields={formFields} form={CRUDStore.createForm} />
+                            </div>
+                        </ModalBody>
+                    </Modal>
+                </Col>
+            </Row>
+        );
+
+        return (
+            <>
+                <Row className="mb-3">
+                    <Col>
+                        <Card>
+                            <CardBody>
+                                <Button color="success" onClick={CRUDStore.refreshItems}>Refresh</Button>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+                {items === null ? <Loader /> : table}
+            </>
+        );
+    }
+
+    public closeModals() {
+        this.setState({
+            modals: {
+                create: false,
+                edit: false,
+            },
+        });
+    }
+
+    public deleteItem = (targetId) => {
+        this.props.CRUDStore.deleteItem(targetId);
+    }
+
+    private handlePageChange(page, perPage) {
+        if (page !== this.state.page || perPage !== this.state.perPage) {
+            this.setState({
+                page,
+                perPage,
+            });
+        }
+    }
+
+    private toggleModal(modal, show?) {
+        if (this.state.modals.hasOwnProperty(modal)) {
+            this.setState({
+                modals: {
+                    ...{},
+                    ...this.state.modals,
+                    ...{ [modal]: show !== undefined ? show : !this.state.modals[modal] },
+                },
+            });
+        }
+    }
+
+    private editItem = (user) => {
+        this.setState({
+            userToEdit: user,
+        });
+        const { email, displayName, accessLevel, id } = user;
+        this.props.CRUDStore.setSelectedItemData({ email, displayName, accessLevel, id });
+        // this.props.CRUDStore.initUpdateForm(formFields);
+        this.toggleModal('edit', true);
+    }
+
+}
+
+export default CRUDTable;

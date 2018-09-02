@@ -5,7 +5,6 @@ import { Link } from 'mobx-router';
 import ETabs from '../../components/tabs';
 import EPanel from '../../components/panel';
 import UsersTable from '../Users/UsersTable';
-import UsersFilter from '../Users/UsersFilter';
 // import Profile from './Profile';
 // import CreateUserForm from './ProfileSettingsForm';
 import { pages } from '../../../app';
@@ -126,17 +125,6 @@ class Users extends React.Component<IProps, IUsersState> {
                                 onClickEdit={this.editUser}
                             />
                         </EPanel>
-                    </div>
-                    <div className="col-12 col-lg-3 mb-3">
-                        <UsersFilter
-                            items={this.state.items}
-                            filters={this.state.filters}
-                            tabs={tabs}
-                            tab={this.state.tab}
-                            onTabClick={this.handleTabClick}
-                            onFilterChange={this.handleFilterChange}
-                            onClickCreate={this.createUser}
-                        />
                     </div>
                 </div>
             </>

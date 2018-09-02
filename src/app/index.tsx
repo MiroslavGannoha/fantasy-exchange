@@ -52,11 +52,11 @@ export const pages = {
         component: <MainLayout component={Players} />,
         beforeEnter: (route, params, store) => {
             store.app.setTitle('AAAA');
-            console.log('entering settings!');
-            return false;
+            console.log('entering players!');
+            // return false;
         },
         beforeExit: () => {
-            console.log('exiting settings!');
+            console.log('exiting players!');
         },
         onParamsChange: (route, params, store) => {
             console.log('params changed to', params);

@@ -2,6 +2,7 @@ import { AppStore } from './AppStore';
 import { AuthStore } from './AuthStore';
 import { UsersStore } from './UsersStore';
 import { RouterStore } from 'mobx-router';
+import { PlayersStore } from './PlayersStore';
 
 export interface IAppStore {
     app: AppStore;
@@ -12,7 +13,10 @@ export interface IStores {
     authStore: AuthStore;
     store: IAppStore;
     usersStore: UsersStore;
+    playersStore: PlayersStore;
 }
+
+export interface ICRUDClassStore extends UsersStore, PlayersStore { }
 
 export function createStores() {
 
@@ -23,6 +27,7 @@ export function createStores() {
         },
         authStore: AuthStore.getInstance(),
         usersStore: new UsersStore(),
+        playersStore: new PlayersStore(),
     };
 
     return stores;
