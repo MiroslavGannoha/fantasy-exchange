@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Button, Row, Col, Card, CardBody } from 'reactstrap';
 import * as moment from 'moment';
 
 // import { Collection } from 'firestorter';
-import Form, { formFields } from './Form';
+import ItemForm from './ItemForm';
 import { IStores, UsersStore } from '../../stores';
 import CRUDTable from '../../components/CRUDTable';
 
@@ -64,23 +63,12 @@ class Users extends React.Component<IProps> {
         const {usersStore} = this.props;
 
         return (
-            <>
-                <Row className="mb-3">
-                    <Col>
-                        <Card>
-                            <CardBody>
-                                <Button color="success" onClick={usersStore.refreshItems}>Refresh</Button>
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-                <CRUDTable
-                    CRUDStore={usersStore}
-                    columns={columns}
-                    Form={Form}
-                    formFields={formFields}
-                />
-            </>
+            <CRUDTable
+                CRUDStore={usersStore}
+                columns={columns}
+                ItemForm={ItemForm}
+                noAdd={true}
+            />
         );
     }
 }

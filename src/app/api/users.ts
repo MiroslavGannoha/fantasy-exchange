@@ -25,6 +25,7 @@ export interface IPersona {
     content: string;
     firmId: string;
     published: boolean;
+    accessLevel: AccessLevel;
 }
 
 const call = (methodName: string, reqData?: any) =>
@@ -41,8 +42,8 @@ export const get = (userId: string): Promise<any> =>
 export const create = (persona: IPersona): Promise<any> =>
     call('getAllUsers');
 
-export const update = (userId: string, persona: Partial<IPersona>): Promise<any> =>
-    call('getAllUsers');
+export const update = (targetUserId: string, persona: Partial<IPersona>): Promise<any> =>
+    call('setCustomClaims', { accessLevel: persona.accessLevel, targetUserId });
 
 export const remove = (targetId: string): Promise<any> =>
     call('deleteUser', { targetId });

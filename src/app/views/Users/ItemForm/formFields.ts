@@ -7,6 +7,10 @@ export const formFields = [{
     placeholder: 'Email',
     rules: 'required|string|email',
 }, {
+    name: 'accessLevel',
+    placeholder: 'Access Level',
+    rules: 'required|integer',
+}, {
     name: 'id',
     type: 'hidden',
     output: (value) => { if (value) { return value; } },

@@ -1,8 +1,6 @@
 import { computed, action, observable } from 'mobx';
 import { lazyObservable, ILazyObservable, fromPromise, IPromiseBasedObservable } from 'mobx-utils';
-import MobxReactForm from 'mobx-react-form';
 import { toast } from 'react-toastify';
-import { Form } from '../Utils';
 // import { defaultItemsPerPage } from '../../constants';
 
 interface IEntityApi {
@@ -28,11 +26,6 @@ export abstract class CRUDStore {
     public deleteResult: IPromiseBasedObservable<any> = null;
 
     @observable
-    public createForm: MobxReactForm = null;
-    @observable
-    public updateForm: MobxReactForm = null;
-
-    @observable
     public selectedItemData: any = null;
 
     // @observable
@@ -48,44 +41,30 @@ export abstract class CRUDStore {
         this.entityApi = entityApi;
     }
 
-    @action
-    public initCreateForm(createFields: any[]) {
-        if (!this.createForm) {
-            this.createForm = new Form(createFields, this.onCreateFormValid);
-        }
-
-        this.createForm.update({ firmId: 'e7c6395c-f75f-417e-86a8-8429f3600c69' });
-    }
-
-    @action
-    public initUpdateForm(updateFields: any[]) {
-        if (!this.updateForm) {
-            this.updateForm = new Form(updateFields, this.onUpdateFormValid);
-        }
-
-        this.updateForm.set({ ...this.selectedItemData, ...{ firmId: 'e7c6395c-f75f-417e-86a8-8429f3600c69' } });
-    }
-
-    @action
     public setSelectedItemData(itemData) {
         this.selectedItemData = itemData;
     }
 
     @action.bound
-    public onCreateFormValid(form) {
-        const formData = form.values();
-        this.createResult = fromPromise(
-            this.entityApi.create(formData).then(() => toast.success('Success')),
-        );
+    public createItem(item) {
+        // this.createResult = fromPromise(
+        this.privateItemsObservable.reset();
+        this.entityApi.create(item).then(() => {
+            toast.success('Successful create');
+            this.privateItemsObservable.refresh();
+        });
+        // );
     }
 
     @action.bound
-    public onUpdateFormValid(form) {
-        const { id, ...formData } = form.values();
-
-        this.updateResult = fromPromise(
-            this.entityApi.update(id, formData).then(() => toast.success('Success')),
-        );
+    public updateItem({ id, ...item }) {
+        // this.updateResult = fromPromise(
+        this.privateItemsObservable.reset();
+        this.entityApi.update(id, item).then(() => {
+            toast.success('Successful update');
+            this.privateItemsObservable.refresh();
+        });
+        // );
     }
 
     @action.bound
@@ -105,14 +84,12 @@ export abstract class CRUDStore {
     @action
     public resetCreate() {
         this.createResult = null;
-        if (this.createForm) { this.createForm.clear(); }
     }
 
     @action
     public resetUpdate() {
         this.updateResult = null;
         this.selectedItemData = null;
-        if (this.updateForm) { this.updateForm.clear(); }
     }
 
     @action.bound

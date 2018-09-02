@@ -15,14 +15,13 @@ interface IItemsState {
         edit: boolean;
         create: boolean;
     };
-    userToEdit: any;
 }
 
 interface IProps {
     CRUDStore: ICRUDClassStore;
     columns: any[];
-    Form: any;
-    formFields: any;
+    ItemForm: any;
+    noAdd: boolean;
 }
 
 @observer
@@ -39,7 +38,6 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
             },
             page: 1,
             perPage: 12,
-            userToEdit: {},
         };
 
         // this.props.CRUDStore.initCreateForm(formFields);
@@ -51,7 +49,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
     }
 
     public render() {
-        const { columns, CRUDStore, Form, formFields } = this.props;
+        const { columns, CRUDStore, ItemForm, noAdd } = this.props;
         const items = CRUDStore.itemsObservable.current();
         console.log('itemsData', items);
 
@@ -64,38 +62,36 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
             sizePerPage: this.state.perPage,
         };
 
-        const enhancedColumns = {
-            ...columns,
-            ...{
-                classes: 'text-center align-middle',
-                dataField: '',
-                formatter: (cell, row, index) => {
-                    return (
-                        <div className="btn-group align-top">
-                            <Button
-                                size="sm"
-                                color="secondary"
-                                outline={true}
-                                className="badge"
-                                onClick={this.editItem}
-                            >
-                                Edit
-                            </Button>
-                            <Button
-                                size="sm"
-                                color="secondary"
-                                outline={true}
-                                className="badge"
-                                onClick={this.deleteItem}
-                            >
-                                <i className="fa fa-trash" />
-                            </Button>
-                        </div>
-                    );
-                },
-                text: 'Actions',
+        const enhancedColumns = columns.slice();
+        enhancedColumns.push({
+            classes: 'text-center align-middle',
+            dataField: '',
+            formatter: (cell, row, index) => {
+                return (
+                    <div className="btn-group align-top">
+                        <Button
+                            size="sm"
+                            color="secondary"
+                            outline={true}
+                            className="badge"
+                            onClick={this.editItem(row)}
+                        >
+                            Edit
+                        </Button>
+                        <Button
+                            size="sm"
+                            color="secondary"
+                            outline={true}
+                            className="badge"
+                            onClick={this.deleteItem(cell)}
+                        >
+                            <i className="fa fa-trash" />
+                        </Button>
+                    </div>
+                );
             },
-        };
+            text: 'Actions',
+        });
 
         const table = (
             <Row className="flex-lg-nowrap">
@@ -109,19 +105,19 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
                             pagination={pagination}
                         />
                     </EPanel>
-                    <Modal isOpen={this.state.modals.edit} toggle={toggleModalEdit} size="lg">
-                        <ModalHeader toggle={toggleModalEdit}>Edit Item</ModalHeader>
-                        <ModalBody>
-                            <div className="py-1">
-                                <Form formFields={formFields} closeModal={this.closeModals} />
-                            </div>
-                        </ModalBody>
-                    </Modal>
                     <Modal isOpen={this.state.modals.create} toggle={toggleModalCreate} size="lg">
                         <ModalHeader toggle={toggleModalCreate}>Create Item</ModalHeader>
                         <ModalBody>
                             <div className="py-1">
-                                <Form formFields={formFields} form={CRUDStore.createForm} />
+                                <ItemForm onFormValid={this.onCreateFormValid} />
+                            </div>
+                        </ModalBody>
+                    </Modal>
+                    <Modal isOpen={this.state.modals.edit} toggle={toggleModalEdit} size="lg">
+                        <ModalHeader toggle={toggleModalEdit}>Edit Item</ModalHeader>
+                        <ModalBody>
+                            <div className="py-1">
+                                <ItemForm onFormValid={this.onUpdateFormValid} data={CRUDStore.selectedItemData} />
                             </div>
                         </ModalBody>
                     </Modal>
@@ -129,12 +125,15 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
             </Row>
         );
 
+        const addBtn = noAdd ? null : <Button color="primary" className="mr-2" onClick={this.createItem}>Add</Button>;
+
         return (
             <>
                 <Row className="mb-3">
                     <Col>
                         <Card>
                             <CardBody>
+                                {addBtn}
                                 <Button color="success" onClick={CRUDStore.refreshItems}>Refresh</Button>
                             </CardBody>
                         </Card>
@@ -154,8 +153,8 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
         });
     }
 
-    public deleteItem = (targetId) => {
-        this.props.CRUDStore.deleteItem(targetId);
+    public deleteItem = (itemId) => {
+        return () => this.props.CRUDStore.deleteItem(itemId);
     }
 
     private handlePageChange(page, perPage) {
@@ -179,14 +178,24 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
         }
     }
 
-    private editItem = (user) => {
-        this.setState({
-            userToEdit: user,
-        });
-        const { email, displayName, accessLevel, id } = user;
-        this.props.CRUDStore.setSelectedItemData({ email, displayName, accessLevel, id });
-        // this.props.CRUDStore.initUpdateForm(formFields);
-        this.toggleModal('edit', true);
+    private editItem = (item) => {
+        return () => {
+            this.props.CRUDStore.setSelectedItemData(item);
+            this.toggleModal('edit', true);
+        };
+    }
+
+    private onCreateFormValid = (form) => {
+        if (!this.props.noAdd) {
+            return;
+        }
+        this.closeModals();
+        this.props.CRUDStore.createItem(form.values());
+    }
+
+    private onUpdateFormValid = (form) => {
+        this.closeModals();
+        this.props.CRUDStore.updateItem(form.values());
     }
 
 }
