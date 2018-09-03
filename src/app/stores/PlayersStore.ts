@@ -1,9 +1,9 @@
 import CRUDStore from './CRUDStore';
-import * as usersApi from '../api/users';
+import { playersApi } from '../api';
 
 export class PlayersStore extends CRUDStore {
     constructor() {
-        super(usersApi);
+        super(playersApi);
     }
 }
 

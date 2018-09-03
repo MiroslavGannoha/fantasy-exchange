@@ -21,7 +21,7 @@ interface IProps {
     CRUDStore: ICRUDClassStore;
     columns: any[];
     ItemForm: any;
-    noAdd: boolean;
+    noAdd?: boolean;
 }
 
 @observer
@@ -65,7 +65,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
         const enhancedColumns = columns.slice();
         enhancedColumns.push({
             classes: 'text-center align-middle',
-            dataField: '',
+            dataField: 'id',
             formatter: (cell, row, index) => {
                 return (
                     <div className="btn-group align-top">
@@ -186,11 +186,13 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
     }
 
     private onCreateFormValid = (form) => {
-        if (!this.props.noAdd) {
+        if (this.props.noAdd) {
             return;
         }
         this.closeModals();
-        this.props.CRUDStore.createItem(form.values());
+        const itemToCreate = form.values();
+        delete itemToCreate.id;
+        this.props.CRUDStore.createItem(itemToCreate);
     }
 
     private onUpdateFormValid = (form) => {

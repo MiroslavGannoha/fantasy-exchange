@@ -1,5 +1,2 @@
-import * as users from './users';
-
-export default {
-    users,
-};
+export * from './users';
+export * from './players';

@@ -2,10 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 // import { useStrict } from 'mobx';
 // @ts-ignore
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/database';
-import 'firebase/functions';
+// import firebase from 'firebase/app';
 // import { initFirestorter } from 'firestorter';
 import { Provider } from 'mobx-react';
 import { pages, App } from './app';

@@ -9,7 +9,7 @@ import Overview from './views/Overview';
 import Users from './views/Users';
 import CRUD from './views/CRUD';
 import Settings from './views/Settings';
-// import Players from './views/Players';
+import Players from './views/Players';
 import SignUp from './views/SignUp';
 
 // export const App = hot(module)(() => <Root><MobxRouter /></Root>);
@@ -47,21 +47,21 @@ export const pages = {
         path: '/signup',
         component: <MainLayout component={SignUp}  />,
     }),
-    // players: new Route({
-    //     path: '/players',
-    //     component: <MainLayout component={Players} />,
-    //     beforeEnter: (route, params, store) => {
-    //         store.app.setTitle('AAAA');
-    //         console.log('entering players!');
-    //         // return false;
-    //     },
-    //     beforeExit: () => {
-    //         console.log('exiting players!');
-    //     },
-    //     onParamsChange: (route, params, store) => {
-    //         console.log('params changed to', params);
-    //     },
-    // }),
+    players: new Route({
+        path: '/players',
+        component: <MainLayout component={Players} />,
+        beforeEnter: (route, params, store) => {
+            store.app.setTitle('AAAA');
+            console.log('entering players!');
+            // return false;
+        },
+        beforeExit: () => {
+            console.log('exiting players!');
+        },
+        onParamsChange: (route, params, store) => {
+            console.log('params changed to', params);
+        },
+    }),
 };
 
 // render react DOM

@@ -8,7 +8,7 @@ import { User, UserInfo, FirebaseAuth } from '@firebase/auth-types';
 import { FirebaseFirestore } from '@firebase/firestore-types';
 import 'firebase/auth';
 import 'firebase/firestore';
-import { registerNewUser } from '../../api/users';
+import { usersApi } from '../../api';
 import { loginFormRules } from './loginForm';
 import { signUpFormRules } from './signUpForm';
 import validatorjs from 'validatorjs';
@@ -16,8 +16,6 @@ import { toast } from '../../../../node_modules/react-toastify';
 
 const db: FirebaseFirestore = firebase.firestore();
 const auth: FirebaseAuth = firebase.auth();
-
-console.log(auth);
 
 const plugins = { dvr: validatorjs };
 export class AuthStore {
@@ -103,7 +101,7 @@ export class AuthStore {
             console.log('onauthstatechange SIGN IN', user);
             this.currentUser = user;
             db.collection('personas').doc(user.uid).onSnapshot(
-                (doc) => this.currentPersona = doc.data()
+                (doc) => this.currentPersona = doc.data(),
             );
             this.updateUserInfo(user.providerData[0]);
         } else {
@@ -140,7 +138,7 @@ export class AuthStore {
                 onSuccess: (form: MobxReactForm) => {
                     const { displayName, email, password } = form.values();
                     this.userLoading = true;
-                    registerNewUser(email, password, displayName).then(() => {
+                    usersApi.registerNewUser(email, password, displayName).then(() => {
                         auth.signInWithEmailAndPassword(email, password).catch(({ code, message }) => {
                             toast.error(code + ' ' + message);
                             this.userLoading = false;

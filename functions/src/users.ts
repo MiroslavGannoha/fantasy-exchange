@@ -50,9 +50,7 @@ export const getAllUsers = functions.https.onCall((data, context) => {
                         resolve(users);
                     }
                 })
-                .catch(function (error) {
-                    reject(error);
-                });
+                .catch(reject);
         }
     });
 });
@@ -62,10 +60,10 @@ export const deleteUser = functions.https.onCall(({targetId}, {auth: {token}}) =
         throw new functions.https.HttpsError('permission-denied', 'You have no permission');
     }
 
-    return auth.deleteUser(targetId)
-        .catch((error) => {
-            throw new functions.https.HttpsError('internal', error);
-        });
+    return Promise.all([
+        auth.deleteUser(targetId),
+        db.collection('personas').doc(targetId).delete(),
+    ])
 });
 
 export const setCustomClaims = functions.https.onCall(({accessLevel, targetUserId}, {auth: {token}}) => {

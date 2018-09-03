@@ -1,15 +1,8 @@
 import { computed, action, observable } from 'mobx';
 import { lazyObservable, ILazyObservable, fromPromise, IPromiseBasedObservable } from 'mobx-utils';
 import { toast } from 'react-toastify';
+import { CRUDAPI } from '../../api/utils';
 // import { defaultItemsPerPage } from '../../constants';
-
-interface IEntityApi {
-    getAll: (pageNumber?: number, itemsPerPage?: number) => Promise<any>;
-    get: (id: string) => Promise<any>;
-    create: (data: any) => Promise<any>;
-    update: (id: string, data: any) => Promise<any>;
-    remove: (id: string) => Promise<any>;
-}
 
 // interface IPagingOpts {
 //     itemsPerPage: number;
@@ -35,9 +28,9 @@ export abstract class CRUDStore {
     // };
 
     @observable private privateItemsObservable: ILazyObservable<any> = null;
-    private entityApi: IEntityApi = null;
+    private entityApi: CRUDAPI = null;
 
-    constructor(entityApi: IEntityApi) {
+    constructor(entityApi: CRUDAPI) {
         this.entityApi = entityApi;
     }
 
@@ -49,10 +42,15 @@ export abstract class CRUDStore {
     public createItem(item) {
         // this.createResult = fromPromise(
         this.privateItemsObservable.reset();
-        this.entityApi.create(item).then(() => {
-            toast.success('Successful create');
-            this.privateItemsObservable.refresh();
-        });
+        this.entityApi.create(item)
+            .then(() => {
+                toast.success('Successful create');
+                this.privateItemsObservable.refresh();
+            })
+            .catch(({message}) => {
+                toast.error(message);
+                this.privateItemsObservable.refresh();
+            });
         // );
     }
 
@@ -60,22 +58,28 @@ export abstract class CRUDStore {
     public updateItem({ id, ...item }) {
         // this.updateResult = fromPromise(
         this.privateItemsObservable.reset();
-        this.entityApi.update(id, item).then(() => {
-            toast.success('Successful update');
-            this.privateItemsObservable.refresh();
-        });
+        this.entityApi.update(id, item)
+            .then(() => {
+                toast.success('Successful update');
+                this.privateItemsObservable.refresh();
+            })
+            .catch(({message}) => {
+                toast.error(message);
+                this.privateItemsObservable.refresh();
+            });
         // );
     }
 
     @action.bound
     public deleteItem(itemId) {
         this.privateItemsObservable.reset();
-        this.deleteResult = fromPromise(this.entityApi.remove(itemId)
+        this.deleteResult = fromPromise(this.entityApi.delete(itemId)
             .then(() => {
                 toast.success('Success');
                 this.privateItemsObservable.refresh();
             })
-            .catch(() => {
+            .catch(({message}) => {
+                toast.error(message);
                 this.privateItemsObservable.refresh();
             }),
         );

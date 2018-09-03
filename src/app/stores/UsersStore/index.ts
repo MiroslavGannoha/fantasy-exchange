@@ -1,5 +1,5 @@
 import CRUDStore from '../CRUDStore';
-import * as usersApi from '../../api/users';
+import { usersApi } from '../../api';
 
 export class UsersStore extends CRUDStore {
     constructor() {
