@@ -39,10 +39,10 @@ export abstract class CRUDStore {
     }
 
     @action.bound
-    public createItem(item) {
+    public createItem({ docId, ...item }) {
         // this.createResult = fromPromise(
         this.privateItemsObservable.reset();
-        this.entityApi.create(item)
+        this.entityApi.create(docId, item)
             .then(() => {
                 toast.success('Successful create');
                 this.privateItemsObservable.refresh();
@@ -55,10 +55,10 @@ export abstract class CRUDStore {
     }
 
     @action.bound
-    public updateItem({ id, ...item }) {
+    public updateItem({ docId, ...item }) {
         // this.updateResult = fromPromise(
         this.privateItemsObservable.reset();
-        this.entityApi.update(id, item)
+        this.entityApi.update(docId, item)
             .then(() => {
                 toast.success('Successful update');
                 this.privateItemsObservable.refresh();

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { Form, Input, FormGroup, Col, Label, Row, Button } from 'reactstrap';
+import { Form, Col, Row, Button } from 'reactstrap';
 import MobxReactForm from 'mobx-react-form';
 import { MobxForm } from '../../../stores/Utils';
 import { formFields } from './formFields';
 // import Select from 'react-select';
+import CustomFormGroup from '../../../components/Form/CustomFormGroup';
 
 export * from './formFields';
 
@@ -22,6 +23,10 @@ export default class ItemForm extends React.Component<IProps> {
         this.form = new MobxForm(formFields, props.onFormValid);
         if (props.data) {
             this.form.set(props.data);
+        } else {
+            this.form.$('nickname').observe(({form, field, change}) => {
+                this.form.$('docId').set(change.newValue.replace(/[^\w\s]/gi, ''));
+            });
         }
     }
 
@@ -29,31 +34,12 @@ export default class ItemForm extends React.Component<IProps> {
         const form = this.form;
         return (
             <Form onSubmit={form.onSubmit}>
-                <FormGroup>
-                    <Label htmlFor="name">Full Name</Label>
-                    <Input {...form.$('name').bind()} />
-                    <small className="text-danger">{form.$('name').error}</small>
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="nickname">Nickname</Label>
-                    <Input {...form.$('nickname').bind()} />
-                    <small className="text-danger">{form.$('nickname').error}</small>
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="steamId">Steam account id</Label>
-                    <Input {...form.$('steamId').bind()} />
-                    <small className="text-danger">{form.$('steamId').error}</small>
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="playerRole">Player role</Label>
-                    <Input {...form.$('playerRole').bind()} />
-                    <small className="text-danger">{form.$('playerRole').error}</small>
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="countryCode">Country code</Label>
-                    <Input {...form.$('countryCode').bind()} />
-                    <small className="text-danger">{form.$('countryCode').error}</small>
-                </FormGroup>
+                <CustomFormGroup field={form.$('name')} />
+                <CustomFormGroup field={form.$('nickname')} />
+                <CustomFormGroup field={form.$('docId')} />
+                <CustomFormGroup field={form.$('steamId')} />
+                <CustomFormGroup field={form.$('playerRole')} />
+                <CustomFormGroup field={form.$('countryCode')} />
                 <Row>
                     <Col className="d-flex justify-content-end">
                         <Button color="primary" type="submit">Submit</Button>

@@ -7,6 +7,11 @@ export const formFields = [{
     placeholder: 'Nickname',
     rules: 'required|string|min:3',
 }, {
+    name: 'docId',
+    placeholder: 'Id name',
+    rules: 'required|string|min:3',
+    disabled: true,
+}, {
     name: 'steamId',
     placeholder: 'Steam account id',
     rules: 'required|integer',
@@ -18,8 +23,4 @@ export const formFields = [{
     name: 'countryCode',
     placeholder: 'Country code',
     rules: 'required|string',
-}, {
-    name: 'id',
-    type: 'hidden',
-    output: (value) => { if (value) { return value; } },
 }];

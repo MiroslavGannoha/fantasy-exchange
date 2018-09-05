@@ -49,6 +49,12 @@ class Sidebar extends React.Component<IProps> {
                                     <span>Players</span>
                                 </Link>
                             </li>
+                            <li className={(currentView === pages.rights ? 'active ' : '') + 'nav-item'}>
+                                <Link view={pages.rights} store={this.props.store} className="nav-link px-2">
+                                    <i className="fa fa-fw fa-clone mr-1" />
+                                    <span>Rights</span>
+                                </Link>
+                            </li>
                             <li className={(currentView === pages.settings ? 'active ' : '') + 'nav-item'}>
                                 <Link view={pages.settings} store={this.props.store} className="nav-link px-2">
                                     <i className="fa fa-fw fa-cog mr-1" />

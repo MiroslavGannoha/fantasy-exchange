@@ -11,7 +11,6 @@ export const formFields = [{
     placeholder: 'Access Level',
     rules: 'required|integer',
 }, {
-    name: 'id',
+    name: 'docId',
     type: 'hidden',
-    output: (value) => { if (value) { return value; } },
 }];

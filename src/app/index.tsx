@@ -10,6 +10,7 @@ import Users from './views/Users';
 import CRUD from './views/CRUD';
 import Settings from './views/Settings';
 import Players from './views/Players';
+import Rights from './views/Rights';
 import SignUp from './views/SignUp';
 
 // export const App = hot(module)(() => <Root><MobxRouter /></Root>);
@@ -37,7 +38,6 @@ export const pages = {
     users: new Route({
         path: '/users',
         component: <MainLayout component={Users} />,
-
     }),
     settings: new Route({
         path: '/settings',
@@ -46,6 +46,11 @@ export const pages = {
     signUp: new Route({
         path: '/signup',
         component: <MainLayout component={SignUp}  />,
+    }),
+    rights: new Route({
+        path: '/rights',
+        component: <MainLayout component={Rights} />,
+
     }),
     players: new Route({
         path: '/players',

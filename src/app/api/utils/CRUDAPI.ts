@@ -15,6 +15,8 @@ firebase.initializeApp({
 
 const db: FirebaseFirestore = firebase.firestore();
 
+db.settings({ timestampsInSnapshots: true});
+
 export abstract class CRUDAPI {
     public collectionName: string = null;
 
@@ -28,23 +30,23 @@ export abstract class CRUDAPI {
 
     public getAll(): Promise<any[]> {
         return db.collection(this.collectionName).get()
-            .then((qs) => qs.docs.map((doc) => ({ ...{ id: doc.id }, ...doc.data() })));
+            .then((qs) => qs.docs.map((doc) => ({ ...{ docId: doc.id }, ...doc.data() })));
     }
 
-    public get(itemId: string): Promise<any> {
-        return db.collection(this.collectionName).doc(itemId).get()
+    public get(docId: string): Promise<any> {
+        return db.collection(this.collectionName).doc(docId).get()
             .then((doc) => doc.data());
     }
 
-    public create(item): Promise<any> {
-        return db.collection(this.collectionName).add(item);
+    public create(docId: string, item): Promise<any> {
+        return db.collection(this.collectionName).doc(docId).set(item);
     }
 
-    public update(itemId: string, item): Promise<any> {
-        return db.collection(this.collectionName).doc(itemId).update(item);
+    public update(docId: string, item): Promise<any> {
+        return db.collection(this.collectionName).doc(docId).update(item);
     }
 
-    public delete(itemId: string): Promise<any> {
-        return db.collection(this.collectionName).doc(itemId).delete();
+    public delete(docId: string): Promise<any> {
+        return db.collection(this.collectionName).doc(docId).delete();
     }
 }

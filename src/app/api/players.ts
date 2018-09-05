@@ -3,6 +3,7 @@ import { PlayerRole } from '../constants/playerRoles';
 
 export interface IPlayer {
     nickname: string;
+    docId: string;
     name: string;
     steamId: number;
     role: PlayerRole;

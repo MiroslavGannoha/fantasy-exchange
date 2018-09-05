@@ -16,6 +16,7 @@ import { toast } from '../../../../node_modules/react-toastify';
 
 const db: FirebaseFirestore = firebase.firestore();
 const auth: FirebaseAuth = firebase.auth();
+db.settings({ timestampsInSnapshots: true });
 
 const plugins = { dvr: validatorjs };
 export class AuthStore {

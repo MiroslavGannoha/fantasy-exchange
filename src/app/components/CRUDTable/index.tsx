@@ -65,7 +65,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
         const enhancedColumns = columns.slice();
         enhancedColumns.push({
             classes: 'text-center align-middle',
-            dataField: 'id',
+            dataField: 'docId',
             formatter: (cell, row, index) => {
                 return (
                     <div className="btn-group align-top">
@@ -99,7 +99,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
                     <EPanel title="Items" subtitle="Be a wise leader">
                         <ETable
                             className="table-lg mt-3"
-                            keyField="id"
+                            keyField="docId"
                             data={items}
                             columns={enhancedColumns}
                             pagination={pagination}
@@ -190,9 +190,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
             return;
         }
         this.closeModals();
-        const itemToCreate = form.values();
-        delete itemToCreate.id;
-        this.props.CRUDStore.createItem(itemToCreate);
+        this.props.CRUDStore.createItem(form.values());
     }
 
     private onUpdateFormValid = (form) => {
