@@ -5,7 +5,7 @@ import {
     Col,
     InputProps,
 } from 'reactstrap';
-import CustomInputGroup from '../CustomInputGroup';
+import { CustomInputGroup } from './CustomInputGroup';
 import { observer } from 'mobx-react';
 
 interface Iprops extends InputProps {
@@ -15,7 +15,7 @@ interface Iprops extends InputProps {
 }
 
 @observer
-class CustomFormGroup extends React.Component<Iprops> {
+export class CustomFormGroup extends React.Component<Iprops> {
     public render() {
         const { horizontal, field, ...inputGroupProps } = this.props;
         const fieldBind = field.bind();
@@ -47,5 +47,3 @@ class CustomFormGroup extends React.Component<Iprops> {
         return formGroup;
     }
 }
-
-export default CustomFormGroup;

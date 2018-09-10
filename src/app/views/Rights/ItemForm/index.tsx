@@ -5,7 +5,7 @@ import MobxReactForm from 'mobx-react-form';
 import { MobxForm } from '../../../stores/Utils';
 import { formFields } from './formFields';
 // import Select from 'react-select';
-import CustomFormGroup from '../../../components/Form/CustomFormGroup';
+import { CustomFormGroup } from '../../../components/Form';
 
 export * from './formFields';
 

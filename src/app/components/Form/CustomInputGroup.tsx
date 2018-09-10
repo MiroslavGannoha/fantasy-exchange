@@ -10,11 +10,10 @@ import { observer } from 'mobx-react';
 interface Iprops extends InputProps {
     field: any;
     formText?: string;
-    horizontal?: boolean;
 }
 
 @observer
-class CustomFormGroup extends React.Component<Iprops> {
+export class CustomInputGroup extends React.Component<Iprops> {
     public render() {
         const { field, formText, ...restProps } = this.props;
         const fieldBind = field.bind();
@@ -32,5 +31,3 @@ class CustomFormGroup extends React.Component<Iprops> {
         );
     }
 }
-
-export default CustomFormGroup;
