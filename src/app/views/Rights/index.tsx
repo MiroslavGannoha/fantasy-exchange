@@ -19,19 +19,19 @@ class Players extends React.Component<IProps> {
         const columns = [
             {
                 classes: 'text-nowrap align-middle',
-                dataField: 'name',
+                dataField: 'playerId',
                 headerClasses: 'max-width',
                 text: 'Player',
             },
             {
                 classes: 'text-nowrap align-middle',
-                dataField: 'nickname',
+                dataField: 'holderId',
                 headerClasses: 'max-width',
                 text: 'Holder',
             },
             {
                 classes: 'text-nowrap align-middle',
-                dataField: 'playerRole',
+                dataField: 'volume',
                 headerClasses: 'max-width',
                 text: 'Volume',
             },

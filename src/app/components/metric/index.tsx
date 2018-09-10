@@ -16,6 +16,7 @@ class EMetric extends React.Component<IEMetricProps, {}> {
         const {
             className,
             title, value, icon, iconDark,
+            // @ts-ignore
             ...attributes,
         } = this.props;
 

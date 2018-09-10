@@ -8,7 +8,10 @@ export class MobxForm extends MobxReactForm {
             plugins: { dvr: validatorjs },
             hooks: {
                 onSuccess: onValid,
-                onError: () => toast.error('Form is invalid'),
+                onError: (form) => {
+                    toast.error('Form is invalid');
+                    console.log(form.errors());
+                },
             },
         };
 

@@ -127,6 +127,7 @@ class EDatepicker extends React.Component<IEDatepickerProps, IEDatepickerState> 
         const {
             className,
             config, value, placeholder, onChange,
+            // @ts-ignore
             ...attributes,
         } = this.props;
 

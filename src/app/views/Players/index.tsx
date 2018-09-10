@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 // import * as moment from 'moment';
-
-// import { Collection } from 'firestorter';
 import ItemForm from './ItemForm';
 import { IStores, PlayersStore } from '../../stores';
 import CRUDTable from '../../components/CRUDTable';

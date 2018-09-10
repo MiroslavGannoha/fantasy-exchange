@@ -3,6 +3,7 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 import { FirebaseFirestore } from '@firebase/firestore-types';
+import { initFirestorter } from 'firestorter';
 
 firebase.initializeApp({
     apiKey: 'AIzaSyD94yAtoXu1JWEm635t-d53BGO1AMo1-WU',
@@ -16,6 +17,8 @@ firebase.initializeApp({
 const db: FirebaseFirestore = firebase.firestore();
 
 db.settings({ timestampsInSnapshots: true});
+
+initFirestorter({ firebase });
 
 export abstract class CRUDAPI {
     public collectionName: string = null;
@@ -39,6 +42,11 @@ export abstract class CRUDAPI {
     }
 
     public create(docId: string, item): Promise<any> {
+        if (docId) {
+            return db.collection(this.collectionName).doc(docId).set(item);
+        } else {
+            return  db.collection(this.collectionName).add(item);
+        }
         return db.collection(this.collectionName).doc(docId).set(item);
     }
 
