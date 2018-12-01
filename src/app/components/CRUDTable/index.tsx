@@ -18,7 +18,7 @@ interface IItemsState {
 }
 
 interface IProps {
-    CRUDStore: ICRUDClassStore;
+    CRUDStoreChild: ICRUDClassStore;
     columns: any[];
     ItemForm: any;
     noAdd?: boolean;
@@ -49,9 +49,8 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
     }
 
     public render() {
-        const { columns, CRUDStore, ItemForm, noAdd } = this.props;
-        const items = CRUDStore.itemsObservable.current();
-        console.log('itemsData', items);
+        const { columns, CRUDStoreChild, ItemForm, noAdd } = this.props;
+        const {items} = CRUDStoreChild.itemsState;
 
         const toggleModalEdit = () => this.toggleModal('edit');
         const toggleModalCreate = () => this.toggleModal('create');
@@ -117,7 +116,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
                         <ModalHeader toggle={toggleModalEdit}>Edit Item</ModalHeader>
                         <ModalBody>
                             <div className="py-1">
-                                <ItemForm onFormValid={this.onUpdateFormValid} data={CRUDStore.selectedItemData} />
+                                <ItemForm onFormValid={this.onUpdateFormValid} data={CRUDStoreChild.selectedItemData} />
                             </div>
                         </ModalBody>
                     </Modal>
@@ -134,7 +133,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
                         <Card>
                             <CardBody>
                                 {addBtn}
-                                <Button color="success" onClick={CRUDStore.refreshItems}>Refresh</Button>
+                                <Button color="success" onClick={CRUDStoreChild.refreshItems}>Refresh</Button>
                             </CardBody>
                         </Card>
                     </Col>
@@ -154,7 +153,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
     }
 
     public deleteItem = (itemId) => {
-        return () => this.props.CRUDStore.deleteItem(itemId);
+        return () => this.props.CRUDStoreChild.deleteItem(itemId);
     }
 
     private handlePageChange(page, perPage) {
@@ -180,7 +179,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
 
     private editItem = (item) => {
         return () => {
-            this.props.CRUDStore.setSelectedItemData(item);
+            this.props.CRUDStoreChild.setSelectedItemData(item);
             this.toggleModal('edit', true);
         };
     }
@@ -190,12 +189,12 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
             return;
         }
         this.closeModals();
-        this.props.CRUDStore.createItem(form.values());
+        this.props.CRUDStoreChild.createItem(form.values());
     }
 
     private onUpdateFormValid = (form) => {
         this.closeModals();
-        this.props.CRUDStore.updateItem(form.values());
+        this.props.CRUDStoreChild.updateItem(form.values());
     }
 
 }

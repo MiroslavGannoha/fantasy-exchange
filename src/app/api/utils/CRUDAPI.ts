@@ -2,6 +2,7 @@
 // @ts-ignore
 import firebase from 'firebase/app';
 import 'firebase/database';
+import 'firebase/firestore';
 import { FirebaseFirestore } from '@firebase/firestore-types';
 import { initFirestorter } from 'firestorter';
 
@@ -14,6 +15,7 @@ firebase.initializeApp({
     messagingSenderId: '117336781687',
 });
 
+console.log(firebase);
 const db: FirebaseFirestore = firebase.firestore();
 
 db.settings({ timestampsInSnapshots: true});

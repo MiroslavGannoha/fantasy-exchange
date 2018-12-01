@@ -67,7 +67,7 @@ class Players extends React.Component<IProps> {
 
         return (
             <CRUDTable
-                CRUDStore={playersStore}
+                CRUDStoreChild={playersStore}
                 columns={columns}
                 ItemForm={ItemForm}
             />

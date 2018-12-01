@@ -64,7 +64,7 @@ class Users extends React.Component<IProps> {
 
         return (
             <CRUDTable
-                CRUDStore={usersStore}
+                CRUDStoreChild={usersStore}
                 columns={columns}
                 ItemForm={ItemForm}
                 noAdd={true}

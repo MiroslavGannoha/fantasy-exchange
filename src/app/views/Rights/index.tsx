@@ -25,9 +25,12 @@ class Players extends React.Component<IProps> {
             },
             {
                 classes: 'text-nowrap align-middle',
-                dataField: 'holderId',
+                dataField: 'holder',
                 headerClasses: 'max-width',
                 text: 'Holder',
+                formatter: (holder) => {
+                    return holder.displayName;
+                },
             },
             {
                 classes: 'text-nowrap align-middle',
@@ -48,9 +51,14 @@ class Players extends React.Component<IProps> {
 
         const { rightsStore } = this.props;
 
+        // const result = fromPromise(usersApi.getAll());
+        // if (result.state === 'fulfilled') {
+        //     console.log(result.value);
+        // }
+
         return (
             <CRUDTable
-                CRUDStore={rightsStore}
+                CRUDStoreChild={rightsStore}
                 columns={columns}
                 ItemForm={ItemForm}
             />
