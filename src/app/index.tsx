@@ -11,6 +11,7 @@ import CRUD from './views/CRUD';
 import Settings from './views/Settings';
 import Players from './views/Players';
 import Rights from './views/Rights';
+import Market from './views/Market';
 import SignUp from './views/SignUp';
 
 // export const App = hot(module)(() => <Root><MobxRouter /></Root>);
@@ -29,6 +30,11 @@ export const pages = {
     overview: new Route({
         path: '/overview',
         component: <MainLayout component={Overview} />,
+    }),
+    market: new Route({
+        path: '/market',
+        component: <MainLayout component={Market} />,
+
     }),
     crud: new Route({
         path: '/crud',
@@ -50,7 +56,6 @@ export const pages = {
     rights: new Route({
         path: '/rights',
         component: <MainLayout component={Rights} />,
-
     }),
     players: new Route({
         path: '/players',

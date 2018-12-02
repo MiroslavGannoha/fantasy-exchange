@@ -7,6 +7,7 @@ import firebase from 'firebase/app';
 import * as admin from 'firebase-admin';
 
 export * from './users';
+export * from './offers';
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript

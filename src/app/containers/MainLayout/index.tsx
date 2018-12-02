@@ -5,7 +5,7 @@ import { Container, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/navbar';
 import Login from '../../components/Login';
-import Loader from '../../components/Loader';
+import LoaderInCard from '../../components/Loader';
 
 interface IMainLayoutProps {
     component: React.ComponentClass;
@@ -39,7 +39,7 @@ class MainLayout extends React.Component<IMainLayoutProps> {
                 <Row>
                     <Col>
                         <Navbar />
-                        <Breadcrumb className="bg-white">
+                        <Breadcrumb>
                             <BreadcrumbItem>
                                 Main
                             </BreadcrumbItem>
@@ -51,7 +51,7 @@ class MainLayout extends React.Component<IMainLayoutProps> {
                 </Row>
                 <Row className="flex-lg-nowrap">
                     <Col md="3" className="mb-3">
-                        <Loader loading={authStore.userLoading} message="Logging in ..." />
+                        <LoaderInCard loading={authStore.userLoading} message="Logging in ..." />
                         {!authStore.isLoggedIn && !authStore.userLoading ? <Login className="mb-3" /> : null}
                         <Sidebar />
                     </Col>

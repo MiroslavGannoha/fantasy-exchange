@@ -16,7 +16,7 @@ import {
     Form,
     FormGroup,
 } from 'reactstrap';
-import Loader from '../../components/Loader';
+import LoaderInCard from '../../components/Loader';
 
 interface IProps {
     store: IAppStore;
@@ -48,7 +48,7 @@ class Register extends React.Component<IProps> {
                 </Card>
             ) : (
                 authStore.userLoading ? (
-                    <Loader loading={authStore.userLoading} />
+                    <LoaderInCard loading={authStore.userLoading} />
                 ) : (
                     <div className="app flex-row align-items-center">
                         <Row className="justify-content-center">

@@ -12,7 +12,7 @@ import {
     CardHeader,
     CardTitle,
 } from 'reactstrap';
-import Loader from '../../components/Loader';
+import LoaderInCard from '../../components/Loader';
 
 interface IProps {
     store: IAppStore;
@@ -32,7 +32,7 @@ export class UserComponent extends React.Component<IProps> {
 
         if (!this.props.authStore.isLoggedIn) {
             ChildComponent = this.props.authStore.userLoading ?
-                <Loader loading={this.props.authStore.userLoading} size={8} />
+                <LoaderInCard loading={this.props.authStore.userLoading} size={8} />
             :
             (
                 <Row>

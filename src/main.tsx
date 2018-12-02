@@ -17,6 +17,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'simple-line-icons/css/simple-line-icons.css';
 // // Import Main styles for this application
 import '../styles/scss/elements.scss';
+
 // // Temp fix for reactstrap
 // import '../scss/core/_dropdown-menu-right.scss';
 

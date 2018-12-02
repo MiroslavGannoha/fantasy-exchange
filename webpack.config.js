@@ -128,6 +128,7 @@ module.exports = {
         //     filename: 'styles.css',
         //     disable: !isProduction
         // }),
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new HtmlWebpackPlugin({
             template: 'assets/index.html'
         })

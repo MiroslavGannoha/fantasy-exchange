@@ -78,6 +78,7 @@ class BasicTable extends React.Component<{}, IBasicTableState> {
                         data={items}
                         columns={columns}
                         pagination={pagination}
+                        isDataLoading={true}
                     />
                 </div>
             </EPanel>

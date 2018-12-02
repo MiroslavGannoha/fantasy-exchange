@@ -4,7 +4,7 @@ import { Modal, ModalHeader, ModalBody, Button, Row, Col, Card, CardBody } from 
 
 // import { Collection } from 'firestorter';
 import EPanel from '../../components/panel';
-import Loader from '../../components/Loader';
+import LoaderInCard from '../../components/Loader';
 import { ICRUDClassStore } from '../../stores';
 import ETable from '../table';
 
@@ -50,7 +50,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
 
     public render() {
         const { columns, CRUDStoreChild, ItemForm, noAdd } = this.props;
-        const {items} = CRUDStoreChild.itemsState;
+        const {items, pendingItems} = CRUDStoreChild.itemsState;
 
         const toggleModalEdit = () => this.toggleModal('edit');
         const toggleModalCreate = () => this.toggleModal('create');
@@ -102,6 +102,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
                             data={items}
                             columns={enhancedColumns}
                             pagination={pagination}
+                            isDataLoading={pendingItems}
                         />
                     </EPanel>
                     <Modal isOpen={this.state.modals.create} toggle={toggleModalCreate} size="lg">
@@ -138,7 +139,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
                         </Card>
                     </Col>
                 </Row>
-                {items === null ? <Loader /> : table}
+                {items === null ? <LoaderInCard /> : table}
             </>
         );
     }

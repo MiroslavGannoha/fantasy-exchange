@@ -4,6 +4,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 
 import './table.css';
+import { Loader } from '../Loader';
 
 const defaultPagination = {
     alwaysShowAllBtns: true,
@@ -22,6 +23,7 @@ interface IETableProps {
     keyField: string;
     data: any;
     columns: any;
+    isDataLoading: boolean;
 }
 
 // const defaultProps = {
@@ -33,12 +35,13 @@ interface IETableProps {
 
 class ETable extends React.Component<IETableProps, {}> {
     public render() {
-        const { pagination, className, ...restProps } = this.props;
+        const { pagination, className, isDataLoading, ...restProps } = this.props;
         const paginationOptions = {...defaultPagination, ...pagination};
-
+        const noDataIndication = () => isDataLoading ? <Loader /> : 'Data Not Available';
         return (
             <div className={classNames('table-responsive', className)}>
                 <BootstrapTable
+                    noDataIndication={noDataIndication}
                     pagination={paginationFactory(paginationOptions)}
                     {...restProps}
                 />

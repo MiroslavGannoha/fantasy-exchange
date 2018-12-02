@@ -1,16 +1,16 @@
 export const formFields = [{
     name: 'playerId',
-    placeholder: 'Player',
+    label: 'Player',
     rules: 'required|string',
     type: 'select',
 }, {
     name: 'holderId',
-    placeholder: 'Holder',
+    label: 'Holder',
     rules: 'required|string',
     type: 'select',
 }, {
     name: 'volume',
-    placeholder: 'Shares volume',
+    label: 'Shares volume',
     rules: 'required|integer',
 }, {
     name: 'docId',

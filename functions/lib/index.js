@@ -9,6 +9,7 @@ const firebase_database_1 = require("./firebase-database");
 const express = require("express");
 const admin = require("firebase-admin");
 __export(require("./users"));
+__export(require("./offers"));
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //

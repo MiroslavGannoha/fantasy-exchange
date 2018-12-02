@@ -1,14 +1,14 @@
 export const formFields = [{
     name: 'displayName',
-    placeholder: 'Display name',
+    label: 'Display name',
     rules: 'required|string|min:3',
 }, {
     name: 'email',
-    placeholder: 'Email',
+    label: 'Email',
     rules: 'required|string|email',
 }, {
     name: 'accessLevel',
-    placeholder: 'Access Level',
+    label: 'Access Level',
     rules: 'required|integer',
 }, {
     name: 'docId',

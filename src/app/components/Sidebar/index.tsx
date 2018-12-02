@@ -31,6 +31,12 @@ class Sidebar extends React.Component<IProps> {
                                     <span>Overview</span>
                                 </Link>
                             </li>
+                            <li className={(currentView === pages.market ? 'active ' : '') + 'nav-item'}>
+                                <Link view={pages.market} store={this.props.store} className="nav-link px-2">
+                                    <i className="fa fa-fw fa-shopping-cart mr-1" />
+                                    <span>Market</span>
+                                </Link>
+                            </li>
                             <li className={(currentView === pages.crud ? 'active ' : '') + 'nav-item'}>
                                 <Link view={pages.crud} store={this.props.store} className="nav-link px-2">
                                     <i className="fa fa-fw fa-clone mr-1" />

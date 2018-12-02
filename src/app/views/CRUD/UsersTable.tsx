@@ -145,6 +145,7 @@ class UsersTable extends React.Component<IUsersTableProps, {}> {
                 data={this.props.items}
                 columns={columns}
                 pagination={pagination}
+                isDataLoading={true}
             />
         );
     }

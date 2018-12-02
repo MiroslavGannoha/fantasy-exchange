@@ -5,6 +5,7 @@ import 'firebase/database';
 import 'firebase/firestore';
 import { FirebaseFirestore } from '@firebase/firestore-types';
 import { initFirestorter } from 'firestorter';
+import { toast } from 'react-toastify';
 
 firebase.initializeApp({
     apiKey: 'AIzaSyD94yAtoXu1JWEm635t-d53BGO1AMo1-WU',
@@ -35,28 +36,56 @@ export abstract class CRUDAPI {
 
     public getAll(): Promise<any[]> {
         return db.collection(this.collectionName).get()
-            .then((qs) => qs.docs.map((doc) => ({ ...{ docId: doc.id }, ...doc.data() })));
+            .then((qs) => qs.docs.map((doc) => ({ ...{ docId: doc.id }, ...doc.data() })))
+            .catch((error) => {
+                toast.error(`Get all ${this.collectionName} - ${error.message}`);
+                return error;
+            });
     }
 
     public get(docId: string): Promise<any> {
         return db.collection(this.collectionName).doc(docId).get()
-            .then((doc) => doc.data());
+            .then((doc) => doc.data())
+            .catch((error) => {
+                toast.error(`Get item from ${this.collectionName} - ${error.message}`);
+                return error;
+            });
     }
 
-    public create(docId: string, item): Promise<any> {
+    public create(item, docId: string): Promise<any> {
         if (docId) {
-            return db.collection(this.collectionName).doc(docId).set(item);
+            return db.collection(this.collectionName).doc(docId).set(item)
+                .catch((error) => {
+                    toast.error(`Add item to ${this.collectionName} - ${error.message}`);
+                    return error;
+                });
         } else {
-            return  db.collection(this.collectionName).add(item);
+            return  db.collection(this.collectionName).add(item)
+                .catch((error) => {
+                    toast.error(`Add item to ${this.collectionName} - ${error.message}`);
+                    return error;
+                });
         }
-        return db.collection(this.collectionName).doc(docId).set(item);
+        return db.collection(this.collectionName).doc(docId).set(item)
+            .catch((error) => {
+                toast.error(`Add item to ${this.collectionName} - ${error.message}`);
+                return error;
+            });
     }
 
-    public update(docId: string, item): Promise<any> {
-        return db.collection(this.collectionName).doc(docId).update(item);
+    public update(item, docId: string): Promise<any> {
+        return db.collection(this.collectionName).doc(docId).update(item)
+            .catch((error) => {
+                toast.error(`Update item from ${this.collectionName} - ${error.message}`);
+                return error;
+            });
     }
 
     public delete(docId: string): Promise<any> {
-        return db.collection(this.collectionName).doc(docId).delete();
+        return db.collection(this.collectionName).doc(docId).delete()
+            .catch((error) => {
+                toast.error(`Delete item from ${this.collectionName} - ${error.message}`);
+                return error;
+            });
     }
 }

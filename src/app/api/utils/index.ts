@@ -11,5 +11,5 @@ export * from './CRUDAPI';
 
 export const call = (methodName: string, reqData?: any) =>
     firebase.functions().httpsCallable(methodName)(reqData)
-        .then(({ data }) => { toast.success('Successful: ' + methodName); return data; })
+        // .then(({ data }) => { toast.success('Successful: ' + methodName); return data; })
         .catch((error) => { toast.error(error.message); throw error; });

@@ -239,3 +239,7 @@ $pagination-active-border-color:    $gray-500 !default;
 $pagination-disabled-color:         $gray-400 !default;
 // $pagination-disabled-bg:            $white !default;
 $pagination-disabled-border-color:  $gray-200 !default;
+
+$breadcrumb-bg: transparent;
+$breadcrumb-padding-y:              0;
+$breadcrumb-padding-x:              .75rem;

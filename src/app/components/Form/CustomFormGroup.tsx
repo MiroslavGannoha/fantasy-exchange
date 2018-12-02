@@ -20,8 +20,8 @@ export class CustomFormGroup extends React.Component<Iprops> {
         const { horizontal, field, ...inputGroupProps } = this.props;
         const fieldBind = field.bind();
 
-        const label = <Label htmlFor={field.name}>{fieldBind.placeholder}</Label>;
-        const inputElements = <CustomInputGroup field={field} {...inputGroupProps} />;
+        const label = <Label htmlFor={field.name}>{fieldBind.label}</Label>;
+        const inputElements = <CustomInputGroup field={field} {...inputGroupProps} placeholder={fieldBind.label} />;
 
         let formGroup: React.ReactFragment = null;
         if (horizontal) {

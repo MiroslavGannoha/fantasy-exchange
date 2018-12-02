@@ -7,11 +7,14 @@ interface ILoaderProps {
     message?: string;
 }
 
-class Loader extends React.Component<ILoaderProps> {
+export const Loader = () => (
+    <Progress animated={true} value="100" color="success" className="m-3" />
+);
+
+class LoaderInCard extends React.Component<ILoaderProps> {
     public render() {
         const { loading, size, message } = this.props;
         let show;
-        console.log('loading', loading);
         loading === undefined ? show = true : show = loading;
         return show ? (
             <Row className="justify-content-center mb-3">
@@ -21,7 +24,7 @@ class Loader extends React.Component<ILoaderProps> {
                             <CardTitle>
                                 {message || 'Loading...'}
                             </CardTitle>
-                            <Progress animated={true} value="100" color="success" />
+                            <Loader />
                         </CardBody>
                     </Card>
                 </Col>
@@ -30,4 +33,4 @@ class Loader extends React.Component<ILoaderProps> {
     }
 }
 
-export default Loader;
+export default LoaderInCard;
