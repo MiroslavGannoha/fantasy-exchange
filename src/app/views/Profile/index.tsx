@@ -49,10 +49,10 @@ class Profile extends React.Component<IProps, IProfileState> {
                     <div className="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                         <div className="text-center text-sm-left mb-2 mb-sm-0">
                             <h4 className="pt-sm-2 pb-1 mb-0 text-nowrap">{authStore.userName}</h4>
-                            <p className="mb-0">{authStore.userInfo.email}</p>
-                            <div className="text-muted">
+                            <p className="mb-0">{authStore.currentUser.attributes.email}</p>
+                            {/* <div className="text-muted">
                                 <small>Last seen {authStore.lastVisit}</small>
-                            </div>
+                            </div> */}
                             <div className="mt-2">
                                 <button className="btn btn-primary" type="button">
                                     <i className="fa fa-fw fa-camera"/>
@@ -62,11 +62,11 @@ class Profile extends React.Component<IProps, IProfileState> {
                         </div>
                         <div className="text-center text-sm-right">
                             <span className="badge badge-secondary">administrator</span>
-                            <div className="text-muted">
+                            {/* <div className="text-muted">
                                 <small>
                                     Joined {authStore.userCreated}
                                 </small>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

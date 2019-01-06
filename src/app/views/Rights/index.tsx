@@ -29,7 +29,7 @@ class Players extends React.Component<IProps> {
                 headerClasses: 'max-width',
                 text: 'Holder',
                 formatter: (holder) => {
-                    return holder.displayName;
+                    return holder.username;
                 },
             },
             {

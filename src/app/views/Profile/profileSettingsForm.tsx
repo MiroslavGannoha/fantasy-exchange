@@ -80,8 +80,8 @@ class ProfileSettingsForm extends React.Component<IProps, IState> {
                                     <input
                                         className="form-control"
                                         type="text"
-                                        placeholder={authStore.userInfo.email || 'user@example.com'}
-                                        defaultValue={authStore.userInfo.email}
+                                        placeholder={authStore.currentUser.attributes.email || 'user@example.com'}
+                                        defaultValue={authStore.currentUser.attributes.email}
                                     />
                                 </div>
                             </div>

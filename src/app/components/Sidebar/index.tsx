@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-
-// import { NavLink } from 'react-router-dom';
 import { Link } from 'mobx-router';
 import ENavlist from '../navlist';
 import { pages } from '../../../app';
@@ -55,12 +53,12 @@ class Sidebar extends React.Component<IProps> {
                                     <span>Players</span>
                                 </Link>
                             </li>
-                            <li className={(currentView === pages.rights ? 'active ' : '') + 'nav-item'}>
+                            {/* <li className={(currentView === pages.rights ? 'active ' : '') + 'nav-item'}>
                                 <Link view={pages.rights} store={this.props.store} className="nav-link px-2">
                                     <i className="fa fa-fw fa-clone mr-1" />
                                     <span>Rights</span>
                                 </Link>
-                            </li>
+                            </li> */}
                             <li className={(currentView === pages.settings ? 'active ' : '') + 'nav-item'}>
                                 <Link view={pages.settings} store={this.props.store} className="nav-link px-2">
                                     <i className="fa fa-fw fa-cog mr-1" />

@@ -1,22 +1,10 @@
 import { computed, observable, action } from 'mobx';
 import MobxReactForm from 'mobx-react-form';
 import * as moment from 'moment';
-// @ts-ignore
-import firebase from 'firebase/app';
-// @ts-ignore
-import { User, UserInfo, FirebaseAuth } from '@firebase/auth-types';
-import { FirebaseFirestore } from '@firebase/firestore-types';
-import 'firebase/auth';
-import 'firebase/firestore';
-import { usersApi } from '../../api';
 import { loginFormRules } from './loginForm';
 import { signUpFormRules } from './signUpForm';
 import validatorjs from 'validatorjs';
-import { toast } from '../../../../node_modules/react-toastify';
-
-const db: FirebaseFirestore = firebase.firestore();
-const auth: FirebaseAuth = firebase.auth();
-db.settings({ timestampsInSnapshots: true });
+import { Auth } from 'aws-amplify';
 
 const plugins = { dvr: validatorjs };
 export class AuthStore {
@@ -32,36 +20,36 @@ export class AuthStore {
     public loginForm: MobxReactForm = null;
     public signUpForm: MobxReactForm = null;
 
-    @observable public userInfo: UserInfo = {
-        displayName: '',
-        email: '',
-        phoneNumber: '',
-        photoURL: '',
-        providerId: '',
-        uid: '',
-    };
+    @observable public currentUser: any = null;
 
     @observable
     public auth: any = null;
 
     @observable
-    public userLoading: boolean = true;
-
-    @observable private currentUser: User = null;
-    @observable private currentPersona: any = null;
+    public userLoading: boolean = false;
 
     constructor() {
-        this.auth = firebase.auth();
-        this.auth.onAuthStateChanged((user) => this.onAuthStateChanged(user));
         this.initForms();
+        Auth.currentAuthenticatedUser().then(this.setCurrentUser);
     }
 
-    public login(email: string, password: string) {
+    public login(username: string, password: string) {
         this.userLoading = true;
-        this.auth.signInWithEmailAndPassword(email, password).catch(({code, message}) => {
-            toast.error(code + ' ' + message);
-            this.userLoading = false;
-        });
+        Auth.signIn(username, password)
+            .then((user) => {
+                this.userLoading = false;
+                this.setCurrentUser(user);
+            })
+            .catch((error) => {
+                this.userLoading = false;
+                console.log('error', error);
+            });
+    }
+
+    @action
+    public setCurrentUser = (user) => {
+        console.log('current user:', user);
+        this.currentUser = user;
     }
 
     @action
@@ -71,7 +59,7 @@ export class AuthStore {
 
     @computed
     public get userName(): string {
-        return this.currentPersona ? this.currentPersona.displayName : '';
+        return this.currentUser ? this.currentUser.username : '';
     }
 
     @computed
@@ -87,49 +75,20 @@ export class AuthStore {
         return moment(this.currentUser.metadata.creationTime).format('DD MMM YYYY');
     }
 
-    @computed
-    public get lastVisit() {
-        if (!this.currentUser) {
-            return '';
-        }
-        return moment(this.currentUser.metadata.lastSignInTime).fromNow();
-    }
-
-    @action
-    public onAuthStateChanged(user: User) {
-        this.userLoading = false;
-        if (user) {
-            console.log('onauthstatechange SIGN IN', user);
-            this.currentUser = user;
-            db.collection('personas').doc(user.uid).onSnapshot(
-                (doc) => this.currentPersona = doc.data(),
-            );
-            this.updateUserInfo(user.providerData[0]);
-        } else {
-            console.log('onauthstatechange SIGN OUT');
-            this.currentUser = null;
-            this.userInfo = {
-                displayName: '',
-                email: '',
-                phoneNumber: '',
-                photoURL: '',
-                providerId: '',
-                uid: '',
-            };
-        }
-    }
-
-    @action
-    private updateUserInfo(newUserInfo: Partial<UserInfo>) {
-        Object.assign(this.userInfo, newUserInfo);
-    }
+    // @computed
+    // public get lastVisit() {
+    //     if (!this.currentUser) {
+    //         return '';
+    //     }
+    //     return moment(this.currentUser.metadata.lastSignInTime).fromNow();
+    // }
 
     private initForms() {
         this.loginForm = new MobxReactForm({ fields: loginFormRules }, {
             plugins, hooks: {
                 onSuccess: (form) => {
-                    const { email, password } = form.values();
-                    this.login(email, password);
+                    const { username, password } = form.values();
+                    this.login(username, password);
                 },
             },
         });
@@ -137,16 +96,17 @@ export class AuthStore {
         this.signUpForm = new MobxReactForm({ fields: signUpFormRules }, {
             plugins, hooks: {
                 onSuccess: (form: MobxReactForm) => {
-                    const { displayName, email, password } = form.values();
-                    this.userLoading = true;
-                    usersApi.registerNewUser(email, password, displayName).then(() => {
-                        auth.signInWithEmailAndPassword(email, password).catch(({ code, message }) => {
-                            toast.error(code + ' ' + message);
-                            this.userLoading = false;
-                        });
-                    }).catch(() => {
-                        this.userLoading = false;
-                    });
+                    const { username, email, password } = form.values();
+                    Auth.signUp({
+                        username,
+                        password,
+                        attributes: {
+                            email,          // optional
+                        },
+                    })
+                        .then((data) => console.log(data))
+                        .catch((err) => console.log(err));
+                    // this.userLoading = true;
                 },
             },
         });

@@ -1,0 +1,17 @@
+projects:
+  fantasy-exchange-api:
+    schemaPath: src\graphql\schema.json
+    includes:
+      - src\graphql\**\*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        graphQLApiId: 2qhoevxvpzcdrhzvojpkzpmiji
+        codeGenTarget: typescript
+        generatedFileName: src\API.ts
+        docsFilePath: src\graphql
+        region: eu-central-1
+      endpoints:
+        prod: >-
+          https://buncxmagonftfbwqg4urbf6jey.appsync-api.eu-central-1.amazonaws.com/graphql

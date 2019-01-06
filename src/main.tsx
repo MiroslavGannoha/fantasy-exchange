@@ -5,9 +5,11 @@ import * as ReactDOM from 'react-dom';
 // import firebase from 'firebase/app';
 // import { initFirestorter } from 'firestorter';
 import { Provider } from 'mobx-react';
-import { pages, App } from './app';
+import { pages, APP } from './app';
 import { createStores, IStores } from './app/stores';
 import { startRouter } from 'mobx-router';
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
 // Styles
 // Import Flag Icons Set
 import 'flag-icon-css/css/flag-icon.min.css';
@@ -39,13 +41,15 @@ import '../styles/scss/elements.scss';
 
 // prepare MobX stores
 // const history = createBrowserHistory();
+Amplify.configure(aws_exports);
+
 const stores: IStores = createStores();
 
 startRouter(pages, stores.store);
 
 ReactDOM.render(
-    <Provider {...stores}>
-        <App />
+    <Provider {...stores} >
+        <APP />
         {/* <App history={history} /> */}
     </Provider>,
     document.getElementById('root'),

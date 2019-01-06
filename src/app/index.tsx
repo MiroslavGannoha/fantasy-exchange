@@ -10,17 +10,31 @@ import Users from './views/Users';
 import CRUD from './views/CRUD';
 import Settings from './views/Settings';
 import Players from './views/Players';
-import Rights from './views/Rights';
+// import Rights from './views/Rights';
 import Market from './views/Market';
 import SignUp from './views/SignUp';
+import AWSAppSyncClient, { AUTH_TYPE } from 'aws-appsync';
+import appSyncConfig from '../aws-exports.js';
+import { Auth } from 'aws-amplify';
+
+export const client = new AWSAppSyncClient({
+    url: appSyncConfig.aws_appsync_graphqlEndpoint,
+    region: appSyncConfig.aws_appsync_region,
+    auth: {
+        type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
+        jwtToken: async () => (await Auth.currentSession()).getAccessToken().getJwtToken(),
+    },
+});
 
 // export const App = hot(module)(() => <Root><MobxRouter /></Root>);
-export const App = () => (
+export const APP = () => (
     <Root>
         <MobxRouter />
         <ToastContainer />
     </Root>
 );
+
+// export const APP = withAuthenticator(App, true);
 
 export const pages = {
     home: new Route({
@@ -39,7 +53,6 @@ export const pages = {
     crud: new Route({
         path: '/crud',
         component: <MainLayout component={CRUD} />,
-
     }),
     users: new Route({
         path: '/users',
@@ -53,10 +66,10 @@ export const pages = {
         path: '/signup',
         component: <MainLayout component={SignUp}  />,
     }),
-    rights: new Route({
-        path: '/rights',
-        component: <MainLayout component={Rights} />,
-    }),
+    // rights: new Route({
+    //     path: '/rights',
+    //     component: <MainLayout component={Rights} />,
+    // }),
     players: new Route({
         path: '/players',
         component: <MainLayout component={Players} />,

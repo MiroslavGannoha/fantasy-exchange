@@ -15,9 +15,9 @@ class UsersApi extends CRUDAPI {
         super('personas');
     }
 
-    public update(persona: Partial<IPersona>, targetUserId: string): Promise<any[]> {
-        return call('setCustomClaims', { accessLevel: persona.accessLevel, targetUserId });
-    }
+    // public update(persona: Partial<IPersona>, targetUserId: string): Promise<any[]> {
+    //     return call('setCustomClaims', { accessLevel: persona.accessLevel, targetUserId });
+    // }
 
     public delete(targetId: string): Promise<any> {
         return call('deleteUser', { targetId });

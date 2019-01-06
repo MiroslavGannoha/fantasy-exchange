@@ -75,6 +75,8 @@ class UsersFilter extends React.Component<IUsersFilterProps, {}> {
                                     value={this.props.filters.date}
                                     onChange={onDateChange}
                                     placeholder={datesInputPlaceholder}
+                                    config={{}}
+                                    className=""
                                 />
                             </div>
                         </div>

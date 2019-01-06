@@ -1,5 +1,5 @@
 export const formFields = [{
-    name: 'displayName',
+    name: 'username',
     label: 'Display name',
     rules: 'required|string|min:3',
 }, {

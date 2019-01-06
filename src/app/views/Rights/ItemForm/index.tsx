@@ -36,8 +36,8 @@ export default class ItemForm extends React.Component<IProps> {
         let personasOptions = [];
         let playersOptions = [];
         if (personas) {
-            personasOptions = personas.map(({docId, displayName}) => {
-                return <option key={docId} value={docId}>{displayName}</option>;
+            personasOptions = personas.map(({docId, username}) => {
+                return <option key={docId} value={docId}>{username}</option>;
             });
         }
 

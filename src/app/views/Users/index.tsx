@@ -32,7 +32,7 @@ class Users extends React.Component<IProps> {
             },
             {
                 classes: 'text-nowrap align-middle',
-                dataField: 'displayName',
+                dataField: 'username',
                 headerClasses: 'max-width',
                 text: 'Name',
             },

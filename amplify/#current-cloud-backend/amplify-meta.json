@@ -1,0 +1,64 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "fantasyexchangev2-20190102201924-authRole",
+			"UnauthRoleArn": "arn:aws:iam::016924773714:role/fantasyexchangev2-20190102201924-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::016924773714:role/fantasyexchangev2-20190102201924-authRole",
+			"Region": "eu-central-1",
+			"DeploymentBucketName": "fantasyexchangev2-20190102201924-deployment",
+			"UnauthRoleName": "fantasyexchangev2-20190102201924-unauthRole",
+			"StackName": "fantasyexchangev2-20190102201924",
+			"StackId": "arn:aws:cloudformation:eu-central-1:016924773714:stack/fantasyexchangev2-20190102201924/eea61b00-0eba-11e9-a6e0-0a43c0b04aee"
+		}
+	},
+	"api": {
+		"fantasy-exchange-api": {
+			"service": "AppSync",
+			"output": {
+				"securityType": "AMAZON_COGNITO_USER_POOLS",
+				"GraphQLAPIIdOutput": "2qhoevxvpzcdrhzvojpkzpmiji",
+				"GraphQLAPIEndpointOutput": "https://buncxmagonftfbwqg4urbf6jey.appsync-api.eu-central-1.amazonaws.com/graphql"
+			},
+			"lastPushTimeStamp": "2019-01-02T18:20:20.348Z"
+		}
+	},
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/fantasyexchangev2-20190102201924-deployment/amplify-cfn-templates/hosting/template.json",
+				"logicalId": "hostingS3AndCloudFront"
+			},
+			"lastPushTimeStamp": "2019-01-03T19:05:39.058Z",
+			"output": {
+				"S3BucketSecureURL": "https://fantasy-exchange.s3.amazonaws.com",
+				"WebsiteURL": "http://fantasy-exchange.s3-website.eu-central-1.amazonaws.com",
+				"Region": "eu-central-1",
+				"HostingBucketName": "fantasy-exchange"
+			},
+			"lastPushDirHash": "bXFSkN2JSU5Sh3CzDOlx/tGn2RY="
+		}
+	},
+	"auth": {
+		"cognito3e60410b": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/fantasyexchangev2-20190102201924-deployment/amplify-cfn-templates/auth/cognito3e60410b-cloudformation-template.yml",
+				"logicalId": "authcognito3e60410b"
+			},
+			"lastPushTimeStamp": "2019-01-03T19:05:39.058Z",
+			"output": {
+				"AppClientSecret": "17tfu6s70e1nag49tt5fdl36hhkmbailj2tpq7le298h1t67gs43",
+				"UserPoolId": "eu-central-1_36sSPOmvk",
+				"AppClientIDWeb": "6r6j27nj3kertq2jcj4vn45veu",
+				"AppClientID": "dn2jrv853a67oa5i6gb9aki3h",
+				"IdentityPoolId": "eu-central-1:dc535272-b90a-49a1-9ed6-988d434d3602",
+				"IdentityPoolName": "cognito3e60410b_identitypool_3e60410b",
+				"UserPoolName": "cognito3e60410b_userpool_3e60410b"
+			},
+			"lastPushDirHash": "VBewCtySoraZUy4IPirQuPoEW2c="
+		}
+	}
+}

@@ -61,11 +61,11 @@ const toArray = (value) => {
 };
 
 interface IEDatepickerProps {
-    config: object;
+    config?: object;
     value: Date | Date[];
     placeholder: string;
     onChange: (dates) => void;
-    className: string;
+    className?: string;
 }
 
 interface IEDatepickerState {
@@ -78,7 +78,7 @@ interface IEDatepickerState {
 // };
 
 class EDatepicker extends React.Component<IEDatepickerProps, IEDatepickerState> {
-    private localDefaults: any = {};
+    public localDefaults: any = {};
     private options: any = {};
     constructor(props) {
         super(props);

@@ -1,27 +1,7 @@
 
-// @ts-ignore
-import firebase from 'firebase/app';
-import 'firebase/database';
-import 'firebase/firestore';
-import { FirebaseFirestore } from '@firebase/firestore-types';
-import { initFirestorter } from 'firestorter';
 import { toast } from 'react-toastify';
 
-firebase.initializeApp({
-    apiKey: 'AIzaSyD94yAtoXu1JWEm635t-d53BGO1AMo1-WU',
-    authDomain: 'fantasy-exchange.firebaseapp.com',
-    databaseURL: 'https://fantasy-exchange.firebaseio.com',
-    projectId: 'fantasy-exchange',
-    storageBucket: 'gs://fantasy-exchange.appspot.com',
-    messagingSenderId: '117336781687',
-});
-
-console.log(firebase);
-const db: FirebaseFirestore = firebase.firestore();
-
-db.settings({ timestampsInSnapshots: true});
-
-initFirestorter({ firebase });
+const db: any = {};
 
 export abstract class CRUDAPI {
     public collectionName: string = null;

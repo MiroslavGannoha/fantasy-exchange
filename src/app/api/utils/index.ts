@@ -1,15 +1,8 @@
-// @ts-ignore
-import firebase from 'firebase/app';
-import 'firebase/functions';
-import { toast } from 'react-toastify';
-// import { initFirestorter } from 'firestorter';
-// import { FirebaseFirestore } from '@firebase/firestore-types';
-
 export * from './CRUDAPI';
+import graphql from 'mobx-apollo';
+import gql from 'graphql-tag';
+import { client } from 'app';
 
-// initFirestorter({ firebase });
+export const call = (methodName: string, reqData?: any) => (new Promise((y) => y()));
 
-export const call = (methodName: string, reqData?: any) =>
-    firebase.functions().httpsCallable(methodName)(reqData)
-        // .then(({ data }) => { toast.success('Successful: ' + methodName); return data; })
-        .catch((error) => { toast.error(error.message); throw error; });
+export const queryCall = (query) => graphql({ client, query: gql(query) });

@@ -1,5 +1,5 @@
 export const signUpFormRules = [{
-    name: 'displayName',
+    name: 'username',
     type: 'text',
     label: 'Username',
     placeholder: 'Username',

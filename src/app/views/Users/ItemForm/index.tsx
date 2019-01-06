@@ -32,9 +32,9 @@ export default class ItemForm extends React.Component<IProps> {
             <Form onSubmit={form.onSubmit}>
                 <FormGroup row={true}>
                     <Col sm="6">
-                        <Label htmlFor="displayName">Display name</Label>
-                        <Input {...form.$('displayName').bind()} />
-                        <small className="text-danger">{form.$('displayName').error}</small>
+                        <Label htmlFor="username">Display name</Label>
+                        <Input {...form.$('username').bind()} />
+                        <small className="text-danger">{form.$('username').error}</small>
                     </Col>
                     <Col sm="6">
                         <Label htmlFor="email">Email</Label>

@@ -21,17 +21,18 @@ class LoginForm extends React.Component<IProps> {
         const form = this.props.authStore.loginForm;
         return (
             <EPanel titleNode={<Title />} className={this.props.className}>
+                {/* <Authenticator /> */}
                 <Form onSubmit={form.onSubmit}>
                     <FormGroup>
                         <InputGroup>
                             <div className="input-group-prepend">
                                 <span className="input-group-text">
-                                    @
+                                    <i className="icon-user" />
                                 </span>
                             </div>
-                            <Input {...form.$('email').bind()}/>
+                            <Input {...form.$('username').bind()}/>
                         </InputGroup>
-                        <small className="text-danger">{form.$('email').error}</small>
+                        <small className="text-danger">{form.$('username').error}</small>
                     </FormGroup>
                     <FormGroup>
                         <InputGroup>
