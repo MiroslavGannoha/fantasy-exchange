@@ -23,19 +23,6 @@ import '../styles/scss/elements.scss';
 // // Temp fix for reactstrap
 // import '../scss/core/_dropdown-menu-right.scss';
 
-// Initialize firebase app
-// firebase.initializeApp({
-//     apiKey: 'AIzaSyD94yAtoXu1JWEm635t-d53BGO1AMo1-WU',
-//     authDomain: 'fantasy-exchange.firebaseapp.com',
-//     databaseURL: 'https://fantasy-exchange.firebaseio.com',
-//     projectId: 'fantasy-exchange',
-//     storageBucket: 'gs://fantasy-exchange.appspot.com',
-//     messagingSenderId: '117336781687',
-// });
-
-// Initialize `firestorter`
-// initFirestorter({ firebase });
-
 // enable MobX strict mode
 // useStrict(true);
 

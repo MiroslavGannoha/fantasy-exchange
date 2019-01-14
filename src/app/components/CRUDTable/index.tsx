@@ -42,6 +42,8 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
 
         // this.props.CRUDStore.initCreateForm(formFields);
 
+        this.props.CRUDStoreChild.getAll();
+
     }
 
     public createItem() {
@@ -50,7 +52,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
 
     public render() {
         const { columns, CRUDStoreChild, ItemForm, noAdd } = this.props;
-        const {items, pendingItems} = CRUDStoreChild.itemsState;
+        const {data: {listPlayers}, loading} = CRUDStoreChild.getAllResult;
 
         const toggleModalEdit = () => this.toggleModal('edit');
         const toggleModalCreate = () => this.toggleModal('create');
@@ -64,7 +66,7 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
         const enhancedColumns = columns.slice();
         enhancedColumns.push({
             classes: 'text-center align-middle',
-            dataField: 'docId',
+            dataField: 'id',
             formatter: (cell, row, index) => {
                 return (
                     <div className="btn-group align-top">
@@ -98,11 +100,11 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
                     <EPanel title="Items" subtitle="Be a wise leader">
                         <ETable
                             className="table-lg mt-3"
-                            keyField="docId"
-                            data={items}
+                            keyField="id"
+                            data={listPlayers ? listPlayers.items : []}
                             columns={enhancedColumns}
                             pagination={pagination}
-                            isDataLoading={pendingItems}
+                            isDataLoading={loading}
                         />
                     </EPanel>
                     <Modal isOpen={this.state.modals.create} toggle={toggleModalCreate} size="lg">
@@ -134,12 +136,12 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
                         <Card>
                             <CardBody>
                                 {addBtn}
-                                <Button color="success" onClick={CRUDStoreChild.refreshItems}>Refresh</Button>
+                                <Button color="success" onClick={this.refresh}>Refresh</Button>
                             </CardBody>
                         </Card>
                     </Col>
                 </Row>
-                {items === null ? <LoaderInCard /> : table}
+                {listPlayers === undefined ? <LoaderInCard /> : table}
             </>
         );
     }
@@ -154,7 +156,8 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
     }
 
     public deleteItem = (itemId) => {
-        return () => this.props.CRUDStoreChild.deleteItem(itemId);
+        return () => console.log(itemId);
+        // return () => this.props.CRUDStoreChild.deleteItem(itemId);
     }
 
     private handlePageChange(page, perPage) {
@@ -190,12 +193,19 @@ class CRUDTable extends React.Component<IProps, IItemsState> {
             return;
         }
         this.closeModals();
-        this.props.CRUDStoreChild.createItem(form.values());
+        // this.props.CRUDStoreChild.createItem(form.values());
     }
 
     private onUpdateFormValid = (form) => {
         this.closeModals();
-        this.props.CRUDStoreChild.updateItem(form.values());
+        console.log(form.values());
+        this.props.CRUDStoreChild.update(form.values())
+            .then((r) => console.log(r))
+            .catch((err) => console.log(err));
+    }
+
+    private refresh = () => {
+        this.props.CRUDStoreChild.getAllResult.ref.refetch();
     }
 
 }

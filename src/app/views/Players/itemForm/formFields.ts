@@ -7,7 +7,7 @@ export const formFields = [{
     label: 'Nickname',
     rules: 'required|string|min:3',
 }, {
-    name: 'docId',
+    name: 'id',
     label: 'Id name',
     rules: 'required|string|min:3',
     disabled: true,

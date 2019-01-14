@@ -49,7 +49,7 @@ class Profile extends React.Component<IProps, IProfileState> {
                     <div className="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                         <div className="text-center text-sm-left mb-2 mb-sm-0">
                             <h4 className="pt-sm-2 pb-1 mb-0 text-nowrap">{authStore.userName}</h4>
-                            <p className="mb-0">{authStore.currentUser.attributes.email}</p>
+                            <p className="mb-0">{authStore.userAttributes.email}</p>
                             {/* <div className="text-muted">
                                 <small>Last seen {authStore.lastVisit}</small>
                             </div> */}

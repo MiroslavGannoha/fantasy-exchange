@@ -24,3 +24,32 @@ export const allTasks = `query AllTasks($nextToken: String) {
   }
 }
 `;
+export const getPlayer = `query GetPlayer($id: ID!, $nickname: String!) {
+  getPlayer(id: $id, nickname: $nickname) {
+    id
+    countryCode
+    name
+    nickname
+    playerRole
+    steamId
+  }
+}
+`;
+export const listPlayers = `query ListPlayers(
+  $filter: TablePlayerFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPlayers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      countryCode
+      name
+      nickname
+      playerRole
+      steamId
+    }
+    nextToken
+  }
+}
+`;

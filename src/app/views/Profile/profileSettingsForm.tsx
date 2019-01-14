@@ -55,8 +55,8 @@ class ProfileSettingsForm extends React.Component<IProps, IState> {
                                         className="form-control"
                                         type="text"
                                         name="name"
-                                        defaultValue={authStore.userName}
-                                        placeholder={authStore.userName || 'Name'}
+                                        value={authStore.userName}
+                                        placeholder={'Name'}
                                     />
                                 </div>
                             </div>
@@ -67,8 +67,8 @@ class ProfileSettingsForm extends React.Component<IProps, IState> {
                                         className="form-control"
                                         type="text"
                                         name="username"
-                                        defaultValue={authStore.userName}
-                                        placeholder={authStore.userName || 'Username'}
+                                        value={authStore.userName}
+                                        placeholder={'Username'}
                                     />
                                 </div>
                             </div>
@@ -80,8 +80,8 @@ class ProfileSettingsForm extends React.Component<IProps, IState> {
                                     <input
                                         className="form-control"
                                         type="text"
-                                        placeholder={authStore.currentUser.attributes.email || 'user@example.com'}
-                                        defaultValue={authStore.currentUser.attributes.email}
+                                        placeholder={'user@example.com'}
+                                        value={authStore.userAttributes.email}
                                     />
                                 </div>
                             </div>

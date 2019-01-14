@@ -10,6 +10,7 @@ var outPath = path.join(__dirname, './dist');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var WebpackCleanupPlugin = require('webpack-cleanup-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const extractCSS = new ExtractTextPlugin('[name].styles.[chunkhash].css');
 const extractSCSS = new ExtractTextPlugin('[name].scss-styles.[chunkhash].css');
@@ -40,7 +41,6 @@ module.exports = {
             // .ts, .tsx
             {
                 test: /\.tsx?$/,
-                exclude: path.resolve(__dirname, 'functions/'),
                 use: isProduction
                     ? 'ts-loader'
                     : [
@@ -79,15 +79,6 @@ module.exports = {
                         ]
                     }
                 )
-            },
-            {
-                test: /npm\.js$/,
-                loader: 'string-replace-loader',
-                include: path.resolve('node_modules/firebaseui/dist'),
-                options: {
-                    search: 'require(\'firebase/app\');',
-                    replace: 'require(\'firebase/app\').default;',
-                },
             },
             // static assets
             {
@@ -131,7 +122,9 @@ module.exports = {
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new HtmlWebpackPlugin({
             template: 'assets/index.html'
-        })
+        }),
+        new BundleAnalyzerPlugin(),
+
     ],
     devServer: {
         contentBase: sourcePath,

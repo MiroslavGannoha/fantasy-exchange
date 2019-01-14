@@ -41,3 +41,36 @@ export const updateTaskBody = `mutation UpdateTaskBody($id: ID!, $title: String!
   }
 }
 `;
+export const createPlayer = `mutation CreatePlayer($input: CreatePlayerInput!) {
+  createPlayer(input: $input) {
+    id
+    countryCode
+    name
+    nickname
+    playerRole
+    steamId
+  }
+}
+`;
+export const updatePlayer = `mutation UpdatePlayer($input: UpdatePlayerInput!) {
+  updatePlayer(input: $input) {
+    id
+    countryCode
+    name
+    nickname
+    playerRole
+    steamId
+  }
+}
+`;
+export const deletePlayer = `mutation DeletePlayer($input: DeletePlayerInput!) {
+  deletePlayer(input: $input) {
+    id
+    countryCode
+    name
+    nickname
+    playerRole
+    steamId
+  }
+}
+`;

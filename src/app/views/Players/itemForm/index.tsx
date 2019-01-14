@@ -25,7 +25,7 @@ export default class ItemForm extends React.Component<IProps> {
             this.form.set(props.data);
         } else {
             this.form.$('nickname').observe(({form, field, change}) => {
-                this.form.$('docId').set(change.newValue.replace(/[^\w\s]/gi, ''));
+                this.form.$('id').set(change.newValue.replace(/[^\w\s]/gi, ''));
             });
         }
     }
@@ -36,7 +36,7 @@ export default class ItemForm extends React.Component<IProps> {
             <Form onSubmit={form.onSubmit}>
                 <CustomFormGroup field={form.$('name')} />
                 <CustomFormGroup field={form.$('nickname')} />
-                <CustomFormGroup field={form.$('docId')} />
+                <CustomFormGroup field={form.$('id')} />
                 <CustomFormGroup field={form.$('steamId')} />
                 <CustomFormGroup field={form.$('playerRole')} />
                 <CustomFormGroup field={form.$('countryCode')} />

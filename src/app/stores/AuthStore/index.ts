@@ -1,10 +1,11 @@
 import { computed, observable, action } from 'mobx';
 import MobxReactForm from 'mobx-react-form';
-import * as moment from 'moment';
+// import * as moment from 'moment';
 import { loginFormRules } from './loginForm';
 import { signUpFormRules } from './signUpForm';
 import validatorjs from 'validatorjs';
 import { Auth } from 'aws-amplify';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 
 const plugins = { dvr: validatorjs };
 export class AuthStore {
@@ -20,7 +21,8 @@ export class AuthStore {
     public loginForm: MobxReactForm = null;
     public signUpForm: MobxReactForm = null;
 
-    @observable public currentUser: any = null;
+    @observable public cognitoUser: CognitoUser = null;
+    @observable public currentUser = null;
 
     @observable
     public auth: any = null;
@@ -30,15 +32,20 @@ export class AuthStore {
 
     constructor() {
         this.initForms();
-        Auth.currentAuthenticatedUser().then(this.setCurrentUser);
+        Auth.currentAuthenticatedUser().then(this.setCognitoUser);
+        Auth.currentUserInfo().then(this.setCurrentUser);
     }
 
     public login(username: string, password: string) {
         this.userLoading = true;
         Auth.signIn(username, password)
-            .then((user) => {
+            .then((cognitoUser) => {
+                this.setCognitoUser(cognitoUser);
+                return Auth.currentUserInfo().then(this.setCurrentUser);
+            })
+            .then((userInfo) => {
+                this.setCurrentUser(userInfo);
                 this.userLoading = false;
-                this.setCurrentUser(user);
             })
             .catch((error) => {
                 this.userLoading = false;
@@ -47,14 +54,25 @@ export class AuthStore {
     }
 
     @action
-    public setCurrentUser = (user) => {
-        console.log('current user:', user);
-        this.currentUser = user;
+    public setCurrentUser = (userInfo) => {
+        this.currentUser = userInfo;
+    }
+
+    @action
+    public setCognitoUser = (cognitoUser) => {
+        this.cognitoUser = cognitoUser;
     }
 
     @action
     public logout() {
-        this.auth.signOut();
+        this.cognitoUser.signOut();
+        this.cognitoUser = null;
+        this.currentUser = null;
+    }
+
+    @computed
+    public get userAttributes(): any {
+        return this.currentUser ? this.currentUser.attributes : '';
     }
 
     @computed
@@ -64,16 +82,16 @@ export class AuthStore {
 
     @computed
     public get isLoggedIn(): boolean {
-        return !!this.currentUser;
+        return !!this.cognitoUser;
     }
 
-    @computed
-    public get userCreated() {
-        if (!this.currentUser) {
-            return '';
-        }
-        return moment(this.currentUser.metadata.creationTime).format('DD MMM YYYY');
-    }
+    // @computed
+    // public get userCreated() {
+    //     if (!this.currentUser) {
+    //         return '';
+    //     }
+    //     return moment(this.currentUser.metadata.creationTime).format('DD MMM YYYY');
+    // }
 
     // @computed
     // public get lastVisit() {

@@ -13,7 +13,7 @@ export const formFields = [{
     label: 'Shares volume',
     rules: 'required|integer',
 }, {
-    name: 'docId',
+    name: 'id',
     type: 'hidden',
     output: (value) => { if (value) { return value; } },
 }];
