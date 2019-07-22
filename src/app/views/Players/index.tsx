@@ -1,17 +1,11 @@
 import * as React from 'react';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 // import * as moment from 'moment';
-import ItemForm from './ItemForm';
-import { IStores, PlayersStore } from '../../stores';
+import Form from './Form';
 import CRUDTable from '../../components/CRUDTable';
 
-interface IProps {
-    playersStore: PlayersStore;
-}
-
-@inject(({ playersStore }: IStores) => ({ playersStore }))
 @observer
-class Players extends React.Component<IProps> {
+class Players extends React.Component {
 
     public render() {
         const columns = [
@@ -63,13 +57,12 @@ class Players extends React.Component<IProps> {
             // },
         ];
 
-        const { playersStore } = this.props;
 
         return (
             <CRUDTable
-                CRUDStoreChild={playersStore}
+                CRUDStoreChild={null}
                 columns={columns}
-                ItemForm={ItemForm}
+                ItemForm={Form}
             />
         );
     }

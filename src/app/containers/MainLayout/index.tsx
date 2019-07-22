@@ -2,7 +2,7 @@ import * as React from 'react';
 // import { inject, observer } from 'mobx-react';
 import { Container, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Sidebar from '../../components/Sidebar';
-import Navbar from '../../components/navbar';
+import Navbar from 'app/components/navbar';
 // import Login from '../../components/Login';
 // import LoaderInCard from '../../components/Loader';
 
