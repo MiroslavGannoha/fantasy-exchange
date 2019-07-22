@@ -7,7 +7,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "webpack-dev-server --mode development --hot --progress --colors --port 3000 --open",
-        "start": "serve -s build",
+        "start": "serve -s dist",
         "build": "webpack -p --progress --colors",
         "fetch-schema": "gq https://fantasy-exchange-api.herokuapp.com/v1/graphql --introspect > schema.graphql",
         "scaffold": "mst-gql --force --roots Player,Offer --format ts --outDir src/models schema.graphql",
