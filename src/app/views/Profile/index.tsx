@@ -17,7 +17,7 @@ interface IProfileState {
     tab: any;
 }
 
-@inject(({ store, authStore }: IStores) => ({ store, authStore }))
+// @inject(({ store, authStore }: IStores) => ({ store, authStore }))
 @observer
 class Profile extends React.Component<IProps, IProfileState> {
 

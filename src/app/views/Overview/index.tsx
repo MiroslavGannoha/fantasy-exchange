@@ -7,18 +7,16 @@ import AreaSharpChart from './charts/AreaSharpChart';
 import DonutChart from './charts/DonutChart';
 import BasicTable from '../../components/table/examples/BasicTable';
 import { Row, Col } from 'reactstrap';
-import { inject, observer } from 'mobx-react';
-import { IStores, MarketStore } from 'app/stores';
+import { observer } from 'mobx-react';
 
 interface IProps {
     marketStore: MarketStore;
 }
 
-@inject(({ marketStore }: IStores) => ({ marketStore }))
 @observer
 class Overview extends React.Component<IProps> {
+
     public render() {
-        console.log(this.props.marketStore.tasks.items);
         return (
             <>
                 <Row className="flex-column-reverse flex-lg-row">

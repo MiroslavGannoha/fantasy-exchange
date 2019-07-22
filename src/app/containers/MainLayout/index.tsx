@@ -1,39 +1,14 @@
 import * as React from 'react';
-import { inject, observer } from 'mobx-react';
-import { IStores, AuthStore } from '../../stores';
+// import { inject, observer } from 'mobx-react';
 import { Container, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Sidebar from '../../components/Sidebar';
 import Navbar from '../../components/navbar';
-import Login from '../../components/Login';
-import LoaderInCard from '../../components/Loader';
+// import Login from '../../components/Login';
+// import LoaderInCard from '../../components/Loader';
 
-interface IMainLayoutProps {
-    component: React.ComponentClass;
-    role?: React.ComponentClass;
-    authStore?: AuthStore;
-}
-
-@inject(({ authStore }: IStores) => ({ authStore }))
-@observer
-class MainLayout extends React.Component<IMainLayoutProps> {
-
-    constructor(props) {
-        super(props);
-    }
-
+class MainLayout extends React.Component<any> {
     public render() {
-        const { component: ChildComponent, role: RoleComponent, authStore } = this.props;
-        let Component;
-        if (RoleComponent) {
-            Component = (
-                <RoleComponent>
-                    <ChildComponent />
-                </RoleComponent>
-            );
-        } else {
-            Component = <ChildComponent />;
-        }
-
+        const { children } = this.props;
         return (
             <Container fluid={true}>
                 <Row>
@@ -51,12 +26,12 @@ class MainLayout extends React.Component<IMainLayoutProps> {
                 </Row>
                 <Row className="flex-lg-nowrap">
                     <Col md="3" className="mb-3">
-                        <LoaderInCard loading={authStore.userLoading} message="Logging in ..." />
-                        {!authStore.isLoggedIn && !authStore.userLoading ? <Login className="mb-3" /> : null}
+                        {/* <LoaderInCard loading={authStore.userLoading} message="Logging in ..." /> */}
+                        {/* {!authStore.isLoggedIn && !authStore.userLoading ? <Login className="mb-3" /> : null} */}
                         <Sidebar />
                     </Col>
                     <Col md="9" >
-                        {Component}
+                        {children}
                     </Col>
                 </Row>
             </Container>

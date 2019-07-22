@@ -1,0 +1,824 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+# conflict action
+enum conflict_action {
+  # ignore the insert on this row
+  ignore
+
+  # update the row with the given values
+  update
+}
+
+# expression to compare columns of type integer. All fields are combined with logical 'AND'.
+input integer_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+# mutation root
+type Mutation {
+  # delete data from the table: "Offer"
+  delete_Offer(
+    # filter the rows which have to be deleted
+    where: Offer_bool_exp!
+  ): Offer_mutation_response
+
+  # delete data from the table: "Player"
+  delete_Player(
+    # filter the rows which have to be deleted
+    where: Player_bool_exp!
+  ): Player_mutation_response
+
+  # insert data into the table: "Offer"
+  insert_Offer(
+    # the rows to be inserted
+    objects: [Offer_insert_input!]!
+
+    # on conflict condition
+    on_conflict: Offer_on_conflict
+  ): Offer_mutation_response
+
+  # insert data into the table: "Player"
+  insert_Player(
+    # the rows to be inserted
+    objects: [Player_insert_input!]!
+
+    # on conflict condition
+    on_conflict: Player_on_conflict
+  ): Player_mutation_response
+
+  # update data of the table: "Offer"
+  update_Offer(
+    # increments the integer columns with given value of the filtered values
+    _inc: Offer_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: Offer_set_input
+
+    # filter the rows which have to be updated
+    where: Offer_bool_exp!
+  ): Offer_mutation_response
+
+  # update data of the table: "Player"
+  update_Player(
+    # increments the integer columns with given value of the filtered values
+    _inc: Player_inc_input
+
+    # sets the columns of the filtered rows to the given values
+    _set: Player_set_input
+
+    # filter the rows which have to be updated
+    where: Player_bool_exp!
+  ): Player_mutation_response
+}
+
+# columns and relationships of "Offer"
+type Offer {
+  amount: Int!
+  id: ID!
+  playerId: Player!
+}
+
+# aggregated selection of "Offer"
+type Offer_aggregate {
+  aggregate: Offer_aggregate_fields
+  nodes: [Offer!]!
+}
+
+# aggregate fields of "Offer"
+type Offer_aggregate_fields {
+  avg: Offer_avg_fields
+  count(columns: [Offer_select_column!], distinct: Boolean): Int
+  max: Offer_max_fields
+  min: Offer_min_fields
+  stddev: Offer_stddev_fields
+  stddev_pop: Offer_stddev_pop_fields
+  stddev_samp: Offer_stddev_samp_fields
+  sum: Offer_sum_fields
+  var_pop: Offer_var_pop_fields
+  var_samp: Offer_var_samp_fields
+  variance: Offer_variance_fields
+}
+
+# order by aggregate values of table "Offer"
+input Offer_aggregate_order_by {
+  avg: Offer_avg_order_by
+  count: order_by
+  max: Offer_max_order_by
+  min: Offer_min_order_by
+  stddev: Offer_stddev_order_by
+  stddev_pop: Offer_stddev_pop_order_by
+  stddev_samp: Offer_stddev_samp_order_by
+  sum: Offer_sum_order_by
+  var_pop: Offer_var_pop_order_by
+  var_samp: Offer_var_samp_order_by
+  variance: Offer_variance_order_by
+}
+
+# input type for inserting array relation for remote table "Offer"
+input Offer_arr_rel_insert_input {
+  data: [Offer_insert_input!]!
+  on_conflict: Offer_on_conflict
+}
+
+# aggregate avg on columns
+type Offer_avg_fields {
+  amount: Float
+}
+
+# order by avg() on columns of table "Offer"
+input Offer_avg_order_by {
+  amount: order_by
+}
+
+# Boolean expression to filter rows from the table "Offer". All fields are combined with a logical 'AND'.
+input Offer_bool_exp {
+  _and: [Offer_bool_exp]
+  _not: Offer_bool_exp
+  _or: [Offer_bool_exp]
+  amount: integer_comparison_exp
+  id: ID_comparison_exp
+  playerId: ID_comparison_exp
+}
+
+# unique or primary key constraints on table "Offer"
+enum Offer_constraint {
+  # unique or primary key constraint
+  Offers_pkey
+}
+
+# input type for incrementing integer columne in table "Offer"
+input Offer_inc_input {
+  amount: Int
+}
+
+# input type for inserting data into table "Offer"
+input Offer_insert_input {
+  amount: Int
+  id: ID
+  playerId: ID
+}
+
+# aggregate max on columns
+type Offer_max_fields {
+  amount: Int
+}
+
+# order by max() on columns of table "Offer"
+input Offer_max_order_by {
+  amount: order_by
+}
+
+# aggregate min on columns
+type Offer_min_fields {
+  amount: Int
+}
+
+# order by min() on columns of table "Offer"
+input Offer_min_order_by {
+  amount: order_by
+}
+
+# response of any mutation on the table "Offer"
+type Offer_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [Offer!]!
+}
+
+# input type for inserting object relation for remote table "Offer"
+input Offer_obj_rel_insert_input {
+  data: Offer_insert_input!
+  on_conflict: Offer_on_conflict
+}
+
+# on conflict condition type for table "Offer"
+input Offer_on_conflict {
+  constraint: Offer_constraint!
+  update_columns: [Offer_update_column!]!
+}
+
+# ordering options when selecting data from "Offer"
+input Offer_order_by {
+  amount: order_by
+  id: order_by
+  playerId: order_by
+}
+
+# select columns of table "Offer"
+enum Offer_select_column {
+  # column name
+  amount
+
+  # column name
+  id
+
+  # column name
+  playerId
+}
+
+# input type for updating data in table "Offer"
+input Offer_set_input {
+  amount: Int
+  id: ID
+  playerId: ID
+}
+
+# aggregate stddev on columns
+type Offer_stddev_fields {
+  amount: Float
+}
+
+# order by stddev() on columns of table "Offer"
+input Offer_stddev_order_by {
+  amount: order_by
+}
+
+# aggregate stddev_pop on columns
+type Offer_stddev_pop_fields {
+  amount: Float
+}
+
+# order by stddev_pop() on columns of table "Offer"
+input Offer_stddev_pop_order_by {
+  amount: order_by
+}
+
+# aggregate stddev_samp on columns
+type Offer_stddev_samp_fields {
+  amount: Float
+}
+
+# order by stddev_samp() on columns of table "Offer"
+input Offer_stddev_samp_order_by {
+  amount: order_by
+}
+
+# aggregate sum on columns
+type Offer_sum_fields {
+  amount: Int
+}
+
+# order by sum() on columns of table "Offer"
+input Offer_sum_order_by {
+  amount: order_by
+}
+
+# update columns of table "Offer"
+enum Offer_update_column {
+  # column name
+  amount
+
+  # column name
+  id
+
+  # column name
+  playerId
+}
+
+# aggregate var_pop on columns
+type Offer_var_pop_fields {
+  amount: Float
+}
+
+# order by var_pop() on columns of table "Offer"
+input Offer_var_pop_order_by {
+  amount: order_by
+}
+
+# aggregate var_samp on columns
+type Offer_var_samp_fields {
+  amount: Float
+}
+
+# order by var_samp() on columns of table "Offer"
+input Offer_var_samp_order_by {
+  amount: order_by
+}
+
+# aggregate variance on columns
+type Offer_variance_fields {
+  amount: Float
+}
+
+# order by variance() on columns of table "Offer"
+input Offer_variance_order_by {
+  amount: order_by
+}
+
+# column ordering options
+enum order_by {
+  # in the ascending order, nulls last
+  asc
+
+  # in the ascending order, nulls first
+  asc_nulls_first
+
+  # in the ascending order, nulls last
+  asc_nulls_last
+
+  # in the descending order, nulls first
+  desc
+
+  # in the descending order, nulls first
+  desc_nulls_first
+
+  # in the descending order, nulls last
+  desc_nulls_last
+}
+
+# columns and relationships of "Player"
+type Player {
+  countryCode: String!
+  id: ID!
+  name: String!
+  nickname: String!
+  playerRole: String!
+  steamId: Int!
+}
+
+# aggregated selection of "Player"
+type Player_aggregate {
+  aggregate: Player_aggregate_fields
+  nodes: [Player!]!
+}
+
+# aggregate fields of "Player"
+type Player_aggregate_fields {
+  avg: Player_avg_fields
+  count(columns: [Player_select_column!], distinct: Boolean): Int
+  max: Player_max_fields
+  min: Player_min_fields
+  stddev: Player_stddev_fields
+  stddev_pop: Player_stddev_pop_fields
+  stddev_samp: Player_stddev_samp_fields
+  sum: Player_sum_fields
+  var_pop: Player_var_pop_fields
+  var_samp: Player_var_samp_fields
+  variance: Player_variance_fields
+}
+
+# order by aggregate values of table "Player"
+input Player_aggregate_order_by {
+  avg: Player_avg_order_by
+  count: order_by
+  max: Player_max_order_by
+  min: Player_min_order_by
+  stddev: Player_stddev_order_by
+  stddev_pop: Player_stddev_pop_order_by
+  stddev_samp: Player_stddev_samp_order_by
+  sum: Player_sum_order_by
+  var_pop: Player_var_pop_order_by
+  var_samp: Player_var_samp_order_by
+  variance: Player_variance_order_by
+}
+
+# input type for inserting array relation for remote table "Player"
+input Player_arr_rel_insert_input {
+  data: [Player_insert_input!]!
+  on_conflict: Player_on_conflict
+}
+
+# aggregate avg on columns
+type Player_avg_fields {
+  steamId: Float
+}
+
+# order by avg() on columns of table "Player"
+input Player_avg_order_by {
+  steamId: order_by
+}
+
+# Boolean expression to filter rows from the table "Player". All fields are combined with a logical 'AND'.
+input Player_bool_exp {
+  _and: [Player_bool_exp]
+  _not: Player_bool_exp
+  _or: [Player_bool_exp]
+  countryCode: text_comparison_exp
+  id: ID_comparison_exp
+  name: text_comparison_exp
+  nickname: text_comparison_exp
+  playerRole: text_comparison_exp
+  steamId: integer_comparison_exp
+}
+
+# unique or primary key constraints on table "Player"
+enum Player_constraint {
+  # unique or primary key constraint
+  players_pkey
+}
+
+# input type for incrementing integer columne in table "Player"
+input Player_inc_input {
+  steamId: Int
+}
+
+# input type for inserting data into table "Player"
+input Player_insert_input {
+  countryCode: String
+  id: ID
+  name: String
+  nickname: String
+  playerRole: String
+  steamId: Int
+}
+
+# aggregate max on columns
+type Player_max_fields {
+  countryCode: String
+  name: String
+  nickname: String
+  playerRole: String
+  steamId: Int
+}
+
+# order by max() on columns of table "Player"
+input Player_max_order_by {
+  countryCode: order_by
+  name: order_by
+  nickname: order_by
+  playerRole: order_by
+  steamId: order_by
+}
+
+# aggregate min on columns
+type Player_min_fields {
+  countryCode: String
+  name: String
+  nickname: String
+  playerRole: String
+  steamId: Int
+}
+
+# order by min() on columns of table "Player"
+input Player_min_order_by {
+  countryCode: order_by
+  name: order_by
+  nickname: order_by
+  playerRole: order_by
+  steamId: order_by
+}
+
+# response of any mutation on the table "Player"
+type Player_mutation_response {
+  # number of affected rows by the mutation
+  affected_rows: Int!
+
+  # data of the affected rows by the mutation
+  returning: [Player!]!
+}
+
+# input type for inserting object relation for remote table "Player"
+input Player_obj_rel_insert_input {
+  data: Player_insert_input!
+  on_conflict: Player_on_conflict
+}
+
+# on conflict condition type for table "Player"
+input Player_on_conflict {
+  constraint: Player_constraint!
+  update_columns: [Player_update_column!]!
+}
+
+# ordering options when selecting data from "Player"
+input Player_order_by {
+  countryCode: order_by
+  id: order_by
+  name: order_by
+  nickname: order_by
+  playerRole: order_by
+  steamId: order_by
+}
+
+# select columns of table "Player"
+enum Player_select_column {
+  # column name
+  countryCode
+
+  # column name
+  id
+
+  # column name
+  name
+
+  # column name
+  nickname
+
+  # column name
+  playerRole
+
+  # column name
+  steamId
+}
+
+# input type for updating data in table "Player"
+input Player_set_input {
+  countryCode: String
+  id: ID
+  name: String
+  nickname: String
+  playerRole: String
+  steamId: Int
+}
+
+# aggregate stddev on columns
+type Player_stddev_fields {
+  steamId: Float
+}
+
+# order by stddev() on columns of table "Player"
+input Player_stddev_order_by {
+  steamId: order_by
+}
+
+# aggregate stddev_pop on columns
+type Player_stddev_pop_fields {
+  steamId: Float
+}
+
+# order by stddev_pop() on columns of table "Player"
+input Player_stddev_pop_order_by {
+  steamId: order_by
+}
+
+# aggregate stddev_samp on columns
+type Player_stddev_samp_fields {
+  steamId: Float
+}
+
+# order by stddev_samp() on columns of table "Player"
+input Player_stddev_samp_order_by {
+  steamId: order_by
+}
+
+# aggregate sum on columns
+type Player_sum_fields {
+  steamId: Int
+}
+
+# order by sum() on columns of table "Player"
+input Player_sum_order_by {
+  steamId: order_by
+}
+
+# update columns of table "Player"
+enum Player_update_column {
+  # column name
+  countryCode
+
+  # column name
+  id
+
+  # column name
+  name
+
+  # column name
+  nickname
+
+  # column name
+  playerRole
+
+  # column name
+  steamId
+}
+
+# aggregate var_pop on columns
+type Player_var_pop_fields {
+  steamId: Float
+}
+
+# order by var_pop() on columns of table "Player"
+input Player_var_pop_order_by {
+  steamId: order_by
+}
+
+# aggregate var_samp on columns
+type Player_var_samp_fields {
+  steamId: Float
+}
+
+# order by var_samp() on columns of table "Player"
+input Player_var_samp_order_by {
+  steamId: order_by
+}
+
+# aggregate variance on columns
+type Player_variance_fields {
+  steamId: Float
+}
+
+# order by variance() on columns of table "Player"
+input Player_variance_order_by {
+  steamId: order_by
+}
+
+# query root
+type Query {
+  # fetch data from the table: "Offer"
+  Offer(
+    # distinct select on columns
+    distinct_on: [Offer_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [Offer_order_by!]
+
+    # filter the rows returned
+    where: Offer_bool_exp
+  ): [Offer!]!
+
+  # fetch aggregated fields from the table: "Offer"
+  Offer_aggregate(
+    # distinct select on columns
+    distinct_on: [Offer_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [Offer_order_by!]
+
+    # filter the rows returned
+    where: Offer_bool_exp
+  ): Offer_aggregate!
+
+  # fetch data from the table: "Offer" using primary key columns
+  Offer_by_pk(id: ID!): Offer
+
+  # fetch data from the table: "Player"
+  Player(
+    # distinct select on columns
+    distinct_on: [Player_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [Player_order_by!]
+
+    # filter the rows returned
+    where: Player_bool_exp
+  ): [Player!]!
+
+  # fetch aggregated fields from the table: "Player"
+  Player_aggregate(
+    # distinct select on columns
+    distinct_on: [Player_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [Player_order_by!]
+
+    # filter the rows returned
+    where: Player_bool_exp
+  ): Player_aggregate!
+
+  # fetch data from the table: "Player" using primary key columns
+  Player_by_pk(id: ID!): Player
+}
+
+# subscription root
+type Subscription {
+  # fetch data from the table: "Offer"
+  Offer(
+    # distinct select on columns
+    distinct_on: [Offer_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [Offer_order_by!]
+
+    # filter the rows returned
+    where: Offer_bool_exp
+  ): [Offer!]!
+
+  # fetch aggregated fields from the table: "Offer"
+  Offer_aggregate(
+    # distinct select on columns
+    distinct_on: [Offer_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [Offer_order_by!]
+
+    # filter the rows returned
+    where: Offer_bool_exp
+  ): Offer_aggregate!
+
+  # fetch data from the table: "Offer" using primary key columns
+  Offer_by_pk(id: ID!): Offer
+
+  # fetch data from the table: "Player"
+  Player(
+    # distinct select on columns
+    distinct_on: [Player_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [Player_order_by!]
+
+    # filter the rows returned
+    where: Player_bool_exp
+  ): [Player!]!
+
+  # fetch aggregated fields from the table: "Player"
+  Player_aggregate(
+    # distinct select on columns
+    distinct_on: [Player_select_column!]
+
+    # limit the nuber of rows returned
+    limit: Int
+
+    # skip the first n rows. Use only with order_by
+    offset: Int
+
+    # sort the rows by one or more columns
+    order_by: [Player_order_by!]
+
+    # filter the rows returned
+    where: Player_bool_exp
+  ): Player_aggregate!
+
+  # fetch data from the table: "Player" using primary key columns
+  Player_by_pk(id: ID!): Player
+}
+
+# expression to compare columns of type text. All fields are combined with logical 'AND'.
+input text_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+  _ilike: String
+  _in: [String!]
+  _is_null: Boolean
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+  _nilike: String
+  _nin: [String!]
+  _nlike: String
+  _nsimilar: String
+  _similar: String
+}
+
+scalar ID
+scalar uuid
+
+# expression to compare columns of type ID. All fields are combined with logical 'AND'.
+input ID_comparison_exp {
+  _eq: ID
+  _gt: ID
+  _gte: ID
+  _in: [ID!]
+  _is_null: Boolean
+  _lt: ID
+  _lte: ID
+  _neq: ID
+  _nin: [ID!]
+}
+

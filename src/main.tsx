@@ -1,43 +1,42 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-// import { useStrict } from 'mobx';
-// @ts-ignore
-// import firebase from 'firebase/app';
-// import { initFirestorter } from 'firestorter';
 import { Provider } from 'mobx-react';
-import { pages, APP } from './app';
-import { createStores, IStores } from './app/stores';
-import { startRouter } from 'mobx-router';
-import Amplify from 'aws-amplify';
-import aws_exports from './aws-exports';
+import { createHttpClient } from 'mst-gql';
+import { RootStore, StoreContext } from './models';
+
 // Styles
 // Import Flag Icons Set
 import 'flag-icon-css/css/flag-icon.min.css';
 // Import Font Awesome Icons Set
 import 'font-awesome/css/font-awesome.min.css';
-// Import Simple Line Icons Set
-import 'simple-line-icons/css/simple-line-icons.css';
 // // Import Main styles for this application
 import '../styles/scss/elements.scss';
+import { App } from 'app';
 
-// // Temp fix for reactstrap
-// import '../scss/core/_dropdown-menu-right.scss';
-
-// enable MobX strict mode
-// useStrict(true);
-
-// prepare MobX stores
-// const history = createBrowserHistory();
-Amplify.configure(aws_exports);
-
-const stores: IStores = createStores();
-
-startRouter(pages, stores.store);
+const rootStore = RootStore.create(undefined, {
+    gqlHttpClient: createHttpClient('https://fantasy-exchange-api.herokuapp.com/v1/graphql'),
+        // headers: {
+            // authorization: session.getAccessToken().getJwtToken(),
+            // 'x-api-key': 'da2-4j2ccn4hvncw7fzdi6pc6vywwi',
+        // },
+    // }),
+});
 
 ReactDOM.render(
-    <Provider {...stores} >
-        <APP />
-        {/* <App history={history} /> */}
-    </Provider>,
+    <StoreContext.Provider value={rootStore}>
+        <Provider>
+            <App />
+        </Provider>,
+    </StoreContext.Provider>,
+
     document.getElementById('root'),
 );
+
+// @ts-ignore
+window.rootStore = rootStore;
+
+// @ts-ignore
+if (module.hot) {
+    // @ts-ignore
+    module.hot.accept('./app', () => renderApp());
+}

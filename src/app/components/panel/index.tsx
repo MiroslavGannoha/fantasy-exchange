@@ -20,8 +20,7 @@ class EPanel extends React.Component<IEPanelProps, {}> {
             className,
             title, subtitle, noHead,
             headNode, titleNode, subtitleNode, actionsNode,
-            // @ts-ignore
-            ...attributes,
+            ...attributes
         } = this.props;
 
         const panelClass = classNames(

@@ -16,7 +16,6 @@ See also: [react-redux-typescript-boilerplate](https://github.com/rokoroku/react
 - [x] [Mobx](https://github.com/mobxjs/mobx)
 - [x] [Mobx React](https://github.com/mobxjs/mobx-react)
 - [x] [Mobx React Router](https://github.com/alisd23/mobx-react-router/)
-- [x] [Mobx React Devtools](https://github.com/mobxjs/mobx-react-devtools)
 - [x] [TodoMVC example](http://todomvc.com)
 
 ### Build tools

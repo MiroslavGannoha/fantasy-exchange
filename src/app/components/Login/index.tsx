@@ -12,7 +12,7 @@ interface IProps {
     className?: string;
 }
 
-@inject(({ store, authStore }: IStores) => ({ store, authStore }))
+// @inject(({ store, authStore }: IStores) => ({ store, authStore }))
 @observer
 class LoginForm extends React.Component<IProps> {
 

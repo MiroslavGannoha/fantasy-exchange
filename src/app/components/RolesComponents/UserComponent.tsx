@@ -20,7 +20,7 @@ interface IProps {
     children: any;
 }
 
-@inject(({authStore, store}: IStores) => ({authStore, store}))
+// @inject(({authStore, store}: IStores) => ({authStore, store}))
 @observer
 export class UserComponent extends React.Component<IProps> {
     constructor(props) {

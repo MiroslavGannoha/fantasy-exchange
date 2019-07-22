@@ -23,7 +23,7 @@ interface IProps {
     authStore: AuthStore;
 }
 
-@inject(({ store, authStore }: IStores) => ({ store, authStore }))
+// @inject(({ store, authStore }: IStores) => ({ store, authStore }))
 @observer
 class Register extends React.Component<IProps> {
     public render() {

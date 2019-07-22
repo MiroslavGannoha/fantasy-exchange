@@ -4,11 +4,9 @@ import MobxReactForm from 'mobx-react-form';
 import { loginFormRules } from './loginForm';
 import { signUpFormRules } from './signUpForm';
 import validatorjs from 'validatorjs';
-import { Auth } from 'aws-amplify';
-import { CognitoUser } from 'amazon-cognito-identity-js';
 
 const plugins = { dvr: validatorjs };
-export class AuthStore {
+class AuthStore {
     public static getInstance() {
         if (!AuthStore.instance) {
             AuthStore.instance = new AuthStore();
@@ -32,25 +30,25 @@ export class AuthStore {
 
     constructor() {
         this.initForms();
-        Auth.currentAuthenticatedUser().then(this.setCognitoUser);
-        Auth.currentUserInfo().then(this.setCurrentUser);
+        // Auth.currentAuthenticatedUser().then(this.setCognitoUser);
+        // Auth.currentUserInfo().then(this.setCurrentUser);
     }
 
     public login(username: string, password: string) {
         this.userLoading = true;
-        Auth.signIn(username, password)
-            .then((cognitoUser) => {
-                this.setCognitoUser(cognitoUser);
-                return Auth.currentUserInfo().then(this.setCurrentUser);
-            })
-            .then((userInfo) => {
-                this.setCurrentUser(userInfo);
-                this.userLoading = false;
-            })
-            .catch((error) => {
-                this.userLoading = false;
-                console.log('error', error);
-            });
+        // Auth.signIn(username, password)
+        //     .then((cognitoUser) => {
+        //         this.setCognitoUser(cognitoUser);
+        //         return Auth.currentUserInfo().then(this.setCurrentUser);
+        //     })
+        //     .then((userInfo) => {
+        //         this.setCurrentUser(userInfo);
+        //         this.userLoading = false;
+        //     })
+        //     .catch((error) => {
+        //         this.userLoading = false;
+        //         console.log('error', error);
+        //     });
     }
 
     @action

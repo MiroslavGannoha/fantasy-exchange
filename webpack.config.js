@@ -18,17 +18,18 @@ const extractSCSS = new ExtractTextPlugin('[name].scss-styles.[chunkhash].css');
 module.exports = {
     context: sourcePath,
     entry: {
-        main: './main.tsx'
+        main: ['react-hot-loader/patch', '@babel/polyfill', './main.tsx'],
     },
     output: {
         path: outPath,
         filename: 'bundle.js',
         chunkFilename: '[chunkhash].js',
-        publicPath: '/'
+        publicPath: '/',
+        pathinfo: false
     },
     target: 'web',
     resolve: {
-        extensions: ['.js', '.ts', '.tsx'],
+        extensions: [ '.mjs', '.js', '.ts', '.tsx'],
         // Fix webpack's default behavior to not load packages with jsnext:main module
         // (jsnext:main directs not usually distributable es6 format, but es6 sources)
         mainFields: ['module', 'browser', 'main'],
@@ -41,12 +42,17 @@ module.exports = {
             // .ts, .tsx
             {
                 test: /\.tsx?$/,
+                include: sourcePath,
+                exclude: /node_modules/,
                 use: isProduction
-                    ? 'ts-loader'
-                    : [
-                          'babel-loader?plugins=react-hot-loader/babel',
-                          'ts-loader'
-                      ]
+                    ? 'babel-loader'
+                    : ['react-hot-loader/webpack', 'babel-loader'],
+            },
+            // .mjs
+            {
+                test: /\.mjs$/,
+                include: /node_modules/,
+                type: "javascript/auto",
             },
             // scss
             {
@@ -66,26 +72,20 @@ module.exports = {
                     }
                 )
             },
+            // css
             {
                 test: /\.css$/,
-                use: extractCSS.extract(
-                    {
-                        fallback: 'style-loader',
-                        use: [
-                            {
-                                loader: 'css-loader'
-                                // options: { alias: { '../img': '../public/img' } }
-                            }
-                        ]
-                    }
-                )
+                use: extractCSS.extract({
+                    fallback: 'style-loader',
+                    use: 'css-loader'
+                })
             },
             // static assets
             {
-                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+                test: /\.(woff(2)?|ttf|eot|svg|gif)(\?v=\d+\.\d+\.\d+)?$/,
                 loader: 'file-loader',
                 options: {
-                    name: './fonts/[name].[hash].[ext]'
+                    name: './fonts/[name].[ext]'
                 }
             },
             { test: /\.html$/, use: 'html-loader' },
@@ -109,7 +109,10 @@ module.exports = {
                 }
             }
         },
-        runtimeChunk: true
+        runtimeChunk: true,
+        removeAvailableModules: false,
+        removeEmptyChunks: false,
+        splitChunks: false,      
     },
     plugins: [
         new WebpackCleanupPlugin(),
@@ -119,11 +122,10 @@ module.exports = {
         //     filename: 'styles.css',
         //     disable: !isProduction
         // }),
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new HtmlWebpackPlugin({
             template: 'assets/index.html'
         }),
-        new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
 
     ],
     devServer: {
@@ -135,11 +137,5 @@ module.exports = {
         },
         stats: 'minimal'
     },
-    devtool: 'cheap-module-eval-source-map',
-    node: {
-        // workaround for webpack-dev-server issue
-        // https://github.com/webpack/webpack-dev-server/issues/60#issuecomment-103411179
-        fs: 'empty',
-        net: 'empty'
-    }
+    devtool: 'cheap-module-eval-source-map'
 };

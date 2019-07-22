@@ -34,8 +34,7 @@ class ENavbar extends React.Component<IENavbarProps, IENavbarState> {
             brandNode,
             collapseNode,
             actionsNode,
-            // @ts-ignore
-            ...attributes,
+            ...attributes
         } = this.props;
 
         const navbarClass = classNames(

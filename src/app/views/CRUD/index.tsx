@@ -34,7 +34,7 @@ interface IProps {
     store: IAppStore;
 }
 
-@inject(({ usersStore, store }: IStores) => ({ usersStore, store }))
+// @inject(({ usersStore, store }: IStores) => ({ usersStore, store }))
 @observer
 class Users extends React.Component<IProps, IUsersState> {
     constructor(props) {
