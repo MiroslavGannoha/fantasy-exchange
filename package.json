@@ -6,7 +6,8 @@
     "main": "server/server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "webpack-dev-server --mode development --hot --progress --colors --port 3000 --open",
+        "dev": "webpack-dev-server --mode development --hot --progress --colors --port 3000 --open",
+        "start": "serve -s build",
         "build": "webpack -p --progress --colors",
         "fetch-schema": "gq https://fantasy-exchange-api.herokuapp.com/v1/graphql --introspect > schema.graphql",
         "scaffold": "mst-gql --force --roots Player,Offer --format ts --outDir src/models schema.graphql",
@@ -83,6 +84,7 @@
         "react-toastify": "3.2.2",
         "react-transition-group": "2.2.1",
         "reactstrap": "^8.0.1",
+        "serve": "^11.1.0",
         "validatorjs": "^3.15.1"
     }
 }
