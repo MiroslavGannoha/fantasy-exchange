@@ -4,8 +4,11 @@ import ENavbar from './ENavbar';
 import { useQuery } from '../../../models/reactUtils';
 import AuthStore from 'app/stores/AuthStore';
 import { Link } from 'react-router-dom';
+import { useAuth0 } from '../AuthWrapper';
 
 const NaviBar = observer(() => {
+    const { isAuthenticated, loginWithRedirect, logout, loading: l, user } = useAuth0();
+    console.log(l, user, isAuthenticated);
     const authStore = AuthStore.getInstance();
     const { store, error, loading, data } = useQuery((store) => store.queryPlayer());
     console.log(store, error, loading, data);
@@ -48,14 +51,28 @@ const NaviBar = observer(() => {
         </div>
     ));
 
+    const onLoginClick = () => loginWithRedirect({});
+
+    const LoginBtn = (
+        <button onClick={onLoginClick}>
+            Log in
+        </button>
+    );
+
     return (
-        <ENavbar
-            className="my-3 px-lg-4"
-            title="Overview"
-            brandNode={<Brand />}
-            collapseNode={<CollapseNav />}
-            actionsNode={<Actions />}
-        />
+        <>
+            <ENavbar
+                className="my-3 px-lg-4"
+                title="Overview"
+                brandNode={<Brand />}
+                collapseNode={<CollapseNav />}
+                actionsNode={<Actions />}
+            />
+            <div>
+                {!isAuthenticated && LoginBtn}
+                {isAuthenticated && <button onClick={logout}>Log out</button>}
+            </div>
+        </>
     );
 });
 

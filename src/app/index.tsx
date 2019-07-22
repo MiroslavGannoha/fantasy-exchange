@@ -8,6 +8,7 @@ import Overview from './views/Overview';
 import Players from './views/Players';
 // import Rights from './views/Rights';
 import { observer } from 'mobx-react';
+import PrivateRoute from './components/PrivateRoute';
 
 // export const App = hot(module)(() => <Root><MobxRouter /></Root>);
 
@@ -15,7 +16,7 @@ const mainLayoutRoutes = (
     <MainLayout>
         <Switch>
                 <Redirect from="/" to="/overview" />
-                <Route path="/overview" component={Overview} exact={true} />
+                <PrivateRoute path="/overview" component={Overview} exact={true} />
                 <Route path="/players" component={Players} exact={true} />
                 {/* <Route path="/user-login" component={AlreadyLoggedIn} /> */}
                 {/* <Route path="/user-signup" component={AlreadyLoggedIn} /> */}
