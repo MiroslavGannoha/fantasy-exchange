@@ -2,9 +2,8 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { Form, Col, Row, Button } from 'reactstrap';
 import MobxReactForm from 'mobx-react-form';
-import { MobxForm } from '../../../stores/Utils';
+import { MobxForm } from '../../../stores/utils';
 import { formFields } from './formFields';
-// import Select from 'react-select';
 import { CustomFormGroup } from '../../../components/Form';
 
 export * from './formFields';

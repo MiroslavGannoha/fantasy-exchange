@@ -5,7 +5,7 @@ import { useQuery } from '../../../models/reactUtils';
 import AuthStore from 'app/stores/AuthStore';
 import { Link } from 'react-router-dom';
 
-const Navbar = observer(() => {
+const NaviBar = observer(() => {
     const authStore = AuthStore.getInstance();
     const { store, error, loading, data } = useQuery((store) => store.queryPlayer());
     console.log(store, error, loading, data);
@@ -59,4 +59,4 @@ const Navbar = observer(() => {
     );
 });
 
-export default Navbar;
+export default NaviBar;

@@ -2,7 +2,7 @@ import * as React from 'react';
 // import { inject, observer } from 'mobx-react';
 import { Container, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import Sidebar from '../../components/Sidebar';
-import Navbar from 'app/components/navbar';
+import NaviBar from 'app/components/NaviBar';
 // import Login from '../../components/Login';
 // import LoaderInCard from '../../components/Loader';
 
@@ -13,7 +13,7 @@ class MainLayout extends React.Component<any> {
             <Container fluid={true}>
                 <Row>
                     <Col>
-                        <Navbar />
+                        <NaviBar />
                         <Breadcrumb>
                             <BreadcrumbItem>
                                 Main
