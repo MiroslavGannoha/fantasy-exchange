@@ -26,8 +26,6 @@ class MainLayout extends React.Component<any> {
                 </Row>
                 <Row className="flex-lg-nowrap">
                     <Col md="3" className="mb-3">
-                        {/* <LoaderInCard loading={authStore.userLoading} message="Logging in ..." /> */}
-                        {/* {!authStore.isLoggedIn && !authStore.userLoading ? <Login className="mb-3" /> : null} */}
                         <Sidebar />
                     </Col>
                     <Col md="9" >

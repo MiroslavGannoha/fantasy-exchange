@@ -1,11 +1,12 @@
-import { computed, observable, action } from 'mobx';
-import MobxReactForm from 'mobx-react-form';
+import { computed, observable, action, when } from 'mobx';
 // import * as moment from 'moment';
-import { loginFormRules } from './loginForm';
-import { signUpFormRules } from './signUpForm';
-import validatorjs from 'validatorjs';
+import createAuth0Client from '@auth0/auth0-spa-js';
+import { createHttpClient } from 'mst-gql';
+import Auth0Client from '@auth0/auth0-spa-js/dist/typings/Auth0Client';
+import { GraphQLClient } from 'graphql-request';
 
-const plugins = { dvr: validatorjs };
+const apiUrl = 'https://fantasy-exchange-api.herokuapp.com/v1/graphql';
+
 class AuthStore {
     public static getInstance() {
         if (!AuthStore.instance) {
@@ -16,49 +17,47 @@ class AuthStore {
 
     private static instance: AuthStore;
 
-    public loginForm: MobxReactForm = null;
-    public signUpForm: MobxReactForm = null;
-
-    @observable public cognitoUser: CognitoUser = null;
     @observable public currentUser = null;
 
-    @observable
-    public auth: any = null;
+    public authClient: Auth0Client = null;
 
     @observable
-    public userLoading: boolean = false;
+    public httpClient: GraphQLClient = null;
+
+    @observable
+    public isAuthed: boolean = false;
+    @observable
+    public loading: boolean = false;
 
     constructor() {
-        this.initForms();
+        when(
+            () => this.isAuthed,
+            () => {
+                this.authClient.getTokenSilently()
+                    .then((token) => {
+                        const headers = { authorization: `Bearer ${token}` };
+                        this.httpClient = createHttpClient(apiUrl, { headers });
+                    });
+
+            },
+        );
         // Auth.currentAuthenticatedUser().then(this.setCognitoUser);
         // Auth.currentUserInfo().then(this.setCurrentUser);
     }
-
-    public login(username: string, password: string) {
-        this.userLoading = true;
-        // Auth.signIn(username, password)
-        //     .then((cognitoUser) => {
-        //         this.setCognitoUser(cognitoUser);
-        //         return Auth.currentUserInfo().then(this.setCurrentUser);
-        //     })
-        //     .then((userInfo) => {
-        //         this.setCurrentUser(userInfo);
-        //         this.userLoading = false;
-        //     })
-        //     .catch((error) => {
-        //         this.userLoading = false;
-        //         console.log('error', error);
-        //     });
+    public async createAuthClient(initOptions) {
+        this.loading = true;
+        this.authClient = await createAuth0Client(initOptions);
+        this.isAuthed = await this.authClient.isAuthenticated();
+        // if (!this.isAuthed) {
+        //     this.authClient.loginWithRedirect();
+        // }
+        this.loading = false;
+        return this.authClient;
     }
 
     @action
     public setCurrentUser = (userInfo) => {
         this.currentUser = userInfo;
-    }
-
-    @action
-    public setCognitoUser = (cognitoUser) => {
-        this.cognitoUser = cognitoUser;
     }
 
     @action
@@ -78,11 +77,6 @@ class AuthStore {
         return this.currentUser ? this.currentUser.username : '';
     }
 
-    @computed
-    public get isLoggedIn(): boolean {
-        return !!this.cognitoUser;
-    }
-
     // @computed
     // public get userCreated() {
     //     if (!this.currentUser) {
@@ -98,35 +92,11 @@ class AuthStore {
     //     }
     //     return moment(this.currentUser.metadata.lastSignInTime).fromNow();
     // }
-
-    private initForms() {
-        this.loginForm = new MobxReactForm({ fields: loginFormRules }, {
-            plugins, hooks: {
-                onSuccess: (form) => {
-                    const { username, password } = form.values();
-                    this.login(username, password);
-                },
-            },
-        });
-
-        this.signUpForm = new MobxReactForm({ fields: signUpFormRules }, {
-            plugins, hooks: {
-                onSuccess: (form: MobxReactForm) => {
-                    const { username, email, password } = form.values();
-                    Auth.signUp({
-                        username,
-                        password,
-                        attributes: {
-                            email,          // optional
-                        },
-                    })
-                        .then((data) => console.log(data))
-                        .catch((err) => console.log(err));
-                    // this.userLoading = true;
-                },
-            },
-        });
-    }
 }
+
+export const authStore = AuthStore.getInstance();
+
+// @ts-ignore
+window.authStore = authStore;
 
 export default AuthStore;

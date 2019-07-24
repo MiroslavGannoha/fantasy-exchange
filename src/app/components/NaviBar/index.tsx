@@ -1,17 +1,14 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import ENavbar from './ENavbar';
-import { useQuery } from '../../../models/reactUtils';
-import AuthStore from 'app/stores/AuthStore';
 import { Link } from 'react-router-dom';
 import { useAuth0 } from '../AuthWrapper';
 
 const NaviBar = observer(() => {
-    const { isAuthenticated, loginWithRedirect, logout, loading: l, user } = useAuth0();
-    console.log(l, user, isAuthenticated);
-    const authStore = AuthStore.getInstance();
-    const { store, error, loading, data } = useQuery((store) => store.queryPlayer());
-    console.log(store, error, loading, data);
+    // const authClient = useAuth0();
+    const { user } = useAuth0();
+    // const { store, error, loading, data } = useQuery((s) => s.queryPlayer());
+    // console.log(store, error, loading, data);
 
     const Brand = () => (
         <Link className="e-logo mx-4" to="/settings" >
@@ -34,9 +31,9 @@ const NaviBar = observer(() => {
             <button className="btn btn-success">
                 <i className="fa fa-bell" />
             </button>
-            <Link to="settings" className="btn btn-success">
+            <Link to="/settings" className="btn btn-success">
                 <span className="mx-1">
-                    {authStore.userName}
+                    {user ? user.nickname : null}
                 </span>
             </Link>
         </div>
@@ -47,17 +44,9 @@ const NaviBar = observer(() => {
             <Link to="/settings" className="btn btn-success d-md-none">
                 <i className="fa fa-user-circle" />
             </Link>
-            {authStore.isLoggedIn && UserBar}
+            {UserBar}
         </div>
     ));
-
-    const onLoginClick = () => loginWithRedirect({});
-
-    const LoginBtn = (
-        <button onClick={onLoginClick}>
-            Log in
-        </button>
-    );
 
     return (
         <>
@@ -68,10 +57,6 @@ const NaviBar = observer(() => {
                 collapseNode={<CollapseNav />}
                 actionsNode={<Actions />}
             />
-            <div>
-                {!isAuthenticated && LoginBtn}
-                {isAuthenticated && <button onClick={logout}>Log out</button>}
-            </div>
         </>
     );
 });

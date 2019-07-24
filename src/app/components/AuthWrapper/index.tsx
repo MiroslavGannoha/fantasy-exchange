@@ -1,5 +1,5 @@
 import * as React from 'react';
-import createAuth0Client from '@auth0/auth0-spa-js';
+import {authStore} from 'app/stores/AuthStore';
 
 const { useState, useEffect, useContext } = React;
 
@@ -21,7 +21,7 @@ export const Auth0Provider = ({
 
     useEffect(() => {
         const initAuth0 = async () => {
-            const auth0FromHook = await createAuth0Client(initOptions);
+            const auth0FromHook = await authStore.createAuthClient(initOptions);
             setAuth0(auth0FromHook);
 
             if (window.location.search.includes('code=')) {
@@ -73,11 +73,11 @@ export const Auth0Provider = ({
         popupOpen,
         loginWithPopup,
         handleRedirectCallback,
-        getIdTokenClaims: (...p) => auth0Client.getIdTokenClaims(...p),
+        getIdTokenClaims: (...p) => auth0Client && auth0Client.getIdTokenClaims(...p),
         loginWithRedirect: (...p) => auth0Client.loginWithRedirect(...p),
-        getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),
+        getTokenSilently: (...p) => auth0Client && auth0Client.getTokenSilently(...p),
         getTokenWithPopup: (...p) => auth0Client.getTokenWithPopup(...p),
-        logout: (...p) => auth0Client.logout(...p)
+        logout: (...p) => auth0Client.logout(...p),
     };
 
     return (

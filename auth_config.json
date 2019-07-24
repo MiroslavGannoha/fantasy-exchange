@@ -1,4 +1,6 @@
 {
     "domain": "fantasy-exchange.eu.auth0.com",
-    "clientId": "Xj2W4bgLA0U8ofCrWM4O1IELeaf0dMm6"
+    "clientId": "Xj2W4bgLA0U8ofCrWM4O1IELeaf0dMm6",
+    "audience": "fantasy-exchange-api",
+    "scope": "nickname name picture https://hasura.io/jwt/claims"
 }

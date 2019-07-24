@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import ENavlist from '../navlist';
 import { NavLink } from 'react-router-dom';
+import { NavItem, Nav } from 'reactstrap';
 
 interface IProps {
     className?: string;
@@ -13,20 +14,20 @@ class Sidebar extends React.Component<IProps> {
         return (
                 <div className={'card p-3 ' + this.props.className || ''}>
                     <ENavlist activeBg={true}>
-                        <ul className="nav">
-                            <li className="nav-item">
-                                <NavLink to="/overview">
-                                    <i className="fa fa-fw fa-bar-chart mr-1" />
+                        <Nav>
+                            <NavItem>
+                                <NavLink to="/overview" className="nav-link">
+                                    <i className="fa fa-fw fa-home mr-1" />
                                     <span>Overview</span>
                                 </NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to="/Players">
+                            </NavItem>
+                            <NavItem>
+                                <NavLink to="/Players" className="nav-link">
                                     <i className="fa fa-fw fa-bar-chart mr-1" />
                                     <span>Players</span>
                                 </NavLink>
-                            </li>
-                        </ul>
+                            </NavItem>
+                        </Nav>
                     </ENavlist>
                 </div>
         );
