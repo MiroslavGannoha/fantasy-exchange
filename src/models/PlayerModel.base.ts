@@ -15,12 +15,12 @@ export const PlayerModelBase = MSTGQLObject
   .named('Player')
   .props({
     __typename: types.optional(types.literal("Player"), "Player"),
-    countryCode: types.maybe(types.string),
+    countryCode: types.maybeNull(types.string),
     id: types.identifier,
-    name: types.maybe(types.string),
-    nickname: types.maybe(types.string),
-    playerRole: types.maybe(types.string),
-    steamId: types.maybe(types.integer),
+    name: types.maybeNull(types.string),
+    nickname: types.maybeNull(types.string),
+    playerRole: types.maybeNull(types.string),
+    steamId: types.maybeNull(types.integer),
   })
   .views(self => ({
     get store() {

@@ -11,10 +11,14 @@ export const formFields = [{
     label: 'Id name',
     rules: 'required|string|min:3',
     disabled: true,
+    type: 'hidden',
+    value: null,
+    output: (v) => v ? v : undefined,
 }, {
     name: 'steamId',
     label: 'Steam account id',
     rules: 'required|integer',
+    output: (v) => parseInt(v, 10),
 }, {
     name: 'playerRole',
     label: 'Role',

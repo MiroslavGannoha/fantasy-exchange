@@ -35,16 +35,16 @@ export const Offer_aggregate_fieldsModelBase = MSTGQLObject
   .named('Offer_aggregate_fields')
   .props({
     __typename: types.optional(types.literal("Offer_aggregate_fields"), "Offer_aggregate_fields"),
-    avg: types.maybe(types.late(() => Offer_avg_fieldsModel)),
-    max: types.maybe(types.late(() => Offer_max_fieldsModel)),
-    min: types.maybe(types.late(() => Offer_min_fieldsModel)),
-    stddev: types.maybe(types.late(() => Offer_stddev_fieldsModel)),
-    stddev_pop: types.maybe(types.late(() => Offer_stddev_pop_fieldsModel)),
-    stddev_samp: types.maybe(types.late(() => Offer_stddev_samp_fieldsModel)),
-    sum: types.maybe(types.late(() => Offer_sum_fieldsModel)),
-    var_pop: types.maybe(types.late(() => Offer_var_pop_fieldsModel)),
-    var_samp: types.maybe(types.late(() => Offer_var_samp_fieldsModel)),
-    variance: types.maybe(types.late(() => Offer_variance_fieldsModel)),
+    avg: types.maybeNull(types.late(() => Offer_avg_fieldsModel)),
+    max: types.maybeNull(types.late(() => Offer_max_fieldsModel)),
+    min: types.maybeNull(types.late(() => Offer_min_fieldsModel)),
+    stddev: types.maybeNull(types.late(() => Offer_stddev_fieldsModel)),
+    stddev_pop: types.maybeNull(types.late(() => Offer_stddev_pop_fieldsModel)),
+    stddev_samp: types.maybeNull(types.late(() => Offer_stddev_samp_fieldsModel)),
+    sum: types.maybeNull(types.late(() => Offer_sum_fieldsModel)),
+    var_pop: types.maybeNull(types.late(() => Offer_var_pop_fieldsModel)),
+    var_samp: types.maybeNull(types.late(() => Offer_var_samp_fieldsModel)),
+    variance: types.maybeNull(types.late(() => Offer_variance_fieldsModel)),
   })
   .views(self => ({
     get store() {

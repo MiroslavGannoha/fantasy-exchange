@@ -15,7 +15,7 @@ export const Player_sum_fieldsModelBase = MSTGQLObject
   .named('Player_sum_fields')
   .props({
     __typename: types.optional(types.literal("Player_sum_fields"), "Player_sum_fields"),
-    steamId: types.maybe(types.integer),
+    steamId: types.maybeNull(types.integer),
   })
   .views(self => ({
     get store() {

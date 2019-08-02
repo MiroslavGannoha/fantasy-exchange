@@ -15,11 +15,11 @@ export const Player_max_fieldsModelBase = MSTGQLObject
   .named('Player_max_fields')
   .props({
     __typename: types.optional(types.literal("Player_max_fields"), "Player_max_fields"),
-    countryCode: types.maybe(types.string),
-    name: types.maybe(types.string),
-    nickname: types.maybe(types.string),
-    playerRole: types.maybe(types.string),
-    steamId: types.maybe(types.integer),
+    countryCode: types.maybeNull(types.string),
+    name: types.maybeNull(types.string),
+    nickname: types.maybeNull(types.string),
+    playerRole: types.maybeNull(types.string),
+    steamId: types.maybeNull(types.integer),
   })
   .views(self => ({
     get store() {

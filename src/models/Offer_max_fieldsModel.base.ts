@@ -15,7 +15,7 @@ export const Offer_max_fieldsModelBase = MSTGQLObject
   .named('Offer_max_fields')
   .props({
     __typename: types.optional(types.literal("Offer_max_fields"), "Offer_max_fields"),
-    amount: types.maybe(types.integer),
+    amount: types.maybeNull(types.integer),
   })
   .views(self => ({
     get store() {

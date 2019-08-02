@@ -19,7 +19,7 @@ export const Player_aggregateModelBase = MSTGQLObject
   .named('Player_aggregate')
   .props({
     __typename: types.optional(types.literal("Player_aggregate"), "Player_aggregate"),
-    aggregate: types.maybe(types.late(() => Player_aggregate_fieldsModel)),
+    aggregate: types.maybeNull(types.late(() => Player_aggregate_fieldsModel)),
     nodes: types.optional(types.array(MSTGQLRef(types.late(() => PlayerModel))), []),
   })
   .views(self => ({

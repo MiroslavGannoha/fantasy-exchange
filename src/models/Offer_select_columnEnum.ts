@@ -4,6 +4,16 @@
 import { types } from "mobx-state-tree"
 
 /**
+ * Typescript enum
+ */
+
+export enum Offer_select_column {
+  amount="amount",
+id="id",
+playerId="playerId"
+}
+
+/**
 * Offer_select_column
 */
 export const Offer_select_columnEnum = types.enumeration("Offer_select_column", [

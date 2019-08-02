@@ -19,7 +19,7 @@ export const Offer_aggregateModelBase = MSTGQLObject
   .named('Offer_aggregate')
   .props({
     __typename: types.optional(types.literal("Offer_aggregate"), "Offer_aggregate"),
-    aggregate: types.maybe(types.late(() => Offer_aggregate_fieldsModel)),
+    aggregate: types.maybeNull(types.late(() => Offer_aggregate_fieldsModel)),
     nodes: types.optional(types.array(MSTGQLRef(types.late(() => OfferModel))), []),
   })
   .views(self => ({

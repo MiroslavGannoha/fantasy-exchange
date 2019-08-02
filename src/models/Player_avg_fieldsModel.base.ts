@@ -15,7 +15,7 @@ export const Player_avg_fieldsModelBase = MSTGQLObject
   .named('Player_avg_fields')
   .props({
     __typename: types.optional(types.literal("Player_avg_fields"), "Player_avg_fields"),
-    steamId: types.maybe(types.number),
+    steamId: types.maybeNull(types.number),
   })
   .views(self => ({
     get store() {

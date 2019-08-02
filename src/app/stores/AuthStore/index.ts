@@ -48,9 +48,9 @@ class AuthStore {
         this.loading = true;
         this.authClient = await createAuth0Client(initOptions);
         this.isAuthed = await this.authClient.isAuthenticated();
-        // if (!this.isAuthed) {
-        //     this.authClient.loginWithRedirect();
-        // }
+        if (!this.isAuthed) {
+            this.authClient.loginWithRedirect();
+        }
         this.loading = false;
         return this.authClient;
     }

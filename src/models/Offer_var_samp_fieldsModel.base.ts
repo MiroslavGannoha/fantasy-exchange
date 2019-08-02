@@ -15,7 +15,7 @@ export const Offer_var_samp_fieldsModelBase = MSTGQLObject
   .named('Offer_var_samp_fields')
   .props({
     __typename: types.optional(types.literal("Offer_var_samp_fields"), "Offer_var_samp_fields"),
-    amount: types.maybe(types.number),
+    amount: types.maybeNull(types.number),
   })
   .views(self => ({
     get store() {

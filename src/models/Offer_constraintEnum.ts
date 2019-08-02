@@ -4,6 +4,14 @@
 import { types } from "mobx-state-tree"
 
 /**
+ * Typescript enum
+ */
+
+export enum Offer_constraint {
+  Offers_pkey="Offers_pkey"
+}
+
+/**
 * Offer_constraint
 */
 export const Offer_constraintEnum = types.enumeration("Offer_constraint", [

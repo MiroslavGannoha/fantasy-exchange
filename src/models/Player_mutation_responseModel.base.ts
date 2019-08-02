@@ -17,7 +17,7 @@ export const Player_mutation_responseModelBase = MSTGQLObject
   .named('Player_mutation_response')
   .props({
     __typename: types.optional(types.literal("Player_mutation_response"), "Player_mutation_response"),
-    affected_rows: types.maybe(types.integer),
+    affected_rows: types.maybeNull(types.integer),
     returning: types.optional(types.array(MSTGQLRef(types.late(() => PlayerModel))), []),
   })
   .views(self => ({

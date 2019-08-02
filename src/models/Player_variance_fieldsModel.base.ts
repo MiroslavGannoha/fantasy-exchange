@@ -15,7 +15,7 @@ export const Player_variance_fieldsModelBase = MSTGQLObject
   .named('Player_variance_fields')
   .props({
     __typename: types.optional(types.literal("Player_variance_fields"), "Player_variance_fields"),
-    steamId: types.maybe(types.number),
+    steamId: types.maybeNull(types.number),
   })
   .views(self => ({
     get store() {

@@ -4,6 +4,15 @@
 import { types } from "mobx-state-tree"
 
 /**
+ * Typescript enum
+ */
+
+export enum conflict_action {
+  ignore="ignore",
+update="update"
+}
+
+/**
 * conflict_action
 */
 export const conflict_actionEnum = types.enumeration("conflict_action", [

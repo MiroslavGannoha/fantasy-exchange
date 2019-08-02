@@ -15,7 +15,7 @@ export const Player_stddev_samp_fieldsModelBase = MSTGQLObject
   .named('Player_stddev_samp_fields')
   .props({
     __typename: types.optional(types.literal("Player_stddev_samp_fields"), "Player_stddev_samp_fields"),
-    steamId: types.maybe(types.number),
+    steamId: types.maybeNull(types.number),
   })
   .views(self => ({
     get store() {

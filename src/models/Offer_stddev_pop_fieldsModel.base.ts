@@ -15,7 +15,7 @@ export const Offer_stddev_pop_fieldsModelBase = MSTGQLObject
   .named('Offer_stddev_pop_fields')
   .props({
     __typename: types.optional(types.literal("Offer_stddev_pop_fields"), "Offer_stddev_pop_fields"),
-    amount: types.maybe(types.number),
+    amount: types.maybeNull(types.number),
   })
   .views(self => ({
     get store() {

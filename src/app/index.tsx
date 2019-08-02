@@ -13,7 +13,7 @@ import { Auth0Provider } from '../app/components/AuthWrapper';
 import config from '../../auth_config.json';
 import { authStore } from './stores';
 import { RootStore, StoreContext } from '../models';
-import LoaderInCard from './components/Loader';
+import { LoaderFullscreen } from './components/Loader';
 import Page404 from './views/Page404';
 import Settings from './views/Settings';
 
@@ -48,8 +48,9 @@ const onRedirectCallback = (appState) => {
 };
 
 const RoutesWithStores = observer(() => {
-    if (authStore.loading || !authStore.isAuthed) {
-        return <LoaderInCard />;
+    if (authStore.loading) {
+    // if (authStore.loading || !authStore.isAuthed) {
+        return <LoaderFullscreen />;
     }
 
     if (authStore.httpClient) {

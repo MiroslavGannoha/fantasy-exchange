@@ -15,7 +15,7 @@ export const Offer_min_fieldsModelBase = MSTGQLObject
   .named('Offer_min_fields')
   .props({
     __typename: types.optional(types.literal("Offer_min_fields"), "Offer_min_fields"),
-    amount: types.maybe(types.integer),
+    amount: types.maybeNull(types.integer),
   })
   .views(self => ({
     get store() {

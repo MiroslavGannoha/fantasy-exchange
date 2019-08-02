@@ -17,7 +17,7 @@ export const Offer_mutation_responseModelBase = MSTGQLObject
   .named('Offer_mutation_response')
   .props({
     __typename: types.optional(types.literal("Offer_mutation_response"), "Offer_mutation_response"),
-    affected_rows: types.maybe(types.integer),
+    affected_rows: types.maybeNull(types.integer),
     returning: types.optional(types.array(MSTGQLRef(types.late(() => OfferModel))), []),
   })
   .views(self => ({

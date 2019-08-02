@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 // import * as moment from 'moment';
 import Form from './Form';
 import CRUDTable from '../../components/CRUDTable';
+// import { useQuery } from '../../../models';
 
 @observer
 class Players extends React.Component {
@@ -57,10 +58,13 @@ class Players extends React.Component {
             // },
         ];
 
+    // const { store, error, loading, data } = useQuery((s) => s.queryPlayer());
+
+
 
         return (
             <CRUDTable
-                CRUDStoreChild={null}
+                tableName={'Player'}
                 columns={columns}
                 ItemForm={Form}
             />

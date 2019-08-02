@@ -17,9 +17,9 @@ export const OfferModelBase = MSTGQLObject
   .named('Offer')
   .props({
     __typename: types.optional(types.literal("Offer"), "Offer"),
-    amount: types.maybe(types.integer),
+    amount: types.maybeNull(types.integer),
     id: types.identifier,
-    playerId: types.maybe(MSTGQLRef(types.late(() => PlayerModel))),
+    playerId: types.maybeNull(MSTGQLRef(types.late(() => PlayerModel))),
   })
   .views(self => ({
     get store() {

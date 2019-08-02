@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Row, Progress, Col, Card, CardBody, CardTitle } from 'reactstrap';
+import { Row, Progress, Col, Card, CardBody, CardTitle, Container } from 'reactstrap';
 
 interface ILoaderProps {
     loading?: boolean;
@@ -32,5 +32,17 @@ class LoaderInCard extends React.Component<ILoaderProps> {
         ) : null;
     }
 }
+
+export const LoaderFullscreen = (props: ILoaderProps) => (
+    <div className="app flex-row align-items-center">
+        <Container>
+            <Row className="justify-content-center">
+                <Col md="6">
+                    <Loader />
+                </Col>
+            </Row>
+        </Container>
+    </div>
+);
 
 export default LoaderInCard;

@@ -46,7 +46,6 @@ type Mutation {
     objects: [Offer_insert_input!]!
 
     # on conflict condition
-    on_conflict: Offer_on_conflict
   ): Offer_mutation_response
 
   # insert data into the table: "Player"
@@ -54,8 +53,6 @@ type Mutation {
     # the rows to be inserted
     objects: [Player_insert_input!]!
 
-    # on conflict condition
-    on_conflict: Player_on_conflict
   ): Player_mutation_response
 
   # update data of the table: "Offer"
@@ -129,7 +126,6 @@ input Offer_aggregate_order_by {
 # input type for inserting array relation for remote table "Offer"
 input Offer_arr_rel_insert_input {
   data: [Offer_insert_input!]!
-  on_conflict: Offer_on_conflict
 }
 
 # aggregate avg on columns
@@ -202,13 +198,6 @@ type Offer_mutation_response {
 # input type for inserting object relation for remote table "Offer"
 input Offer_obj_rel_insert_input {
   data: Offer_insert_input!
-  on_conflict: Offer_on_conflict
-}
-
-# on conflict condition type for table "Offer"
-input Offer_on_conflict {
-  constraint: Offer_constraint!
-  update_columns: [Offer_update_column!]!
 }
 
 # ordering options when selecting data from "Offer"
@@ -389,7 +378,6 @@ input Player_aggregate_order_by {
 # input type for inserting array relation for remote table "Player"
 input Player_arr_rel_insert_input {
   data: [Player_insert_input!]!
-  on_conflict: Player_on_conflict
 }
 
 # aggregate avg on columns
@@ -484,14 +472,8 @@ type Player_mutation_response {
 # input type for inserting object relation for remote table "Player"
 input Player_obj_rel_insert_input {
   data: Player_insert_input!
-  on_conflict: Player_on_conflict
 }
 
-# on conflict condition type for table "Player"
-input Player_on_conflict {
-  constraint: Player_constraint!
-  update_columns: [Player_update_column!]!
-}
 
 # ordering options when selecting data from "Player"
 input Player_order_by {
