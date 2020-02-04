@@ -1,4 +1,5 @@
-# Fantasy Exchange
+# Playground
+Hasura, Auth0, Mobx-State-Tree, MST-GQL
 
 ## Setup
 
