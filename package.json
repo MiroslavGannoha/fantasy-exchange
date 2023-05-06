@@ -55,7 +55,7 @@
         "@types/webpack": "^4.4.35",
         "babel-loader": "^8.0.6",
         "babel-preset-mobx": "^2.0.0",
-        "bootstrap": "^4.2.1",
+        "bootstrap": "^4.3.1",
         "chart.js": "^2.7.3",
         "classnames": "^2.2.6",
         "color": "^3.1.2",
